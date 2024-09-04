@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
+    "typeRoots": [".node/modules/@types", "../src/types"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -17,10 +18,19 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",  // Ensure this is set
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@auth/*": ["./src/(authentication)/*"]
+
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "convex/auth.config.js"
+, "node_modules/Providers.tsx"  ],
   "exclude": ["node_modules"]
 }
