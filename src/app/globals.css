@@ -77,6 +77,54 @@
     --chart-5: 340 75% 55%;
   }
 }
+/* The floating label effect */
+.floating-label {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #6b7280;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Move the label when the input is focused or has a value */
+input:focus + .floating-label,
+input:not(:placeholder-shown) + .floating-label {
+  top: 0.375rem;
+  transform: translateY(0);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #000;
+}
+
+/* Ensure the placeholder is hidden when not focused */
+input::placeholder {
+  opacity: 0;
+}
+
+input:focus::placeholder {
+  opacity: 1;
+}
+
+/*  */
+/* OTP attempt error animation: SHAKE */
+/*  */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25%,
+  75% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.3s;
+}
 
 @layer base {
   * {

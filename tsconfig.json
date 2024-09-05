@@ -21,7 +21,7 @@
     "baseUrl": ".",  // Ensure this is set
     "paths": {
       "@/*": ["./src/*"],
-      "@auth/*": ["./src/(authentication)/*"]
+      "@auth/*": ["./src/app/(authentication)/*"]
 
     }
   },

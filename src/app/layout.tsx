@@ -1,10 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Merriweather } from "next/font/google";
 import "./globals.css";
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Providers from "@/app/Providers";
 
+// Import Merriweather (serif font)
+const fontSerif = Merriweather({
+  subsets: ["latin"],
+  weight: ["300", "400", "700", "900"],
+  variable: "--font-serif",
+});
+
+// Import Inter (sans-serif font)
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -26,7 +34,8 @@ export default function RootLayout({
         <body
           className={cn(
             "min-h-screen bg-background font-sans antialiased",
-            fontSans.variable
+            fontSans.variable, // Use the sans-serif font
+            fontSerif.variable  // Include the serif font variable
           )}
         >
           {children}
