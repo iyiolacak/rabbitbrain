@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import SignUpPageOtherHalf from "@auth/sign-up/_components/SignUpPageOtherHalf";
 import AuthStageIndicator from "@auth/sign-up/_components/SignUpStageIndicator";
 import { AuthProvider } from "@auth/context/AuthContext";
@@ -11,18 +11,16 @@ export const metadata: any = {
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <AuthProvider>
-      <div className="flex min-h-screen w-full flex-row overflow-hidden">
-        <div className="flex flex-col md:flex-row flex-1">
-          {/* Left Side */}
-          <div className="flex w-full flex-1 justify-center items-center p-4 md:p-8 md:pb-4">
-            <div className="z-10 flex flex-col justify-center items-center w-full max-w-lg bg-background rounded-lg md:p-5">
-              {children}
-              <AuthStageIndicator outOf={3} />
-            </div>
-          </div>
-          {/* Right Side */}
-          <div className="hidden z-0 lg:flex lg:w-1/2 items-center justify-center">
-            <SignUpPageOtherHalf />
+      <div className="relative flex min-h-screen w-full overflow-hidden">
+        {/* Full Background */}
+        <div className="absolute inset-0 h-full z-0">
+          <SignUpPageOtherHalf />
+        </div>
+        {/* Form & Stage Indicator */}
+        <div className="relative z-10 flex items-start p-6 w-full max-w-2xl h-screen">
+          <div className="flex h-full flex-col justify-center w-full bg-background rounded-lg px-6 py-4 md:px-20">
+            {children}
+            <AuthStageIndicator outOf={3} />
           </div>
         </div>
       </div>
