@@ -1,29 +1,55 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { useAuthContext } from "@auth/context/AuthContext";
+import { AuthAction, useAuthContext } from "@auth/context/AuthContext";
 import { AuthStage } from "@auth/hooks/useAuthStatus";
 
-const AuthStageIndicator = ({ outOf }: { outOf: number }) => {
+type AuthStageIndicatorProps = {
+  outOf: number;
+  authAction: AuthAction;
+};
+
+type StageMapping = {
+  [AuthAction in "sign-up" | "sign-in" | "forgot-password"]: {
+    [key in AuthStage]: number;
+  };
+};
+
+const AuthStageIndicator = ({ outOf, authAction }: AuthStageIndicatorProps) => {
   const { authStage } = useAuthContext();
   const [stage, setStage] = useState<number>(1);
 
   useEffect(() => {
-    switch(authStage) {
-      case(AuthStage.Verifying):
-        setStage(prev => Math.max(prev, 2));  // Move to stage 2 if not already there
+    const stageMapping: StageMapping = {
+      "sign-up": {
+        [AuthStage.Form]: 1,
+        [AuthStage.Verifying]: 2,
+        [AuthStage.Completed]: 3,
+      },
+      "sign-in": {
+        [AuthStage.Form]: 1,
+        [AuthStage.Verifying]: 2,
+        [AuthStage.Completed]: 3,
+      },
+      "forgot-password": {
+        [AuthStage.Form]: 1,
+        [AuthStage.Verifying]: 2,
+        [AuthStage.Completed]: 3,
+      },
+    } as const;
+    const currentStage = stageMapping[authAction]?.[authStage] ?? 1;
+    switch (authStage) {
+      case AuthStage.Verifying:
+        setStage(currentStage || 1);
         break;
       default:
         setStage(1);
     }
-  }, [authStage]);
+  }, [authStage, authAction]);
 
   const filledStages = useMemo(() => {
     return Array.from({ length: stage }, (_, index) => (
-      <div
-        key={index}
-        className="flex h-2 flex-grow rounded-full bg-gray-200"
-      >
+      <div key={index} className="flex h-2 flex-grow rounded-full bg-gray-200">
         <motion.div
           className="h-full w-[100%] rounded-full bg-primary"
           initial={{ scaleX: 0 }}

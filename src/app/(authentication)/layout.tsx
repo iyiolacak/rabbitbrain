@@ -24,7 +24,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="w-1/2 h-full flex items-center justify-center p-6">
           <div className="w-full h-full max-w-md">
               {children}
-            <AuthStageIndicator outOf={3} />
+            <AuthStageIndicator outOf={3} authAction="sign-up" />
           </div>
         </div>
       </div>
