@@ -1,11 +1,7 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Controller,
-  useForm,
-  useFormContext,
-  UseFormReturn,
 } from "react-hook-form";
 import {
   InputOTP,
@@ -14,12 +10,10 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import {
-  otpCodeSchema,
-  OTPCodeForm,
   useAuthContext,
 } from "@auth/context/AuthContext";
 import ErrorDisplay from "@auth/components/ErrorDisplay";
-import { AuthState, useAuthStatus, AuthStage } from "@auth/hooks/useAuthStatus";
+import { AuthState } from "@auth/hooks/useAuthStatus";
 
 //
 // TODO: The OTP input validation schema will be handled better.
