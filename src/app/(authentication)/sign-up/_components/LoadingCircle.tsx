@@ -1,6 +1,5 @@
 import React from 'react'
 import { CircularLoading } from 'respinner'
-
 type LoadingCircle = {
     color?: string;
     size?: number;
