@@ -1,70 +1,109 @@
 "use client";
+import React, { useEffect, useRef } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Controller,
+  useForm,
+  useFormContext,
+  UseFormReturn,
+} from "react-hook-form";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import {
+  otpCodeSchema,
+  OTPCodeForm,
+  useAuthContext,
+} from "@auth/context/AuthContext";
+import ErrorDisplay from "@auth/components/ErrorDisplay";
+import { AuthState, useAuthStatus, AuthStage } from "@auth/hooks/useAuthStatus";
 
-import * as React from "react";
-import { OTPInput, OTPInputContext } from "input-otp";
-import { Dot } from "lucide-react";
+//
+// TODO: The OTP input validation schema will be handled better.
+//
+const OTPForm = () => {
+  const { onOTPFormSubmit, OTPFormMethods, authState, authServerError } =
+    useAuthContext();
+  console.log(authState === AuthState.Success); // Check this before the return statement
 
-import { cn } from "@/lib/utils";
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = OTPFormMethods;
 
+  const [showError, setShowError] = React.useState(false);
 
-const InputOTP = React.forwardRef<
-  React.ElementRef<typeof OTPInput>,
-  React.ComponentPropsWithoutRef<typeof OTPInput>
->(({ className, containerClassName, ...props }, ref) => (
-  <OTPInput
-    ref={ref}
-    containerClassName={cn(
-      "flex items-center gap-2 has-[:disabled]:opacity-50",
-      containerClassName,
-    )}
-    className={cn("disabled:cursor-not-allowed", className)}
-    {...props}
-  />
-));
-InputOTP.displayName = "InputOTP";
+  const OTPInputRef = useRef<HTMLInputElement | null>(null);
 
-const InputOTPGroup = React.forwardRef<
-  React.ElementRef<"div">,
-  React.ComponentPropsWithoutRef<"div">
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("flex items-center", className)} {...props} />
-));
-InputOTPGroup.displayName = "InputOTPGroup";
+  useEffect(() => {
+    OTPInputRef.current?.focus();
+  }, []);
 
-const InputOTPSlot = React.forwardRef<
-  React.ElementRef<"div">,
-  React.ComponentPropsWithoutRef<"div"> & { index: number; shake?: boolean; error?: boolean }
->(({ index, shake = false, error = false, className, ...props}, ref) => {
-  const inputOTPContext = React.useContext(OTPInputContext);
-  const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index];
-  
+  useEffect(() => {
+    if (authState !== AuthState.Submitting) {
+      OTPInputRef.current?.focus();
+    }
+  }, [authState]);
+  const formRef = useRef<HTMLFormElement>(null);
+  console.log(authState === AuthState.Success); // Check this before the return statement
+
   return (
-    <div
-      ref={ref}
-      className={cn(
-        "relative mx-[2px] flex size-16 items-center justify-center rounded-3xl border text-xl transition-all",
-        isActive && "z-10 ring-2 ring-ring ring-offset-background",
-        error ? "border-red-600" : "border-input", // Red border on error
-        shake && "animate-shake", // Shake effect
-        className,
-      )}
-      {...props}
-    >
-      {char}
-      {hasFakeCaret && (
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="animate-caret-blink h-4 w-px bg-foreground duration-1000" />
-        </div>
-      )}
-    </div>
+    <form ref={formRef} onSubmit={handleSubmit(onOTPFormSubmit)}>
+      <div className={`flex items-center justify-center`}>
+        <Controller
+          name="OTPCode"
+          control={control}
+          defaultValue=""
+          render={({ field: { onChange, value } }) => (
+            <InputOTP
+              id="otp"
+              maxLength={6}
+              value={value}
+              onChange={onChange}
+              onComplete={handleSubmit(onOTPFormSubmit)}
+              ref={OTPInputRef}
+              // onSubmit={handleOTPComplete}
+              disabled={authState === AuthState.Submitting}
+            >
+              <InputOTPGroup>
+                {[0, 1, 2].map((index) => (
+                  <InputOTPSlot
+                    key={index}
+                    index={index}
+                    error={!!authServerError}
+                  />
+                ))}
+              </InputOTPGroup>
+              <InputOTPSeparator />
+              <InputOTPGroup>
+                {[3, 4, 5].map((index) => (
+                  <InputOTPSlot
+                    key={index}
+                    index={index}
+                    shake={!!authServerError}
+                    error={!!authServerError}
+                  />
+                ))}
+              </InputOTPGroup>
+            </InputOTP>
+          )}
+        />
+      </div>
+      <div className="min-h-10">
+        {(errors.OTPCode?.message || authServerError) && (
+          <ErrorDisplay
+            alertIcon={false}
+            className="flex justify-center"
+            errors={errors.OTPCode?.message || authServerError}
+          />
+        )}
+      </div>
+    </form>
   );
-});
-InputOTPSlot.displayName = "InputOTPSlot";
+};
 
-const InputOTPSeparator = React.forwardRef<
-  React.ElementRef<"div">,
-  React.ComponentPropsWithoutRef<"div">
->(({ ...props }, ref) => <div ref={ref} role="separator" {...props}></div>);
-InputOTPSeparator.displayName = "InputOTPSeparator";
-
-export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator };
+export default OTPForm;
