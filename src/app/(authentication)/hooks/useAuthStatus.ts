@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ClerkAPIError } from "@clerk/types";
-import { EmailForm } from "@/context/AuthContext";
+import { EmailForm } from "@auth/context/AuthContext";
 
 export enum AuthState {
   Idle = "Idle",
