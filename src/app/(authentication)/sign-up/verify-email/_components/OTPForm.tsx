@@ -74,7 +74,6 @@ const OTPForm = () => {
                   <InputOTPSlot
                     key={index}
                     index={index}
-                    shake={!!authServerError}
                     error={!!authServerError}
                   />
                 ))}
