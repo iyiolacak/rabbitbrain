@@ -57,6 +57,19 @@ const SignUpPage = () => {
             <VerifyEmail />
           </motion.div>
         )}
+                {authStage === AuthStage.Verifying && (
+          <motion.div
+            key="verifying"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={transitionVariants}
+            transition={{ duration: 0.2, ease: [transitionCubicBezier] }}
+            className="h-full"
+          >
+            <VerifyEmail />
+          </motion.div>
+        )}
       </AnimatePresence>
     </div>
   );

@@ -28,33 +28,34 @@ function RedirectToSignIn() {
 const SignUp = () => {
   const { authState } = useAuthStatus();
   return (
-    <div className="flex items-center w-full flex-col h-full px-4 py-3">
-      <Logo size={48} className="flex items-start w-full pb-3" />
-      <div className="flex h-full flex-col justify-center items-center">
-
-      <SectionHeader
-        title="Hop Into Rabbitbrain."
-        subtitle={
-          <>
-            Quick, easy, and free—hop right in!
-            <span className="pt-2 text-neutral-500">
-              &nbsp;Brain training designed to keep you coming back.
-            </span>
-          </>
-        }
+    <div className="flex flex-col items-center w-content h-content px-4 py-3">
+      {/* Added some margin to the logo to avoid overlapping */}
+      <Logo className="flex w-content h-min mb-16" size={40} />
+      <div className="flex flex-col h-full justify-center items-center">
+        <SectionHeader
+          title="Hop Into Rabbitbrain."
+          subtitle={
+            <>
+              Quick, easy, and free—hop right in!
+              <span className="pt-2 text-neutral-500">
+                &nbsp;Brain training designed to keep you coming back.
+              </span>
+            </>
+          }
         />
 
-      <div className="my-3 grid w-full grid-cols-1 gap-x-2 gap-y-3">
-        <OAuthSignInButton
-          strategy="oauth_google"
-          className="border bg-white font-semibold"
-          disabled={authState === AuthState.Submitting}
+        <div className="my-3 grid w-full grid-cols-1 gap-x-2 gap-y-3">
+          <OAuthSignInButton
+            strategy="oauth_google"
+            className="border bg-white font-semibold"
+            disabled={authState === AuthState.Submitting}
           />
+        </div>
+        <Divider />
+        <EmailFormComponent authAction={"sign-up"} />
+        <RedirectToSignIn />
       </div>
-      <Divider />
-      <EmailFormComponent authAction={"sign-up"} />
-      <RedirectToSignIn />
-          </div>
+
       <LegalTOSText />
     </div>
   );

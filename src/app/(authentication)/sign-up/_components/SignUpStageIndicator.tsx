@@ -66,7 +66,7 @@ const AuthStageIndicator = ({ outOf, authAction }: AuthStageIndicatorProps) => {
 
   const indicators = useMemo(() => {
     return (
-      <div className="flex w-full flex-row space-x-2 mb-4">
+      <div className={`flex w-full flex-row space-x-2 mb-4`}>
         {filledStages}
         {Array.from({ length: outOf - stage }, (_, index) => (
           <div
