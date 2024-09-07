@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Lora as FontSerif } from "next/font/google";
+import { Merriweather as FontSerif } from "next/font/google";
 import { Quicksand as FontPlayful } from "next/font/google";
 import "./globals.css";
 import { Inter as FontSans } from "next/font/google";

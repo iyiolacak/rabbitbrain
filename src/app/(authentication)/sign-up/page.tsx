@@ -8,7 +8,7 @@ import { AuthStage, useAuthStatus } from "@auth/hooks/useAuthStatus";
 import { SignUpButton } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/clerk-react";
-
+import AuthCompleted from "./_components/AuthCompleted";
 
 const transitionVariants = {
   initial: { opacity: 1, x: 150 },
@@ -17,16 +17,14 @@ const transitionVariants = {
 };
 
 const SignUpPage = () => {
-
   const router = useRouter();
   const { isLoaded, isSignedIn } = useAuth();
   useEffect(() => {
-    if(isLoaded && isSignedIn) {
+    if (isLoaded && isSignedIn) {
       router.push("/dashboard");
     }
   }, [isLoaded, isSignedIn, router]);
 
-  
   const { authStage } = useAuthContext();
   const transitionCubicBezier = [0.05, 0.66, 0.32, 0.92];
   return (
@@ -57,9 +55,9 @@ const SignUpPage = () => {
             <VerifyEmail />
           </motion.div>
         )}
-                {authStage === AuthStage.Verifying && (
+        {authStage === AuthStage.Completed && (
           <motion.div
-            key="verifying"
+            key="completed"
             initial="initial"
             animate="animate"
             exit="exit"
@@ -67,7 +65,7 @@ const SignUpPage = () => {
             transition={{ duration: 0.2, ease: [transitionCubicBezier] }}
             className="h-full"
           >
-            <VerifyEmail />
+            <AuthCompleted />
           </motion.div>
         )}
       </AnimatePresence>

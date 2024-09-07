@@ -61,7 +61,7 @@ const SignInPage = () => {
           />
         </div>
         <Divider />
-        <EmailFormComponent authAction={"sign-up"} />
+        <EmailFormComponent authAction={"sign-in"} />
         <RedirectToCreateAccount />
       </div>
       <LegalTOSText />
