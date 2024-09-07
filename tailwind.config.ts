@@ -11,7 +11,9 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-sans)", "sans-serif"], // Inter
-        serif: ["var(--font-serif)", "serif"], // Merriweather
+        serif: ["var(--font-serif)", "serif"], // Lora
+        playful: ["var(--font-playful)", "playful"], // Quicksand
+
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
