@@ -30,7 +30,7 @@ const SignUpPage = () => {
   const { authStage } = useAuthContext();
   const transitionCubicBezier = [0.05, 0.66, 0.32, 0.92];
   return (
-    <div className="h-full">
+    <div className="h-full justify-center items-center">
       <AnimatePresence mode="wait">
         {authStage === AuthStage.Form && (
           <motion.div
@@ -39,6 +39,7 @@ const SignUpPage = () => {
             exit="exit"
             variants={transitionVariants}
             transition={{ duration: 0.2, ease: [transitionCubicBezier] }}
+            className="h-full"
           >
             <SignUpStageForm />
           </motion.div>

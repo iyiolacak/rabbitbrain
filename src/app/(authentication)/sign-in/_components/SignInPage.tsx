@@ -10,6 +10,7 @@ import Link from "next/link";
 import EmailFormComponent from "../../sign-up/_components/EmailFormComponent";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/clerk-react";
+import { AuthState, useAuthStatus } from "../../hooks/useAuthStatus";
 
 function RedirectToCreateAccount() {
   return (
@@ -27,43 +28,43 @@ function RedirectToCreateAccount() {
 }
 
 const SignInPage = () => {
-
   const router = useRouter();
   const { isLoaded, isSignedIn } = useAuth();
   useEffect(() => {
-    if(isLoaded && isSignedIn) {
+    if (isLoaded && isSignedIn) {
       router.push("/dashboard");
     }
   }, [isLoaded, isSignedIn, router]);
 
-
+  const { authState } = useAuthStatus();
   return (
-    <div className="flex flex-col items-center px-4 py-3">
-      <Logo size={48} className="flex items-center py-3" />
-      <SectionHeader
-        title="
-        Continue where you left off.
-        "
-        subtitle={
-          <>
-            Sign in to keep things running smoothly.&nbsp;
-            <span className="pt-2 text-neutral-500">
-              Your inventory, your way—secure and simple.
-            </span>
-          </>
-        }
-      />
-      <div className="my-3 grid w-full grid-cols-1 gap-x-2 gap-y-3">
-        <OAuthSignInButton
-          strategy="oauth_google"
-          className="border bg-white font-semibold"
-          //   disabled={authState === AuthState.Submitting}
+    <div className="flex items-center w-full flex-col h-full px-4 py-3">
+      <Logo size={48} className="flex items-start w-full pb-3" />
+      <div className="flex h-full flex-col justify-center items-center">
+        <SectionHeader
+          title="Jump back in."
+          subtitle={
+            <>
+              Let&apos;s keep the momentum going!
+              <span className="pt-2 text-neutral-500">
+                —don&apos;t let those neurons get lazy!
+              </span>
+            </>
+          }
         />
+
+        <div className="my-3 grid w-full grid-cols-1 gap-x-2 gap-y-3">
+          <OAuthSignInButton
+            strategy="oauth_google"
+            className="border bg-white font-semibold"
+            disabled={authState === AuthState.Submitting}
+          />
+        </div>
+        <Divider />
+        <EmailFormComponent authAction={"sign-up"} />
+        <RedirectToCreateAccount />
       </div>
-      {/* (component) 'Or' divider */}
-      <Divider />
-      <EmailFormComponent authAction={"sign-in"} />
-      <RedirectToCreateAccount /><LegalTOSText />
+      <LegalTOSText />
     </div>
   );
 };
