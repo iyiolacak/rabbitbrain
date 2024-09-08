@@ -25,6 +25,7 @@ const SignUpPage = () => {
     }
   }, [isLoaded, isSignedIn, router]);
 
+  
   const { authStage } = useAuthContext();
   const transitionCubicBezier = [0.05, 0.66, 0.32, 0.92];
   return (

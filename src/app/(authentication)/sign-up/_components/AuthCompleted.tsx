@@ -19,10 +19,16 @@ const AuthCompleted = () => {
               You&apos;re hopping in!
             </h2>
             <h3 className="scroll-m-20 text-lg tracking-tight md:mt-1 md:text-xl text-neutral-400">
-              Redirecting... It should take few seconds.
+              Just a second while we set things up...
             </h3>
             <p className="h-full flex items-end justify-end text-gray-400 text-sm">
-            Image by&nbsp;<a href="https://www.freepik.com/free-psd/check-symbol-isolated_44989283.htm#page=2&query=completed%20illustration&position=44&from_view=keyword&track=ais_hybrid&uuid=1ff0111c-3435-44cf-9723-7aea50c4abc6" className="text-gray-500">Freepik</a>
+              Image by&nbsp;
+              <a
+                href="https://www.freepik.com/free-psd/check-symbol-isolated_44989283.htm#page=2&query=completed%20illustration&position=44&from_view=keyword&track=ais_hybrid&uuid=1ff0111c-3435-44cf-9723-7aea50c4abc6"
+                className="text-gray-500"
+              >
+                Freepik
+              </a>
             </p>
           </div>
         </div>

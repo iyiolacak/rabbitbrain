@@ -10,7 +10,7 @@ const VerifyEmail = () => {
     <div className="flex min-h-full w-full items-center justify-center px-4">
       <div className="flex w-full max-w-md flex-col items-center justify-center">
         <div className="mb-5 text-center">
-          <h2 className="scroll-m-20 text-3xl font-bold tracking-tight transition-colors first:mt-0">
+          <h2 className="scroll-m-20 font-serif text-3xl font-bold tracking-tight transition-colors first:mt-0">
             We&apos;ve just sent you an email.
           </h2>
           <h3 className="scroll-m-20 text-[16px] font-normal tracking-tight md:mt-4">
