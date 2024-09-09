@@ -5,13 +5,13 @@
 
 ---
 
-## 🌟 What is Rabbitbrain?
+## What is Rabbitbrain?
 
 Rabbitbrain is an **open-source platform** designed to sharpen your brain through **AI-generated challenges** and **community-created content**. From math to logic and beyond, Rabbitbrain is built to make learning fun, dynamic, and accessible—without paywalls.
 
 ---
 
-## 🚀 Features
+## Features
 
 - **AI-Powered Challenges**: Engage with custom challenges that are generated in real-time using advanced AI models.
 - **Community Contributions**: Create, share, and tackle user-generated challenges to keep the platform fresh and evolving.
@@ -26,13 +26,12 @@ Rabbitbrain is an **open-source platform** designed to sharpen your brain throug
 Rabbitbrain is built using modern, scalable technologies:
 
 - **Frontend**: [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/)
-- **Backend**: [Convex]("https://www.convex.dev/")
-- **Database**: [Convex]("https://www.convex.dev/")
-- **Authentication**: [Clerk]("https://clerk.com/")
+- **Backend**: [Convex](https://www.convex.dev/)
+- **Database**: [Convex](https://www.convex.dev/)
+- **Authentication**: [Clerk](https://clerk.com/)
 - **AI**: OpenAI's GPT API (with plans for integration with open-source AI models)
-- **Icons**: [Lucide React Icons](https://lucide.dev/), [Rabbit icons created by PLANBSTUDIO - Flaticon]("https://www.flaticon.com/free-icons/rabbit")
-- Rabbit icons created by PLANBSTUDIO - Flaticon
-- **Deployment**: Vercel
+- **Icons**: [Lucide React Icons](https://lucide.dev/), [Rabbit icons created by PLANBSTUDIO - Flaticon](https://www.flaticon.com/free-icons/rabbit)
+- **Deployment**: [Vercel](https://vercel.com/)
 
 ---
 
@@ -69,7 +68,7 @@ If you love what Rabbitbrain stands for, share it! The more people contribute, t
 
 ---
 
-## 📜 License
+## License
 
 Rabbitbrain is licensed under the AGPL-3.0 License.
 This means you are free to use, modify, and distribute the code, but if you deploy it as a web service or build on it, you must open-source your modifications.
@@ -78,7 +77,7 @@ For more details, check the LICENSE file.
 
 ---
 
-## 💬 Feedback & Support
+## Feedback & Support
 
 Got feedback or ideas? never let that sparkle fade away.
 Feel free to open an issue or join the discussion on GitHub.
