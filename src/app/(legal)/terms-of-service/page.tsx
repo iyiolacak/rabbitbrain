@@ -13,7 +13,7 @@ const TermsOfService = () => {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 font-serif">1. Use of Rabbitbrain</h2>
         <p className="mb-2">
-          Rabbitbrain is a free, open-source platform for interactive brain training. We encourage you to use Rabbitbrain to learn, create, and share in a positive way. Please avoid abusing the platform’s resources, like the AI-generated challenges, to ensure everyone can enjoy them.
+          Rabbitbrain is a free, open-source platform for interactive brain training. We encourage you to use Rabbitbrain to learn, create, and share in a positive way. Please avoid abusing the platform&apos;s resources, like the AI-generated challenges, to ensure everyone can enjoy them.
         </p>
         <p className="mb-2">
           This platform is built by and for the community. Please use it responsibly and help keep Rabbitbrain fun and open for all users.
@@ -24,10 +24,10 @@ const TermsOfService = () => {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 font-serif">2. User Content</h2>
         <p className="mb-2">
-          When you create and submit challenges or other content, you own that content. By sharing it on Rabbitbrain, you’re giving us permission to display, modify, and share it with others to improve the platform. 
+          When you create and submit challenges or other content, you own that content. By sharing it on Rabbitbrain, you&apos;re giving us permission to display, modify, and share it with others to improve the platform. 
         </p>
         <p className="mb-2">
-          We’re all about creativity and collaboration—just make sure your contributions follow the law and don’t infringe on anyone else’s rights.
+          We&apos;re all about creativity and collaboration—just make sure your contributions follow the law and don&apos;t infringe on anyone else&apos;s rights.
         </p>
       </section>
 
@@ -35,10 +35,10 @@ const TermsOfService = () => {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 font-serif">3. API Usage and Good Practice</h2>
         <p className="mb-2">
-          Rabbitbrain uses AI-powered tools to generate fun, challenging content. We ask that you use these resources mindfully to keep the experience running smoothly for everyone. Our AI APIs are key to the platform, so let's make sure they're used for good!
+          Rabbitbrain uses AI-powered tools to generate fun, challenging content. We ask that you use these resources mindfully to keep the experience running smoothly for everyone. Our AI APIs are key to the platform, so let&apos;s make sure they&apos;re used for good!
         </p>
         <p className="mb-2">
-          Feel free to explore and challenge yourself, but please don’t overload or misuse the system. By using Rabbitbrain responsibly, you’re helping us maintain a great platform for all.
+          Feel free to explore and challenge yourself, but please don&apos;t overload or misuse the system. By using Rabbitbrain responsibly, you&apos;re helping us maintain a great platform for all.
         </p>
       </section>
 
@@ -46,7 +46,7 @@ const TermsOfService = () => {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 font-serif">4. Liability</h2>
         <p className="mb-2">
-          Rabbitbrain is offered as-is, and while we strive to provide a smooth and secure experience, we can’t guarantee everything will work perfectly all the time. Use the platform knowing that we're doing our best, but there might be occasional hiccups.
+          Rabbitbrain is offered as-is, and while we strive to provide a smooth and secure experience, we can&apos;t guarantee everything will work perfectly all the time. Use the platform knowing that we&apos;re doing our best, but there might be occasional hiccups.
         </p>
       </section>
 
@@ -62,7 +62,7 @@ const TermsOfService = () => {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 font-serif">6. Governing Law</h2>
         <p className="mb-2">
-          These terms are governed by the laws of the jurisdiction where Rabbitbrain operates. We’re here to keep things fair and open for all users.
+          These terms are governed by the laws of the jurisdiction where Rabbitbrain operates. We&apos;re here to keep things fair and open for all users.
         </p>
       </section>
 
@@ -70,7 +70,7 @@ const TermsOfService = () => {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 font-serif">7. Changes to Terms of Service</h2>
         <p className="mb-2">
-          We may occasionally update these terms to keep them current. If we make any big changes, we’ll notify you through the platform. Your continued use of Rabbitbrain means you’re okay with the updated terms.
+          We may occasionally update these terms to keep them current. If we make any big changes, we&apos;ll notify you through the platform. Your continued use of Rabbitbrain means you&apos;re okay with the updated terms.
         </p>
       </section>
 
@@ -78,7 +78,7 @@ const TermsOfService = () => {
       <section>
         <h2 className="text-2xl font-semibold mb-4 font-serif">8. Contact Information</h2>
         <p className="mb-2">
-          Got questions or feedback? Feel free to reach out to us at <a href="mailto:rabbitbrain@protonmail.com" className="text-blue-500 underline">rabbitbrain@protonmail.com</a>. We’re always happy to hear from our community!
+          Got questions or feedback? Feel free to reach out to us at <a href="mailto:rabbitbrain@protonmail.com" className="text-blue-500 underline">rabbitbrain@protonmail.com</a>. We&apos;re always happy to hear from our community!
         </p>
       </section>
     </div>
