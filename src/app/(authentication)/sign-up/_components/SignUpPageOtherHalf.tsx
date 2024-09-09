@@ -19,7 +19,7 @@ const SignUpPageOtherHalf = () => {
 
         {/* Text */}
         <div className="absolute inset-0 flex items-end justify-end p-6 z-20">
-          <h2 className="text-5xl text-white">The difference between you and Einstein? Practice.</h2>
+          <h2 className="text-5xl text-white">Einstein&apos;s secret? Lifelong curiosity and practice. Yours can be, too.</h2>
         </div>
       </div>
     </div>
