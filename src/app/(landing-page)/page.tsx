@@ -5,41 +5,59 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 const LandingPage = () => {
-  const router = useRouter();
-
-  const handleSignUpCTA = () => router.push("/sign-up");
-  return (
-    <div className="w-full">
-      <section className="w-full bg-black py-24">
-        <div className="w-full container flex justify-center items-start">
-          <div className="flex flex-col">
-            <h1 className="text-white text-5xl font-semibold ">
-              <span className="text-neutral-500">Stop Overthinking It.</span>
-              <br />
-              Start Training Your Brain Today.
-            </h1>
-            <Image
-              src={"/orange_brain.webp"}
-              alt="isolated orange brain illustration"
-              width={380}
-              height={380}
-              className="mx-auto"
-            />
-            <div className="mt-10 mx-auto">
-              <Button
-                type="submit"
-                disabled={false}
-                className="w-full px-14 bg-primary transition-all"
-                size={"lg"}
-              >
-                Hop in
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+ const router = useRouter();
+ const handleSignUpCTA = () => router.push("/sign-up");
+ return (
+  <div className="relative w-full h-screen bg-black">
+    {/* Background Image for Larger Screens */}
+    <div className="absolute inset-0 z-0 hidden sm:flex justify-center">
+      <div className="relative w-full h-[80vh] max-w-5xl mx-auto">
+        <Image
+          src={"/brain-surrounded-by-rabbits-renaissance-style.webp"}
+          alt="Rabbits and Brain"
+          fill
+          objectFit="cover"
+          objectPosition="center"
+          quality={100}
+          priority
+          className="z-0"
+        />
+        {/* Black fade effect from all edges */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
+      </div>
     </div>
-  );
+    {/* Background Image for 9:16 Mobile Screens */}
+    <div className="absolute inset-0 z-0 sm:hidden">
+      <Image
+        src={"/brain-surrounded-by-rabbits-mobile.webp"}
+        alt="Rabbits and Brain (Mobile)"
+        fill
+        objectFit="cover"
+        objectPosition="center"
+        quality={100}
+        priority
+        className="z-0"
+      />
+      {/* Black fade effect from all edges for mobile */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
+    </div>
+    {/* Hero Content */}
+    <section className="relative z-10 flex flex-col justify-between items-center h-full text-center px-4 py-16">
+      <h1 className="text-white text-5xl drop-shadow-2xl font-serif font-semibold mt-6">
+        Start Training Your Brain Today.
+      </h1>
+      {/* CTA Button */}
+      <Button
+        onClick={handleSignUpCTA}
+        className="text-black bg-white px-8 py-4 rounded-md hover:bg-neutral-300 mb-20"
+      >
+        Sign Up Now
+      </Button>
+    </section>
+  </div>
+ );
 };
 
 export default LandingPage;
