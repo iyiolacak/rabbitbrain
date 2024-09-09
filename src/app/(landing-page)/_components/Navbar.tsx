@@ -1,6 +1,7 @@
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FaGithub } from "react-icons/fa";
 
@@ -10,6 +11,10 @@ const Navbar = () => {
     { href: "/topics", label: "Topics" },
     { href: "/about", label: "About" },
   ];
+
+  const router = useRouter();
+  const handleAuthCTA = (authFlow: "sign-up" | "sign-in") => router.push(authFlow);
+
 
   return (
     <div className="top-0 z-50 sticky w-full bg-zinc-900 shadow-md">
@@ -35,10 +40,11 @@ const Navbar = () => {
               size={"sm"}
               variant={"link"}
               className="h-7 text-zinc-300 text-xs hover:text-white transition-colors"
+              onClick={() => handleAuthCTA("sign-in")}
             >
               Sign In
             </Button>
-            <Button size={"sm"} className="h-7 text-xs">
+            <Button size={"sm"} className="h-7 text-xs" onClick={() => handleAuthCTA("sign-up")}>
               Start Learning
             </Button>
               <Link href={"https://github.com/iyiolacak/rabbitbrain"} target="_blank" rel="noopener noreferrer">
