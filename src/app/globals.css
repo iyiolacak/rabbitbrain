@@ -126,6 +126,13 @@ input:focus::placeholder {
   animation: shake 0.3s;
 }
 
+.align-github-icon {
+  vertical-align: middle;
+  position: relative;
+  top: 0.1em; /* Adjust this value to control the alignment */
+}
+
+
 @layer base {
   * {
     @apply border-border;
