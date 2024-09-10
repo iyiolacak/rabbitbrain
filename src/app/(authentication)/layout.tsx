@@ -13,14 +13,14 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
     <AuthProvider>
       <div className="flex w-full h-screen">
         {/* Sign Up Page Half (Image & Form Section) */}
-        <div className="w-1/2 p-5">
+        <div className="w-1/2 p-5 md:block hidden">
           <div className="w-full h-full rounded-xl overflow-hidden">
             <SignUpPageOtherHalf />
           </div>
         </div>
         {/* Form Section */}
-        <div className="w-1/2 h-full flex items-center justify-center pt-6 pb-1">
-          <div className="flex flex-col w-full h-full max-w-md">
+        <div className="w-full px-1 md:w-1/2 h-full flex items-center justify-center pt-6 pb-1">
+          <div className="flex flex-col h-full md:max-w-md">
             {children}
             <AuthStageIndicator outOf={3} authAction="sign-up" />
           </div>
