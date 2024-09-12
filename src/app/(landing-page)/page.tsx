@@ -6,12 +6,41 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import React from "react";
 import Link from "next/link";
+import { Brain, Code, SigmaFunction, Atom, Box3dThreePoints } from 'iconoir-react';
 
 const LandingPage = () => {
   const router = useRouter();
   const handleSignUpCTA = () => router.push("/sign-up");
 
-  return (
+
+  const concepts = [
+    {
+      name: "Brain Teasers",
+      description: "Logic Puzzles & Riddles",
+      icon: <Brain width={32} height={32} color="#000" />,
+    },
+    {
+      name: "Programming & AI",
+      description: "Code Smarter, Build AI",
+      icon: <Code width={32} height={32} color="#000" />
+    },
+    {
+      name: "Math & Data",
+      description: "Master Numbers & Analytics",
+      icon: <SigmaFunction width={32} height={32} color="#000" />
+    },
+    {
+      name: "Science & Discovery",
+      description: "Explore Physics, Chemistry & More",
+      icon: <Atom width={32} height={32} color="#000" />
+    },
+    {
+      name: "Data Visualization",
+      description: "Understand Data with Charts",
+      icon: <Box3dThreePoints width={32} height={32} color="#000" />
+    }
+  ];
+    return (
     <div className="min-h-screen bg-black">
       {/* First Section - Hero */}
       <section className="relative h-screen overflow-hidden">
@@ -72,7 +101,18 @@ const LandingPage = () => {
       </section>
 
       {/* Second Section */}
-      <section className="bg-white py-24 px-6 md:px-12">
+      <section className="bg-white py-6 px-6 md:px-6">
+        <div className="flex flex-row space-x-10 items-center justify-center mb-16">
+          {concepts.map((concept) => (
+            <div className="flex flex-col items-center justify-center" key={concept.name}>
+              <div className="flex flex-row space-x-2 items-center justify-center text-center">
+              <span>{concept.icon}</span>
+              <h3 className={`font-serif text-lg`} >{concept.name}</h3>
+              </div>
+              <p className="text-center text-sm text-zinc-400 mt-1">{concept.description}</p>
+            </div>
+          ))}
+        </div>
         <div className="max-w-2xl lg:max-w-5xl mx-auto">
           <h2 className="text-black text-2xl md:text-4xl block font-medium text-center mb-8">
             Rabbitbrain is a free,{" "}
