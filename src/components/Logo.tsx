@@ -52,8 +52,9 @@ const Logo = ({ size = 36, className = '', monochrome = false, textSize = "md" }
           <Image
             src={getLogoSrc()}
             alt={`${monochrome || "orange"} rabbit`}
-            layout="fill"
-            objectFit="contain"
+            fill
+            // layout="fill"
+            // objectFit="contain"
             className="rounded"
           />
         </div>
