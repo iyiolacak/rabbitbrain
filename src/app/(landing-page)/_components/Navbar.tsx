@@ -1,4 +1,5 @@
 "use client";
+import { AppleComboboxComponent, LanguageSwitcher } from "@/components/LanguageSwitcher";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -14,8 +15,8 @@ const Navbar = () => {
   ];
 
   const router = useRouter();
-  const handleAuthCTA = (authFlow: "sign-up" | "sign-in") => router.push(authFlow);
-
+  const handleAuthCTA = (authFlow: "sign-up" | "sign-in") =>
+    router.push(authFlow);
 
   return (
     <div className="top-0 z-50 sticky w-full bg-zinc-900/85 backdrop-blur-md shadow-md">
@@ -31,26 +32,34 @@ const Navbar = () => {
                 <Link
                   key={index}
                   href={item.href}
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-xs font-medium transition-all"
+                  className="text-gray-300 hover:bg-zinc-200/20 hover:text-white px-3 py-1.5 rounded-md text-xs font-medium transition-all"
                 >
                   {item.label}
                 </Link>
               ))}
             </div>
             <Button
-              size={"sm"}
-              variant={"link"}
-              className="h-7 text-zinc-300 text-xs hover:text-white transition-colors"
+              className="h-7 border-none bg-transparent text-zinc-300 text-xs hover:text-white hover:bg-zinc-200/20 rounded-md transition-colors"
+              variant={"outline"}
               onClick={() => handleAuthCTA("sign-in")}
             >
               Sign In
             </Button>
-            <Button size={"sm"} className="h-7 text-xs" onClick={() => handleAuthCTA("sign-up")}>
+            <Button
+              size={"sm"}
+              className="h-7 text-xs"
+              onClick={() => handleAuthCTA("sign-up")}
+            >
               Start Learning
             </Button>
-              <Link href={"https://github.com/iyiolacak/rabbitbrain"} target="_blank" rel="noopener noreferrer">
-                <FaGithub className="mr-1 items-center text-zinc-300" size={24} />
-              </Link>
+            <Link
+              href={"https://github.com/iyiolacak/rabbitbrain"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaGithub className="mr-1 items-center text-zinc-300 hover:text-white transition-colors" size={24} />
+            </Link>
+            <LanguageSwitcher/>
           </div>
         </div>
       </div>

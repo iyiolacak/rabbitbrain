@@ -54,12 +54,12 @@ const Hero = () => {
 
       {/* Hero Content */}
       <div className="relative z-10 flex flex-col justify-between items-center h-full text-center px-4 py-16">
-        <h1 className="text-white text-5xl drop-shadow-2xl font-serif font-semibold mt-6 leading-tight">
+        <h1 className="text-white text-5xl font-serif font-semibold mt-6 leading-tight">
           Start Training Your Brain Today.
         </h1>
         <Button
           onClick={handleSignUpCTA}
-          className="text-black bg-white px-8 py-4 text-md tracking-tight rounded-full hover:bg-neutral-300 mb-20"
+          className="text-black backdrop-brightness-75 bg-white px-8 py-4 text-md tracking-tight rounded-full hover:bg-neutral-300 mb-20"
         >
           Hop In Now—It&apos;s Free!
         </Button>

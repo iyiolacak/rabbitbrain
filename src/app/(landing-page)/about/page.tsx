@@ -3,7 +3,7 @@ import React from "react";
 
 const About = () => {
   return (
-    <div className="max-w-5xl mx-auto p-8">
+    <div className="max-w-5xl mx-auto p-8 bg-white">
       {/* Hero Section */}
       <section className="mb-16 text-center">
         <h1 className="text-4xl font-bold mb-4 font-serif">
