@@ -103,21 +103,8 @@ export function LanguageSwitcher() {
           role="combobox"
           aria-expanded={open}
           aria-controls="language-list"
-          className="flex items-center justify-start w-min rounded-md bg-transparent px-3 py-2 text-xs text-zinc-200 shadow-sm hover:bg-gray-50/20 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="flex items-center justify-start w-min rounded-md bg-transparent px-3 py-1 text-[12px] text-zinc-500 shadow-sm hover:bg-gray-50/20 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         >
-          <div className="mr-1.5 rounded-full size-4 relative overflow-hidden">
-            <ReactCountryFlag
-              countryCode={value.countryCode}
-              svg
-              className=""
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover", // Uncomment if necessary
-                display: "block",
-              }}
-            />
-          </div>
           {value.shortLabel}
           <ChevronDown className="h-4 w-4 opacity-50" />
         </button>
