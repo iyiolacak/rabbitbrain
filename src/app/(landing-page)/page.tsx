@@ -17,24 +17,25 @@ import {
 import Hero from "./_components/Hero";
 import { motion } from "framer-motion";
 
-// const concepts = [
-//   { name: "Brain Teasers", description: "Fun Puzzles to Sharpen Your Mind", icon: Brain, color: "#F59E0B" }, // Orange
-//   { name: "Math", description: "Tackle Numbers with Confidence", icon: SigmaFunction, color: "#10B981" }, // Green
-//   { name: "Science", description: "Explore the World, One Concept at a Time", icon: Atom, color: "#3B82F6" }, // Blue
-//   { name: "Programming & AI", description: "Build your first smart AI—Step by Step", icon: Code, color: "#6366F1" }, // Indigo
-//   { name: "Data Science", description: "Turn Data into Simple Insights", icon: DatabaseStats, color: "#EF4444" }, // Red
-//   { name: "Cybersecurity", description: "Keep Systems Safe in a Fun Way", icon: ShieldCheck, color: "#06B6D4" }, // Cyan
-//   { name: "Chemistry", description: "Understand Reactions", icon: Flask, color: "#A855F7" }, // Purple
-//   { name: "Cryptography", description: "Unlock the Secrets of Secure Tech", icon: Lock, color: "#F97316" }, // Orange
-//   { name: "Psychology & Behavior", description: "Learn What Makes Us Tick", icon: BrainElectricity, color: "#F43F5E" }, // Pink
-// ];
+const conceptsList = [
+  { name: "Brain Teasers", description: "Fun Puzzles to Sharpen Your Mind", icon: Brain, color: "#F59E0B" }, // Orange
+  { name: "Math", description: "Tackle Numbers with Confidence", icon: SigmaFunction, color: "#10B981" }, // Green
+  { name: "Science", description: "Explore the World, One Concept at a Time", icon: Atom, color: "#3B82F6" }, // Blue
+  { name: "Programming & AI", description: "Build your first smart AI—Step by Step", icon: Code, color: "#6366F1" }, // Indigo
+  { name: "Data Science", description: "Turn Data into Simple Insights", icon: DatabaseStats, color: "#EF4444" }, // Red
+  { name: "Cybersecurity", description: "Keep Systems Safe in a Fun Way", icon: ShieldCheck, color: "#06B6D4" }, // Cyan
+  { name: "Chemistry", description: "Understand Reactions", icon: Flask, color: "#A855F7" }, // Purple
+  { name: "Cryptography", description: "Unlock the Secrets of Secure Tech", icon: Lock, color: "#F97316" }, // Orange
+  { name: "Psychology & Behavior", description: "Learn What Makes Us Tick", icon: BrainElectricity, color: "#F43F5E" }, // Pink
+];
 const LandingPage = () => {
   const router = useRouter();
   const handleSignUpCTA = () => router.push("/sign-up");
   const [hoverIndex, setHoverIndex] = useState(null);
 
-  const conceptsList: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  // const conceptsList: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const [index, setIndex] = useState(4);
+  const [replacementIndex, setReplacementIndex] = useState(0);
   const [conceptsDisplay, setConceptsDisplay] = useState<typeof conceptsList>([
     conceptsList[0],
     conceptsList[1],
@@ -46,30 +47,20 @@ const LandingPage = () => {
     function positiveMod(n: number, m: number): number {
       return ((n + m) % m) % m;
     }
-    const nextIndexToReplace =
-      positiveMod(index, conceptsDisplay.length);
-    // 4 - 4 = 0 % 4 = 0
-    // 0 - 4 = -4 % 4 = 0
-    // 1 - 4 = -3 % 4 = 1
-    setConceptsDisplay((prevDisplay) => {
-      // 1, 2, 3, 4
-      // Create a copy of the previous display to maintain immutability
-      const newDisplay = [...prevDisplay];
-      // Update newDisplay based on the current index 'i' and modulus
-      newDisplay[nextIndexToReplace] =
-        conceptsList[index % conceptsList.length];
-      // ^ newDisplay[0] = conceptsList[4 % 10 = 4 aka. 5]
-      // ^ newDisplay[6](completely wrong since newDisplay is max 4 elements) = conceptsList[10 % 10 = 0](perfectly wrapped)
 
+    const nextIndexToReplace = positiveMod(replacementIndex - 4, conceptsDisplay.length);
+    // -4 % 4 = 0
+    // 0 % 4 = 0
+    
+    setConceptsDisplay((prevDisplay) => {
+
+      const newDisplay = [...prevDisplay];
+      newDisplay[nextIndexToReplace] = conceptsList[index % conceptsList.length];
       // Return the new array, causing React to update the state
       return newDisplay;
-      // ^ [5, 2, 3 ,4]
     });
+    setReplacementIndex(prev => prev + 1)
     setIndex((prevIndex) => (prevIndex + 1) % conceptsList.length);
-    // ^ 4+1 = 5 % 10 = 5
-    // (index = 9, + 1) = index 10 % length 10 = 0
-    // setIndex(4)'e ulaşabildiğinde, 0. index güncellenebiliyor fakat diğerlerinin güncellenmiyor olmasının sebebi bu
-    // gerektirir ki:
   };
 
   // Stop updating once we cycle through the full conceptsList
@@ -81,18 +72,18 @@ const LandingPage = () => {
       <section className="bg-white py-6 px-6 md:px-6">
         <div className="w-full flex justify-center space-x-10 mb-16">
           <p className="font-bold text-zinc-400 mr-20">{index}</p>
-          {conceptsDisplay.map((item, idx) => (
+          {/* {conceptsDisplay.map((item, idx) => (
             <span key={idx} style={{ marginRight: "10px" }}>
               {item}
             </span>
-          ))}
+          ))} */}
           <Button
             onClick={handleNextReplacement}
             disabled={index >= conceptsList.length}
           >
             Next Replacement
           </Button>
-          {/* {conceptsDisplay.map(({ name, icon: Icon, color }) => (
+          {conceptsDisplay.map(({ name, icon: Icon, color }) => (
             <motion.div
             className="min-w-max p-4 flex flex-col items-center group cursor-pointer"
             key={name}
@@ -106,7 +97,7 @@ const LandingPage = () => {
                 </h3>
               </div>
             </motion.div>
-          ))} */}
+          ))}
           {/* Show the updated array on the screen */}
         </div>
 
