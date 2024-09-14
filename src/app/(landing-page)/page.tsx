@@ -162,7 +162,7 @@ const LandingPage = () => {
 
         <section className="py-10">
           <div>
-            <h1 className="text-9xl text-zinc-200 flex justify-center transition-all">
+            <h1 className="text-6xl md:text-9xl text-zinc-200 flex justify-center transition-all">
               rabbitbrain
             </h1>
           </div>
@@ -194,16 +194,18 @@ const LandingPage = () => {
       </section>
 
       <section className="bg-orange-600 py-16 text-center">
-        <h2 className="text-white font-serif text-3xl md:text-4xl font-medium mb-6">
-          Ready to Create Your Own Challenge?
-        </h2>
-        <p className="text-white text-lg mb-8">
-          Join the community and start building your own brain-busting
-          challenges.
-        </p>
+        <div className="px-4">
+          <h2 className="text-white font-serif text-3xl md:text-4xl font-medium mb-6">
+            Ready to Create Your Own Challenge?
+          </h2>
+          <p className="text-white text-lg mb-8">
+            Join the community and start building your own brain-busting
+            challenges.
+          </p>
+        </div>
         <Button
           onClick={handleSignUpCTA}
-          className="bg-white text-orange-600 font-playful font-semibold px-8 py-4 text-md tracking-tight rounded-full hover:bg-neutral-300"
+          className="bg-white text-orange-600 font-medium px-8 py-4 text-md tracking-tight rounded-full hover:bg-neutral-300"
         >
           Get Started Now
         </Button>

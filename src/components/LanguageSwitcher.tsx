@@ -119,6 +119,7 @@ export function LanguageSwitcher() {
                 <CommandItem
                   key={language.value}
                   value={language.value}
+                  disabled={!!value.value}
                   onSelect={(currentValue) => {
                     const selectedLanguage = languages.find(
                       (lang) => lang.value === currentValue
