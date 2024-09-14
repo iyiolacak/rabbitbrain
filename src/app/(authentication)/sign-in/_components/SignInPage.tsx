@@ -38,9 +38,9 @@ const SignInPage = () => {
 
   const { authState } = useAuthStatus();
   return (
-    <div className="flex items-center w-full flex-col h-full px-4 py-3">
-      <Logo size={48} className="flex items-start w-full pb-3" />
-      <div className="flex h-full flex-col justify-center items-center">
+    <div className="flex items-center w-content flex-col h-content px-4 py-3">
+      <Logo size={40} className="flex h-min mb-16 w-content" />
+      <div className="flex flex-col justify-center items-center">
         <SectionHeader
           title="Jump back in."
           subtitle={
