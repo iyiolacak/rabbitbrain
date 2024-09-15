@@ -19,7 +19,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
   return(
     <ClerkProvider
     publishableKey={PUBLISHABLE_KEY}
-    signInFallbackRedirectUrl={"/dashboard"}
+    signInFallbackRedirectUrl={"/home"}
     signUpFallbackRedirectUrl={"/onboarding"}
     >
     <ConvexProviderWithClerk useAuth={useAuth} client={convex}>
