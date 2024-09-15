@@ -47,7 +47,7 @@ const Navbar = () => {
             </Button>
             <Button
               size={"sm"}
-              className="h-7 text-xs"
+              className="h-7 text-xs text-black hover:bg-zinc-300 bg-white"
               onClick={() => handleAuthCTA("sign-up")}
             >
               Start Learning

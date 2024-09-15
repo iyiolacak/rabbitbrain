@@ -8,10 +8,10 @@ const HomeNavbar = () => {
       {/* Navbar content */}
       <div className="flex items-center justify-center">
         <div className="max-w-6xl">
-        <Logo size={30} textSize="sm" />
+          <Logo size={30} textSize="sm" />
         </div>
       </div>
-      </div>
+    </div>
   );
 };
 

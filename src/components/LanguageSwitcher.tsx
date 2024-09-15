@@ -103,7 +103,7 @@ export function LanguageSwitcher() {
           role="combobox"
           aria-expanded={open}
           aria-controls="language-list"
-          className="flex items-center justify-start w-min rounded-md bg-transparent px-3 py-1 text-[12px] text-zinc-500 shadow-sm hover:bg-gray-50/20 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="flex items-center justify-start w-min rounded-md bg-transparent px-3 py-1 text-[12px] text-zinc-500 shadow-sm hover:text-white hover:bg-gray-50/20 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         >
           {value.shortLabel}
           <ChevronDown className="h-4 w-4 opacity-50" />
