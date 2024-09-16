@@ -3,18 +3,18 @@ import React from "react";
 
 const About = () => {
   return (
-    <div className="max-w-5xl mx-auto p-8 bg-white">
+    <div className="max-w-5xl mx-auto p-8">
       {/* Hero Section */}
       <section className="mb-16 text-center">
-        <h1 className="text-4xl font-bold mb-4 font-serif">
+        <h1 className="text-4xl text-white font-bold mb-4 font-serif">
           About Rabbitbrain
         </h1>
-        <p className="text-lg mb-6">
+        <p className="text-lg mb-6 text-white">
           Rabbitbrain is a free, open-source platform where AI and human
           creativity merge to challenge your mind and help you grow. No
           paywalls, no limits—just smarter thinking, one challenge at a time.
         </p>
-        <p className="text-md text-gray-600">
+        <p className="text-md text-zinc-400">
           Powered by GPT, AI-generated challenges, and a thriving community,
           Rabbitbrain is built for those who love learning, problem-solving, and
           contributing to something greater.
@@ -23,69 +23,31 @@ const About = () => {
 
       {/* Our Mission */}
       <section className="mb-16">
-        <h2 className="text-3xl font-semibold mb-4 font-serif text-center">
+        <h2 className="text-3xl text-white font-semibold mb-4 font-serif text-center">
           Our Mission
         </h2>
-        <p className="text-lg mb-4 text-center">
+        <p className="text-lg mb-4 text-center text-white">
           At Rabbitbrain, our mission is simple: provide a fun and engaging
           platform where people can challenge their minds and learn from both AI
           and the community. We aim to create a space that fosters creativity,
           collaboration, and personal growth.
         </p>
-        <p className="text-md text-gray-600 text-center">
+        <p className="text-md text-zinc-400 text-center">
           Rabbitbrain is for the curious, the thinkers, and those who believe in
           the power of open knowledge.
         </p>
       </section>
 
-      {/* Features Section */}
-      <section className="mb-16">
-        <h2 className="text-3xl font-semibold mb-8 font-serif text-center">
-          Core Features
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white p-6 rounded-lg ">
-            <h3 className="text-xl font-semibold mb-4">
-              AI-Powered Challenges
-            </h3>
-            <p>
-              Tackle dynamic, AI-generated problems across subjects like math,
-              logic, and science. Each challenge is designed to adapt to your
-              skill level, pushing your mind to think critically and creatively.
-            </p>
-          </div>
-          <div className="bg-white p-6 rounded-lg">
-            <h3 className="text-xl font-semibold mb-4">
-              Community-Driven Content
-            </h3>
-            <p>
-              Rabbitbrain grows with you. The community creates and shares
-              brain-busting challenges, making the platform richer with every
-              contribution.
-            </p>
-          </div>
-          <div className="bg-white p-6 rounded-lg">
-            <h3 className="text-xl font-semibold mb-4">
-              Completely Free & Open-Source
-            </h3>
-            <p>
-              No fees, no subscriptions. Rabbitbrain is entirely free, and its
-              open-source nature means anyone can contribute to the
-              platform&apos;s evolution.
-            </p>
-          </div>
-        </div>
-      </section>
 
       {/* How It Works */}
-      <section className="mb-16">
-        <h2 className="text-3xl font-semibold mb-8 font-serif text-center">
+      <section className="mb-16 text-white">
+        <h2 className="text-3xl text-white font-semibold mb-8 font-serif text-center">
           How It Works
         </h2>
-        <div className="flex flex-col md:flex-row justify-center items-center md:space-x-10">
+        <div className="flex flex-col text-white md:flex-row justify-center items-center md:space-x-10">
           <div className="mb-8 md:mb-0"></div>
           <div>
-            <h3 className="text-xl font-semibold mb-4">
+            <h3 className="text-xl text-white font-semibold mb-4">
               Interactive AI Challenges
             </h3>
             <p className="mb-4">
@@ -96,7 +58,7 @@ const About = () => {
             </p>
             <a
               href="/challenges"
-              className="text-blue-500 underline font-medium"
+              className="text-primary underline font-medium"
             >
               Explore Challenges
             </a>
@@ -106,10 +68,10 @@ const About = () => {
 
       {/* Our Community */}
       <section className="mb-16 text-center">
-        <h2 className="text-3xl font-semibold mb-8 font-serif">
+        <h2 className="text-3xl font-semibold text-white mb-8 font-serif">
           Our Community
         </h2>
-        <p className="text-lg mb-6">
+        <p className="text-lg text-white mb-6">
           Rabbitbrain thrives on the passion and creativity of its community.
           Whether you&apos;re a learner or a contributor, everyone has a role to
           play. Build your own challenges, solve AI-generated puzzles, and help
@@ -123,10 +85,10 @@ const About = () => {
 
       {/* Call to Action */}
       <section className="mb-16 text-center">
-        <h2 className="text-3xl font-semibold mb-4 font-serif">
+        <h2 className="text-3xl  text-white font-semibold mb-4 font-serif">
           Ready to Challenge Your Mind?
         </h2>
-        <p className="text-lg mb-6">
+        <p className="text-lg text-white mb-6">
           Sign up in seconds and start growing your brain with AI-powered,
           community-driven content. No fees. No limits. Just fun, interactive
           learning.
