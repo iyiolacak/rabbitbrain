@@ -76,6 +76,8 @@ const conceptsList = [
     color: "#c3423f", // Ruby Wine
   },
 ];
+
+
 const LandingPage = () => {
   const router = useRouter();
   const handleSignUpCTA = () => router.push("/sign-up");
@@ -162,31 +164,29 @@ const LandingPage = () => {
 
         <section className="py-10">
           <div>
-            <h1 className="text-6xl md:text-9xl text-zinc-200 flex justify-center transition-all">
+            <h1 className="text-6xl md:text-9xl text-white flex justify-center transition-all">
               rabbitbrain
             </h1>
           </div>
           <div className="max-w-2xl lg:max-w-5xl mx-auto">
-            <h2 className="text-zinc-800 text-2xl md:text-4xl block font-medium text-center mb-8">
-              is a free,{" "}
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline hover:text-blue-600 align-baseline transition-colors cursor-pointer items-center"
-                href="https://github.com/iyiolacak/rabbitbrain"
-              >
-                <FaGithub className="mr-1 inline" size={32} />
-                open-source
-              </a>
-              &nbsp;platform
-              <span className="text-zinc-900">
-                &nbsp;where you train your mind with <span>AI-generated</span>{" "}
-                and &nbsp;
-                <span className="hover:text-green-500 transition-colors cursor-pointer">
-                  community-created
-                </span>
-                &nbsp;challenges. No paywalls, no limits—just smarter thinking,
-                one challenge at a time.
+            <h2 className="text-zinc-400 text-2xl md:text-4xl block font-medium text-center mb-8">
+              It&apos;s your interactive learning playground, powered by <span className="">AI</span> and
+              driven by <span className="">you</span>.&nbsp;
+              <span className="text-zinc-700">
+                Join a community that&apos;s here to learn by doing.
+              </span>
+              <span className="text-zinc-700">
+                &nbsp;rabbitbrain is a free,{" "}
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline hover:text-primary align-baseline transition-colors cursor-pointer items-center"
+                  href="https://github.com/iyiolacak/rabbitbrain"
+                >
+                  <FaGithub className="mr-1 inline" size={32} />
+                  open-source
+                </a>
+                &nbsp;platform.
               </span>
             </h2>
           </div>
@@ -207,7 +207,7 @@ const LandingPage = () => {
           onClick={handleSignUpCTA}
           className="bg-white text-orange-600 font-medium px-8 py-4 text-md tracking-tight rounded-full hover:bg-neutral-300"
         >
-          Get Started Now
+          challenge Get Started Now
         </Button>
       </section>
     </div>
