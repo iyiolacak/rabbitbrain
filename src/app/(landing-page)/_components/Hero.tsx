@@ -4,11 +4,26 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const heroTitle = ["AI-Powered Challenges,", "Built by You"];
-const heroTitleWords = heroTitle.map((line) => line.split(" "));
+
+const HeroTitle = ({ titles }: { titles: string[][] }) => {
+  return (
+    <div>{titles.map((lineWords, index) => (
+      <div className="block" key={index}>
+        {lineWords.map((word: string, idx: number) => (
+          <span key={idx} className="text-white font-sans">{word}&nbsp;</span>
+        ))}
+        <br/>
+      </div>
+    ))}</div>
+  )
+}
+
 const Hero = () => {
   const router = useRouter();
   const handleSignUpCTA = () => router.push("/sign-up");
+  
+  const heroTitle: string[] = ["AI-Powered Challenges,", "Built by You"];
+  const heroTitleWords: string[][] = heroTitle.map((line) => line.split(" "));
 
   return (
     <section className="relative h-screen overflow-hidden">
@@ -59,33 +74,8 @@ const Hero = () => {
         <div className="relative inline-block">
           <h1 className="relative text-primary md:text-zinc-400 text-2xl xl:text-6xl font-serif font-semibold mt-6 leading-none lg:max-w-4xl ">
             Mastermind Playground
-            <br />{" "}
-            <span className="text-white font-sans">
-              {heroTitleWords.map((lineWords, index) => (
-                <div className="block"  key={index}>
-                  {lineWords.map((word, idx) => (
-                    <span key={idx}>{word}&nbsp;</span>
-                  ))}
-                </div>
-              ))}
-              <br />
-            </span>
-            <motion.span
-              className="absolute inset-0 bg-gradient-to-r from-transparent to-transparent bg-clip-text"
-              initial={{ x: "-150%" }}
-              animate={{ x: "150%" }}
-              transition={{
-                duration: 2,
-                ease: "linear",
-                repeat: Infinity,
-              }}
-              style={{
-                backgroundImage:
-                  "linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)",
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-              }}
-            />
+            <br />
+            <HeroTitle titles={heroTitleWords} />
           </h1>
         </div>
         <Button

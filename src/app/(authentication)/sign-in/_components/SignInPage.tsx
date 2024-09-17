@@ -15,10 +15,10 @@ import { AuthState, useAuthStatus } from "../../hooks/useAuthStatus";
 function RedirectToCreateAccount() {
   return (
     <div>
-      <p className="flex flex-row text-sm mt-5">
+      <p className="flex flex-wrap w-full justify-center text-sm mt-5">
         Don&apos;t have an account yet?&nbsp;
         <Link href={"/sign-up"}>
-          <button className="flex flex-row px-0.5 text-primary hover:underline">
+          <button className="pl-0.5 text-primary hover:underline inline-flex">
             Create an account <ArrowUpRight size={16} />
           </button>
         </Link>

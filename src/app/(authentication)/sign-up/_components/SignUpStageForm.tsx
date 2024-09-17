@@ -12,11 +12,11 @@ import { ArrowUpRight } from "lucide-react";
 
 function RedirectToSignIn() {
   return (
-    <div className="mt-5">
-      <p className="flex flex-row text-sm">
-        You have an account?&nbsp;
+    <div>
+      <p className="flex flex-wrap w-full justify-center text-sm mt-5">
+        Have an account?&nbsp;
         <Link href={"/sign-in"}>
-          <button className="text-primary hover:underline flex flex-row px-0.5">
+          <button className="pl-0.5 text-primary hover:underline inline-flex">
             Sign in to your account <ArrowUpRight size={16} />
           </button>
         </Link>
