@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 
 const FooterCTA = () => {
-    const { navigateTo } = useNavigation();
+  const { navigateTo } = useNavigation();
   return (
     <>
       <section className="bg-orange-600 py-16 text-center">
@@ -20,7 +20,7 @@ const FooterCTA = () => {
           onClick={() => navigateTo("/sign-up")}
           className="bg-white text-orange-600 font-medium px-8 py-4 text-md tracking-tight rounded-full hover:bg-neutral-300"
         >
-          challenge Get Started Now
+          Get Started Now
         </Button>
       </section>
     </>
