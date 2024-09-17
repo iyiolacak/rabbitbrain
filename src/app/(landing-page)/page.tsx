@@ -7,17 +7,14 @@ import {
   Brain,
   SigmaFunction,
   Atom,
-  Code,
   DatabaseStats,
   ShieldCheck,
   Flask,
   Lock,
-  BrainElectricity,
-  EmojiPuzzled,
   Group,
   CodeBrackets,
 } from "iconoir-react";
-import Hero from "./_components/Hero";
+import HeroSection from "./_components/HeroSection";
 import { motion } from "framer-motion";
 
 const conceptsList = [
@@ -77,7 +74,6 @@ const conceptsList = [
   },
 ];
 
-
 const LandingPage = () => {
   const router = useRouter();
   const handleSignUpCTA = () => router.push("/sign-up");
@@ -85,47 +81,30 @@ const LandingPage = () => {
 
   const [index, setIndex] = useState(4);
   const [replacementIndex, setReplacementIndex] = useState(0);
-  const [conceptsDisplay, setConceptsDisplay] = useState<typeof conceptsList>([
-    conceptsList[0],
-    conceptsList[1],
-    conceptsList[2],
-    conceptsList[3],
-  ]);
+  const [conceptsDisplay, setConceptsDisplay] = useState(
+    conceptsList.slice(0, 4)
+  );
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const interval = setInterval(() => {
-      const handleNextReplacement = () => {
-        // if `n` is negative, it could cause an array index issue.
-        function positiveMod(n: number, m: number): number {
-          return (n + m) % m;
-        }
+      setConceptsDisplay((prevDisplay) => {
+        const newDisplay = [...prevDisplay];
+        newDisplay[replacementIndex % conceptsDisplay.length] =
+          conceptsList[index % conceptsList.length];
+        // Return the new array, causing React to update the state
+        return newDisplay;
+      });
 
-        const nextIndexToReplace = positiveMod(
-          replacementIndex,
-          conceptsDisplay.length
-        );
-
-        setConceptsDisplay((prevDisplay) => {
-          const newDisplay = [...prevDisplay];
-          newDisplay[nextIndexToReplace] =
-            conceptsList[index % conceptsList.length];
-          // Return the new array, causing React to update the state
-          return newDisplay;
-        });
-        setReplacementIndex((prev) => prev + 1);
-        setIndex((prevIndex) => (prevIndex + 1) % conceptsList.length);
-      };
-      handleNextReplacement();
+      setReplacementIndex((prev) => prev + 1);
+      setIndex((prevIndex) => (prevIndex + 1) % conceptsList.length);
     }, 500);
     return () => clearInterval(interval);
-  }, [conceptsDisplay, index, replacementIndex]);
-
-  // Stop updating once we cycle through the full conceptsList
-  console.log(conceptsDisplay);
+  }, [index, replacementIndex]);
 
   return (
     <div className="w-full min-h-screen bg-black">
-      <Hero />
+      <HeroSection />
       <section className="w-full py-3 md:py-6 px-6 md:px-8 bg-black">
         <div className="w-full flex justify-center md:space-x-10 mb-3 md:mb-16">
           {/* Desktop Version: Display all elements */}
@@ -170,8 +149,9 @@ const LandingPage = () => {
           </div>
           <div className="max-w-2xl lg:max-w-5xl mx-auto">
             <h2 className="text-zinc-400 text-2xl md:text-4xl block font-medium text-center mb-8">
-              It&apos;s your interactive learning playground, powered by <span className="">AI</span> and
-              driven by <span className="">you</span>.&nbsp;
+              It&apos;s your interactive learning playground, powered by{" "}
+              <span className="">AI</span> and driven by{" "}
+              <span className="">you</span>.&nbsp;
               <span className="text-zinc-700">
                 Join a community that&apos;s here to learn by doing.
               </span>
@@ -193,23 +173,6 @@ const LandingPage = () => {
         </section>
       </section>
 
-      <section className="bg-orange-600 py-16 text-center">
-        <div className="px-4">
-          <h2 className="text-white font-serif text-3xl md:text-4xl font-medium mb-6">
-            Ready to Create Your Own Challenge?
-          </h2>
-          <p className="text-white text-lg mb-8">
-            Join the community and start building your own brain-busting
-            challenges.
-          </p>
-        </div>
-        <Button
-          onClick={handleSignUpCTA}
-          className="bg-white text-orange-600 font-medium px-8 py-4 text-md tracking-tight rounded-full hover:bg-neutral-300"
-        >
-          challenge Get Started Now
-        </Button>
-      </section>
     </div>
   );
 };
