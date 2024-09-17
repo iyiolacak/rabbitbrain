@@ -16,6 +16,7 @@ import {
 } from "iconoir-react";
 import HeroSection from "./_components/HeroSection";
 import { motion } from "framer-motion";
+import FooterCTA from "./_components/FooterCTA";
 
 const conceptsList = [
   {
@@ -76,7 +77,6 @@ const conceptsList = [
 
 const LandingPage = () => {
   const router = useRouter();
-  const handleSignUpCTA = () => router.push("/sign-up");
   const [hoverIndex, setHoverIndex] = useState(null);
 
   const [index, setIndex] = useState(4);
@@ -172,7 +172,7 @@ const LandingPage = () => {
           </div>
         </section>
       </section>
-
+      <FooterCTA/>
     </div>
   );
 };
