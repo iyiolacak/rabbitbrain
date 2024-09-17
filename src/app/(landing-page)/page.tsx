@@ -1,84 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { FaGithub } from "react-icons/fa";
-import {
-  Brain,
-  SigmaFunction,
-  Atom,
-  DatabaseStats,
-  ShieldCheck,
-  Flask,
-  Lock,
-  Group,
-  CodeBrackets,
-} from "iconoir-react";
 import HeroSection from "./_components/HeroSection";
 import { motion } from "framer-motion";
 import FooterCTA from "./_components/FooterCTA";
+import conceptsList from "./_components/concepts";
 
-const conceptsList = [
-  {
-    name: "Brain Teasers",
-    description: "Fun Puzzles to Sharpen Your Mind",
-    icon: Brain,
-    color: "#f497da", // Deep Amber
-  },
-  {
-    name: "Math",
-    description: "Tackle Numbers with Confidence",
-    icon: SigmaFunction,
-    color: "#6f9ceb", // Teal Green
-  },
-  {
-    name: "Science",
-    description: "Explore the World, One Concept at a Time",
-    icon: Atom,
-    color: "#007fff", // Deep Blue
-  },
-  {
-    name: "Programming & AI",
-    description: "Build your first smart AI—Step by Step",
-    icon: CodeBrackets,
-    color: "#6a0f49", // Royal Indigo
-  },
-  {
-    name: "Data Science",
-    description: "Turn Data into Simple Insights",
-    icon: DatabaseStats,
-    color: "#DC2626", // Crimson Red
-  },
-  {
-    name: "Cybersecurity",
-    description: "Keep Systems Safe in a Fun Way",
-    icon: ShieldCheck,
-    color: "#0891B2", // Dark Cyan
-  },
-  {
-    name: "Chemistry",
-    description: "Understand Reactions",
-    icon: Flask,
-    color: "#6e44ff", // Vivid Violet
-  },
-  {
-    name: "Cryptography",
-    description: "Unlock the Secrets of Secure Tech",
-    icon: Lock,
-    color: "#f4e409", // Burnt Orange
-  },
-  {
-    name: "Psychology",
-    description: "Learn What Makes Us Tick",
-    icon: Group,
-    color: "#c3423f", // Ruby Wine
-  },
-];
 
 const LandingPage = () => {
-  const router = useRouter();
-  const [hoverIndex, setHoverIndex] = useState(null);
-
   const [index, setIndex] = useState(4);
   const [replacementIndex, setReplacementIndex] = useState(0);
   const [conceptsDisplay, setConceptsDisplay] = useState(
@@ -100,6 +29,7 @@ const LandingPage = () => {
       setIndex((prevIndex) => (prevIndex + 1) % conceptsList.length);
     }, 500);
     return () => clearInterval(interval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index, replacementIndex]);
 
   return (

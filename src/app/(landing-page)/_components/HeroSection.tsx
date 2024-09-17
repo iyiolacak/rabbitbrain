@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 import React from "react";
 import HeroBackgroundImage from "./HeroBackgroundImage";
 import useNavigation from "@/app/hooks/useNavigation";
@@ -25,6 +24,7 @@ const HeroTitle = ({ titles }: { titles: string[][] }) => {
 const HeroSection = () => {
   const heroTitle: string[] = ["AI-Powered Challenges,", "Built by You"];
   const heroTitleWords: string[][] = heroTitle.map((line) => line.split(" "));
+  // ^[["this", "is", "how"], ["it", "is", "mapped"]]
 
   const { navigateTo } = useNavigation();
   return (
