@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import FooterCTA from "./_components/FooterCTA";
 import conceptsList from "./_components/concepts";
 
-
 const LandingPage = () => {
   const [index, setIndex] = useState(4);
   const [replacementIndex, setReplacementIndex] = useState(0);
@@ -29,7 +28,7 @@ const LandingPage = () => {
       setIndex((prevIndex) => (prevIndex + 1) % conceptsList.length);
     }, 500);
     return () => clearInterval(interval);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index, replacementIndex]);
 
   return (
@@ -102,7 +101,7 @@ const LandingPage = () => {
           </div>
         </section>
       </section>
-      <FooterCTA/>
+      <FooterCTA />
     </div>
   );
 };
