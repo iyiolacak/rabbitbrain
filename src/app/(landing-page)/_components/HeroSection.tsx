@@ -9,13 +9,13 @@ const HeroTitle = ({ titles }: { titles: string[][] }) => {
   const containerVariants = {
     animate: {
       transition: {
-        staggerChildren: 0.1, // Adjust the delay between animations
+        staggerChildren: 0.2, // Adjust the delay between animations
       },
     },
   };
 
   const wordVariants = {
-    initial: { color: "#808080" }, // Gray color
+    initial: { color: "#303030" }, // Gray color
     animate: { color: "#ffffff" }, // White color
   };
 
