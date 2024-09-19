@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import HeroSection from "./_components/HeroSection";
 import { motion } from "framer-motion";
@@ -7,29 +7,25 @@ import FooterCTA from "./_components/FooterCTA";
 import conceptsList from "./_components/concepts";
 
 const LandingPage = () => {
-  const [index, setIndex] = useState(4);
-  const [replacementIndex, setReplacementIndex] = useState(0);
-  const [conceptsDisplay, setConceptsDisplay] = useState(
-    conceptsList.slice(0, 4)
-  );
+  const indexRef = useRef(4);
+  const replacementIndexRef = useRef(0);
+  const conceptsDisplayRef = useRef(conceptsList.slice(0, 4));
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    const interval = setInterval(() => {
-      setConceptsDisplay((prevDisplay) => {
-        const newDisplay = [...prevDisplay];
-        newDisplay[replacementIndex % conceptsDisplay.length] =
-          conceptsList[index % conceptsList.length];
-        // Return the new array, causing React to update the state
-        return newDisplay;
-      });
+    const updateConceptsDisplay = () => {
+      const newDisplay = [...conceptsDisplayRef.current];
+      newDisplay[replacementIndexRef.current % newDisplay.length] =
+        conceptsList[indexRef.current % conceptsList.length];
+      conceptsDisplayRef.current = newDisplay;
 
-      setReplacementIndex((prev) => prev + 1);
-      setIndex((prevIndex) => (prevIndex + 1) % conceptsList.length);
-    }, 500);
+      replacementIndexRef.current += 1;
+      indexRef.current = (indexRef.current + 1) % conceptsList.length;
+    };
+    const interval = setInterval(updateConceptsDisplay, 500);
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [index, replacementIndex]);
+  }, []);
 
   return (
     <div className="w-full min-h-screen bg-black">
@@ -37,7 +33,7 @@ const LandingPage = () => {
       <section className="w-full py-3 md:py-6 px-6 md:px-8 bg-black">
         <div className="w-full flex justify-center md:space-x-10 mb-3 md:mb-16">
           {/* Desktop Version: Display all elements */}
-          {conceptsDisplay.map(({ name, icon: Icon, color }) => (
+          {conceptsDisplayRef.current.map(({ name, icon: Icon, color }) => (
             <motion.div
               className="hidden w-72 h-16 md:flex flex-col items-center group cursor-pointer"
               key={name}
@@ -53,7 +49,7 @@ const LandingPage = () => {
             </motion.div>
           ))}
           {/* Mobile Version: Display only the first element */}
-          {conceptsDisplay.slice(0, 1).map(({ name, icon: Icon, color }) => (
+          {conceptsDisplayRef.current.slice(0, 1).map(({ name, icon: Icon, color }) => (
             <motion.div
               className="md:hidden w-full h-16 flex flex-col items-center justify-center group cursor-pointer"
               key={name}
