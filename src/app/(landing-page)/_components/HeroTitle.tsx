@@ -7,7 +7,6 @@ const HeroTitle = ({ title }: { title: string[][] }) => {
   const containerVariants = {
     animate: {
       transition: {
-        staggerChildren: 0.05, // Delay between showing words
       },
     },
   };

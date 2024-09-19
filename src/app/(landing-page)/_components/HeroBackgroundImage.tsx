@@ -43,8 +43,8 @@ const HeroBackgroundImage = () => {
           />
         </div>
         {/* Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/10 to-black"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/10 to-black"></div>
       </motion.div>
     </>
   );

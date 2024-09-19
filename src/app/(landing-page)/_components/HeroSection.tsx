@@ -9,6 +9,7 @@ const HeroSection = () => {
   const heroTitleWords: string[][] = heroTitles.map((line) => line.split(" "));
 
   const { navigateTo } = useNavigation();
+  console.log(heroTitleWords);
   return (
     <section className="relative h-screen overflow-hidden">
       <HeroBackgroundImage />
