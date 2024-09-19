@@ -49,21 +49,23 @@ const LandingPage = () => {
             </motion.div>
           ))}
           {/* Mobile Version: Display only the first element */}
-          {conceptsDisplayRef.current.slice(0, 1).map(({ name, icon: Icon, color }) => (
-            <motion.div
-              className="md:hidden w-full h-16 flex flex-col items-center justify-center group cursor-pointer"
-              key={name}
-            >
-              <div className="flex items-center justify-center space-x-1">
-                <span>
-                  <Icon width={36} height={36} color={color} />
-                </span>
-                <h3 className="font-serif text-2xl text-white truncate font-medium ">
-                  {name}
-                </h3>
-              </div>
-            </motion.div>
-          ))}
+          {conceptsDisplayRef.current
+            .slice(0, 1)
+            .map(({ name, icon: Icon, color }) => (
+              <motion.div
+                className="md:hidden w-full h-16 flex flex-col items-center justify-center group cursor-pointer"
+                key={name}
+              >
+                <div className="flex items-center justify-center space-x-1">
+                  <span>
+                    <Icon width={36} height={36} color={color} />
+                  </span>
+                  <h3 className="font-serif text-2xl text-white truncate font-medium ">
+                    {name}
+                  </h3>
+                </div>
+              </motion.div>
+            ))}
         </div>
 
         <section className="py-10">
