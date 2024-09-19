@@ -1,5 +1,5 @@
 import React from "react";
-import SignUpPageOtherHalf from "@auth/sign-up/_components/SignUpPageOtherHalf";
+import AuthImageSection from "@/app/(authentication)/sign-up/_components/AuthImageSection";
 import AuthStageIndicator from "@auth/sign-up/_components/SignUpStageIndicator";
 import { AuthProvider } from "@auth/context/AuthContext";
 
@@ -15,7 +15,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
         {/* Sign Up Page Half (Image & Form Section) */}
         <div className="w-1/2 p-5 md:block hidden">
           <div className="w-full h-full rounded-xl overflow-hidden">
-            <SignUpPageOtherHalf />
+            <AuthImageSection />
           </div>
         </div>
         {/* Form Section */}
