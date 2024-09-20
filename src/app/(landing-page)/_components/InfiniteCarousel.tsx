@@ -3,12 +3,13 @@ import conceptsList from "./concepts";
 import { AnimatePresence, motion } from "framer-motion";
 
 const InfiniteCarousel = () => {
+  const MAX_ITEMS = 4;
   const [conceptsDisplay, setConceptsDisplay] = useState(
     conceptsList
-      .slice(0, 4)
+      .slice(0, MAX_ITEMS)
       .map((item) => ({ ...item, id: Date.now() + Math.random() }))
   );
-  const [index, setIndex] = useState(4);
+  const [index, setIndex] = useState(MAX_ITEMS);
   const [replacementIndex, setReplacementIndex] = useState(0);
 
   useEffect(() => {
@@ -27,14 +28,13 @@ const InfiniteCarousel = () => {
       setIndex((prev) => (prev + 1) % conceptsList.length);
     };
 
-    const interval = setInterval(updateConceptsDisplay, 2000);
+    const interval = setInterval(updateConceptsDisplay, 2500);
     return () => clearInterval(interval);
   }, [replacementIndex, index]); // no more dependency on `conceptsDisplay`
 
   const variants = {
-    enter: { y: 60, opacity: 0 },
+    enter: { y: 20, opacity: 0 },
     center: { y: 0, opacity: 100 },
-    exit: { y: -60, opacity: 0 },
   };
   return (
     <>
@@ -47,8 +47,6 @@ const InfiniteCarousel = () => {
             variants={variants}
             initial="enter"
             animate="center"
-            exit="exit"
-            layout
           >
             <div className="flex items-center justify-center space-x-1">
               <span>
