@@ -27,7 +27,7 @@ const InfiniteCarousel = () => {
       setIndex((prev) => (prev + 1) % conceptsList.length);
     };
 
-    const interval = setInterval(updateConceptsDisplay, 500);
+    const interval = setInterval(updateConceptsDisplay, 2000);
     return () => clearInterval(interval);
   }, [replacementIndex, index]); // no more dependency on `conceptsDisplay`
 
@@ -39,7 +39,7 @@ const InfiniteCarousel = () => {
   return (
     <>
       {/* Desktop Version: Display all elements */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {conceptsDisplay.map(({ name, icon: Icon, color, id }) => (
           <motion.div
             className="hidden w-72 h-16 md:flex flex-col items-center group cursor-pointer"
