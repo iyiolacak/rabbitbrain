@@ -1,71 +1,20 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import HeroSection from "./_components/HeroSection";
 import { motion } from "framer-motion";
 import FooterCTA from "./_components/FooterCTA";
 import conceptsList from "./_components/concepts";
+import InfiniteCarousel from "./_components/InfiniteCarousel";
 
 const LandingPage = () => {
-  const indexRef = useRef(4);
-  const replacementIndexRef = useRef(0);
-  const conceptsDisplayRef = useRef(conceptsList.slice(0, 4));
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    const updateConceptsDisplay = () => {
-      const newDisplay = [...conceptsDisplayRef.current];
-      newDisplay[replacementIndexRef.current % newDisplay.length] =
-        conceptsList[indexRef.current % conceptsList.length];
-      conceptsDisplayRef.current = newDisplay;
-
-      replacementIndexRef.current += 1;
-      indexRef.current = (indexRef.current + 1) % conceptsList.length;
-    };
-    const interval = setInterval(updateConceptsDisplay, 500);
-    return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div className="w-full min-h-screen bg-black">
       <HeroSection />
       <section className="w-full py-3 md:py-6 px-6 md:px-8 bg-black">
         <div className="w-full flex justify-center md:space-x-10 mb-3 md:mb-16">
-          {/* Desktop Version: Display all elements */}
-          {conceptsDisplayRef.current.map(({ name, icon: Icon, color }) => (
-            <motion.div
-              className="hidden w-72 h-16 md:flex flex-col items-center group cursor-pointer"
-              key={name}
-            >
-              <div className="flex items-center justify-center space-x-1">
-                <span>
-                  <Icon width={48} height={48} color={color} />
-                </span>
-                <h3 className="font-serif text-3xl text-white truncate font-medium ">
-                  {name}
-                </h3>
-              </div>
-            </motion.div>
-          ))}
-          {/* Mobile Version: Display only the first element */}
-          {conceptsDisplayRef.current
-            .slice(0, 1)
-            .map(({ name, icon: Icon, color }) => (
-              <motion.div
-                className="md:hidden w-full h-16 flex flex-col items-center justify-center group cursor-pointer"
-                key={name}
-              >
-                <div className="flex items-center justify-center space-x-1">
-                  <span>
-                    <Icon width={36} height={36} color={color} />
-                  </span>
-                  <h3 className="font-serif text-2xl text-white truncate font-medium ">
-                    {name}
-                  </h3>
-                </div>
-              </motion.div>
-            ))}
+          <InfiniteCarousel/>
         </div>
 
         <section className="py-10">
