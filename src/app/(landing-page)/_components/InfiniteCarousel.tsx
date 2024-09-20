@@ -39,15 +39,16 @@ const InfiniteCarousel = () => {
   return (
     <>
       {/* Desktop Version: Display all elements */}
-      <AnimatePresence mode="wait">
-        {conceptsDisplay.map(({ name, icon: Icon, color, id }) => (
+      <AnimatePresence initial={false}>
+        {conceptsDisplay.map(({ name, icon: Icon, color }, idx) => (
           <motion.div
             className="hidden w-72 h-16 md:flex flex-col items-center group cursor-pointer"
-            key={id}
+            key={name + idx}
             variants={variants}
             initial="enter"
             animate="center"
             exit="exit"
+            layout
           >
             <div className="flex items-center justify-center space-x-1">
               <span>
