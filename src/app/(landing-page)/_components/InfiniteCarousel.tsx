@@ -70,6 +70,7 @@ const InfiniteCarousel = () => {
       <div className="flex flex-row space-x-12">
         <AnimatePresence
           onExitComplete={itemRemoved ? handleExitComplete : undefined} // Only add the new item after exit
+          initial={false}
         >
           {conceptsDisplay.map(({ name, icon: Icon, color, id }) => (
             <motion.div
