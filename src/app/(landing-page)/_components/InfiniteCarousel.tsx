@@ -3,11 +3,13 @@ import conceptsList from "./concepts";
 import { AnimatePresence, motion } from "framer-motion";
 
 const InfiniteCarousel = () => {
+  function generateUniqueId(): string {
+    const uniqueId = Date.now() + Math.random().toString(36);
+    return uniqueId;
+  }
   const MAX_ITEMS = 4;
   const [conceptsDisplay, setConceptsDisplay] = useState(
-    conceptsList
-      .slice(0, MAX_ITEMS)
-      .map((item) => ({ ...item, id: Date.now() + Math.random() }))
+    conceptsList.slice(0, MAX_ITEMS).map((item) => ({ ...item }))
   );
   const [index, setIndex] = useState(MAX_ITEMS);
   const [replacementIndex, setReplacementIndex] = useState(0);
@@ -18,41 +20,35 @@ const InfiniteCarousel = () => {
         const newDisplay = [...prevDisplay];
         const newItem = {
           ...conceptsList[index % conceptsList.length],
-          id: Date.now() + Math.random(),
+          id: generateUniqueId(),
         };
-        newDisplay[replacementIndex % newDisplay.length] = newItem;
+        newDisplay[replacementIndex] = newItem;
         return newDisplay;
       });
-
-      setReplacementIndex((prev) => prev + 1);
-      setIndex((prev) => (prev + 1) % conceptsList.length);
+      setReplacementIndex((prev) => (prev + 1) % MAX_ITEMS); // 0, 1, 2, 3 - loop
+      setIndex((prev) => (prev + 1) % conceptsList.length); // conceptsList.length(e.g. 10 items) loop
     };
 
     const interval = setInterval(updateConceptsDisplay, 2500);
     return () => clearInterval(interval);
-  }, [replacementIndex, index]); // no more dependency on `conceptsDisplay`
+  }, [index, replacementIndex]); // no more dependency on `conceptsDisplay`
 
-  const variants = {
-    enter: { y: 20, opacity: 0 },
-    center: { y: 0, opacity: 100 },
-  };
+  console.log("concepts display", conceptsDisplay);
+
   return (
     <>
       {/* Desktop Version: Display all elements */}
-      <AnimatePresence initial={false}>
+      <AnimatePresence mode="wait">
         {conceptsDisplay.map(({ name, icon: Icon, color }, idx) => (
           <motion.div
-            className="hidden w-72 h-16 md:flex flex-col items-center group cursor-pointer"
+            className="hidden min-w-[300px] bg-green-600 h-16 md:flex flex-col items-center group cursor-pointer"
             key={name + idx}
-            variants={variants}
-            initial="enter"
-            animate="center"
           >
             <div className="flex items-center justify-center space-x-1">
               <span>
-                <Icon width={48} height={48} color={color} />
+                <Icon width={38} height={38} color={color} />
               </span>
-              <h3 className="font-serif text-3xl text-white truncate font-medium ">
+              <h3 className="font-serif text-xl text-white truncate font-medium ">
                 {name}
               </h3>
             </div>
@@ -61,7 +57,7 @@ const InfiniteCarousel = () => {
       </AnimatePresence>
       {/* Mobile Version: Display only the first element */}
       {conceptsDisplay.slice(0, 1).map(({ name, icon: Icon, color }) => (
-        <motion.div
+        <div
           className="md:hidden w-full h-16 flex flex-col items-center justify-center group cursor-pointer"
           key={name}
         >
@@ -73,7 +69,7 @@ const InfiniteCarousel = () => {
               {name}
             </h3>
           </div>
-        </motion.div>
+        </div>
       ))}
     </>
   );
