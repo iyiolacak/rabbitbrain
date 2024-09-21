@@ -16,7 +16,7 @@ const HeroTitle = ({ title }: { title: string[][] }) => {
     animate: (custom: number) => ({
       color: "#ffffff", // Change to white
       transition: {
-        duration: 0.05, // Duration for smooth fade-in
+        duration: 0.25, // Duration for smooth fade-in
         delay: custom, // Delay based on index
       },
     }),
