@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import conceptsList from "./concepts";
-import { AnimatePresence, easeInOut, motion } from "framer-motion";
+import { AnimatePresence, easeIn, easeInOut, motion } from "framer-motion";
 
 const InfiniteCarousel = () => {
   function generateUniqueId(): string {
     return Date.now() + Math.random().toString(36);
   }
 
-  const MAX_ITEMS = 4; // Maintain max items
+  const MAX_ITEMS = 4;
   const [conceptsDisplay, setConceptsDisplay] = useState(
     conceptsList.slice(0, MAX_ITEMS).map((item) => ({
       ...item,
@@ -61,20 +61,19 @@ const InfiniteCarousel = () => {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -20 }, // Smooth exit
-    easeInOut
   };
 
   return (
     <>
       {/* Desktop Version: Display all elements */}
-      <div className="flex flex-row space-x-12">
+      <div className="grid grid-cols-2 grid-rows-1 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
         <AnimatePresence
           onExitComplete={itemRemoved ? handleExitComplete : undefined} // Only add the new item after exit
           initial={false}
         >
           {conceptsDisplay.map(({ name, icon: Icon, color, id }) => (
             <motion.div
-              className="min-w-[300px] h-16 md:flex flex-col items-center group cursor-pointer"
+              className="h-16 md:flex flex-col items-center group cursor-pointer"
               key={id} // Unique key to manage animations
               variants={variants}
               initial="initial"
@@ -86,7 +85,7 @@ const InfiniteCarousel = () => {
                 <span>
                   <Icon width={48} height={48} color={color} />
                 </span>
-                <h3 className="font-serif text-3xl text-white truncate font-medium ">
+                <h3 className="font-serif text-xl md:text-3xl text-white truncate font-medium ">
                   {name}
                 </h3>
               </div>
