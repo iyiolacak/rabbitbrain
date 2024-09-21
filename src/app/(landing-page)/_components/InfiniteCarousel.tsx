@@ -59,7 +59,7 @@ const InfiniteCarousel = () => {
     <>
       {/* Desktop Version: Display all elements */}
       <div className="flex flex-row space-x-12">
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {conceptsDisplay.map(({ name, icon: Icon, color, id }) => (
             <motion.div
               className="min-w-[300px] h-16 md:flex flex-col items-center group cursor-pointer"
