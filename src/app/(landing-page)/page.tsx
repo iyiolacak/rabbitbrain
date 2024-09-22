@@ -19,13 +19,13 @@ const LandingPage = () => {
 
         <section className="py-10">
           <div>
-            <h1 className="text-6xl md:text-9xl text-white flex justify-center transition-all">
-              rabbitbrain
+            <h1 className="text-6xl md:text-[172px] mb-16 text-white flex justify-center transition-all">
+              {`learn anything`}.
             </h1>
           </div>
           <div className="max-w-2xl lg:max-w-5xl mx-auto">
             <h2 className="text-zinc-400 text-2xl md:text-4xl block font-medium text-center mb-8">
-              It&apos;s your interactive learning playground, powered by{" "}
+            rabbitbrain – It&apos;s your interactive learning playground, powered by{" "}
               <span className="">AI</span> and driven by{" "}
               <span className="">you</span>.&nbsp;
               <span className="text-zinc-700">
