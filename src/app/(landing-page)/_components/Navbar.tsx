@@ -28,14 +28,14 @@ const Navbar = () => {
 
   return (
     <div className="sticky top-0 z-50 w-full bg-zinc-900/85 backdrop-blur-md shadow-md">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto pl-4 sm:pl-6 pr-3 lg:px-8">
         <div className="flex items-center justify-between py-1">
           <div className="flex-shrink-0">
             <Logo monochrome="white" textSize="sm" size={28} />
           </div>
 
           {/* Hidden on mobile screens */}
-          <div className="hidden sm:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-4">
             <div className="ml-10 flex items-baseline space-x-4">
               {navItems.map((item) => (
                 <Link
@@ -77,21 +77,21 @@ const Navbar = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="sm:hidden text-gray-300 hover:text-white focus:outline-none"
+                className="md:hidden text-gray-300 hover:text-white focus:outline-none"
               >
                 <Menu width={24} height={24} />
               </Button>
             </SheetTrigger>
             <SheetContent
               side="top"
-              className="w-full sm:w-[80vw] max-w-sm bg-zinc-800/70 border-zinc-900 backdrop-blur-lg p-0"
+              className="w-full bg-zinc-800/70 border-zinc-900 backdrop-blur-lg p-0"
             >
               <SheetHeader className="p-4 border-b border-zinc-700">
-                <SheetTitle>
+                <SheetTitle className="w-min">
                   <Logo monochrome="white" textSize="sm" size={28} />
                 </SheetTitle>
               </SheetHeader>
-              <div className="flex flex-col h-full p-4 space-y-4">
+              <div className="flex flex-col w-full h-full p-4 space-y-4">
                 <nav className="flex flex-col space-y-4">
                   {navItems.map((item) => (
                     <Link
