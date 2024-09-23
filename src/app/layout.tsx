@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Libre_Baskerville as FontSerif } from "next/font/google";
+import { JetBrains_Mono as FontMono } from "next/font/google";
 import { Quicksand as FontPlayful } from "next/font/google";
 import "./globals.css";
 import { Inter as FontSans } from "next/font/google";
@@ -11,6 +12,11 @@ const fontSerif = FontSerif({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-serif",
+});
+const fontMono = FontMono({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-mono",
 });
 
 const fontPlayful = FontPlayful({
@@ -43,9 +49,9 @@ export default function RootLayout({
           className={cn(
             "min-h-screen bg-background font-sans antialiased",
             fontSans.variable, // Use the sans-serif font
-            fontSerif.variable, // Include the serif font variable
-            fontPlayful.variable // Include the serif font variable
-
+            fontSerif.variable, // Use the serif font
+            fontPlayful.variable, // Use the playful font
+            fontMono.variable // Use the monospace font for code
           )}
         >
           {children}

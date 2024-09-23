@@ -13,6 +13,7 @@ const config: Config = {
         sans: ["var(--font-sans)", "sans-serif"], // Inter
         serif: ["var(--font-serif)", "serif"], // Lora
         playful: ["var(--font-playful)", "playful"], // Quicksand
+        mono: ["var(--font-mono)", "mono"]
 
       },
       backgroundImage: {
