@@ -8,18 +8,15 @@ const HeroIntro = () => {
         rabbitbrain – It&apos;s your interactive learning playground, powered by{" "}
         AI and driven by you.
       </h2>
-      <p className="text-zinc-700 mb-4">
-      </p>
-      <p className="text-zinc-700">
-        rabbitbrain is a free,{" "}
+      <p className="mt-12 text-2xl items-center text-center inline-flex text-primary/70">
+        rabbitbrain is a free,&nbsp;
         <a
           href="https://github.com/iyiolacak/rabbitbrain"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center hover:text-primary transition-colors"
         >
-          <FaGithub className="mr-2" size={24} />
-          open-source platform
+          <FaGithub className="mr-1" size={36} />open-source platform
         </a>
         .
       </p>
