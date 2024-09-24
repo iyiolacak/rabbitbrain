@@ -5,7 +5,7 @@ import React from "react";
 const FooterCTA = () => {
   const { navigateTo } = useNavigation();
   return (
-    <section className="bg-orange-600 rounded-[6vh] py-16 text-center">
+    <section className="bg-orange-600 rounded-[6vh] py-10 md:py-16 text-center">
       <div className="px-4">
         <h2 className="text-white font-serif text-3xl md:text-5xl font-medium mb-6">
           We&apos;re here to learn by doing. Free.

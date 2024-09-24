@@ -64,7 +64,7 @@ const Footer = () => {
         }
       `}</style>
 
-      <div className="max-w-6xl mx-auto px-4 pb-5 md:pb-0">
+      <div className="max-w-6xl mx-auto px-4 pb-10 md:pb-0">
         <div className="w-full flex flex-col md:flex-row justify-between md:items-start items-center ">
           {/* Left side: Text */}
           <div className="text-center md:text-start text-xl text-zinc-500 font-sans mb-6 md:mb-0">

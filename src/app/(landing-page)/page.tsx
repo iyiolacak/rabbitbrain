@@ -31,7 +31,7 @@ const LandingPage = () => {
       </section>
 
       {/* Footer sections */}
-      <div className="px-8 pt-2 pb-5 bg-white">
+      <div className="px-4 md:px-8 pt-2 pb-5 bg-white">
         <FooterCTA />
       </div>
       <Footer />
