@@ -10,7 +10,7 @@ const links = [
 
 const Footer = () => {
   return (
-    <div className="w-full flex-grow h-full justify-center flex-row mt-8 py-24 bg-black border-t border-white/15">
+    <div className="w-full flex-grow h-full justify-center flex-col py-24 bg-zinc-300">
       <style jsx>{`
         .dynamic-text {
           font-family: "JetBrains Mono", monospace;
@@ -33,7 +33,7 @@ const Footer = () => {
         .link {
           position: relative;
           font-family: "JetBrains Mono", monospace;
-          color: #b3b3b3;
+          color: #555;
           text-decoration: none;
           transition:
             color 0.2s ease,
@@ -45,7 +45,7 @@ const Footer = () => {
           position: absolute;
           width: 100%;
           height: 2px;
-          background: #b3b3b3;
+          background: #000;
           bottom: -2px;
           left: 0;
           transform: scaleX(0);
@@ -54,7 +54,7 @@ const Footer = () => {
         }
 
         .link:hover {
-          color: #ffffff;
+          color: #000;
           transform: translateX(5px);
         }
 
@@ -64,22 +64,22 @@ const Footer = () => {
         }
       `}</style>
 
-      <div className="max-w-6xl mx-auto">
-        <div className="w-full flex flex-row justify-between items-start">
+      <div className="max-w-6xl mx-auto px-4 pb-5 md:pb-0">
+        <div className="w-full flex flex-col md:flex-row justify-between md:items-start items-center ">
           {/* Left side: Text */}
-          <div className="text-start text-xl text-zinc-700 font-sans">
+          <div className="text-center md:text-start text-xl text-zinc-500 font-sans mb-6 md:mb-0">
             You Scrolled This Far. What&apos;s Next? <br />
-            <span className="font-mono text-zinc-200">
+            <span className="font-mono text-black">
               explore the unknown<span className="dynamic-text">_</span>
             </span>
           </div>
 
           {/* Right side: Creative Links */}
           <div className="">
-            <div className="text-white space-x-6 flex flex-col space-y-3 items-end">
+            <div className=" flex flex-col space-y-3 md:space-y-4 items-center md:items-end">
               {links.map(({ href, label }) => (
                 <Link key={href} href={href} aria-disabled>
-                  <p className="link cursor-default">{label}</p>
+                  <p className="link">{label}</p>
                 </Link>
               ))}
             </div>

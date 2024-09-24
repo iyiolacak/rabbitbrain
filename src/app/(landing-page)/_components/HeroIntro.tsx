@@ -1,24 +1,27 @@
+import { Button } from "@/components/ui/button";
 import React from "react";
 import { FaGithub } from "react-icons/fa";
 
 const HeroIntro = () => {
   return (
-    <div className="text-center mb-8">
-      <h2 className="text-zinc-400 text-2xl md:text-4xl font-medium mb-4">
-        rabbitbrain – It&apos;s your interactive learning playground, powered by{" "}
+    <div className="py-12 mb-8 px-4">
+      <h1 className="text-5xl font-serif">Learn Anything. Free.</h1>
+      <h2 className="mx-auto max-w-2xl mt-5 text-zinc-400 text-xl md:text-3xl font-medium mb-4">
+        rabbitbrain – It&apos;s your <span className="text-primary">interactive learning playground</span>, powered by{" "}
         AI and driven by you.
       </h2>
-      <p className="mt-12 text-2xl items-center text-center inline-flex text-primary/70">
-        rabbitbrain is a free,&nbsp;
+      <p className="md:mt-12 mt-3 text-xl md:text-2xl text-primary items-center flex flex-col">
+        {" "}
+        rabbitbrain is a free, <br />
         <a
           href="https://github.com/iyiolacak/rabbitbrain"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center hover:text-primary transition-colors"
+          className="inline-flex items-center ml-1"
         >
-          <FaGithub className="mr-1" size={36} />open-source platform
+          <FaGithub className="mr-1 items-center" size={36} />
+          open-source platform.
         </a>
-        .
       </p>
     </div>
   );

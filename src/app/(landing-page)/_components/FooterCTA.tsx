@@ -5,11 +5,10 @@ import React from "react";
 const FooterCTA = () => {
   const { navigateTo } = useNavigation();
   return (
-    <div className="px-8 pt-2 pb-0 ">
       <section className="bg-orange-600 rounded-[6vh] py-16 text-center">
         <div className="px-4">
           <h2 className="text-white font-serif text-3xl md:text-5xl font-medium mb-6">
-            We&apos;re here to learn by doing.
+            We&apos;re here to learn by doing. Free.
           </h2>
           <p className="text-white text-xl mb-8">
             Join the community and start building your own brain-busting
@@ -23,7 +22,6 @@ const FooterCTA = () => {
           Get Started Now
         </Button>
       </section>
-    </div>
   );
 };
 

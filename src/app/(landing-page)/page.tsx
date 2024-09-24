@@ -1,10 +1,11 @@
 "use client";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { FaGithub } from "react-icons/fa";
+import React from "react";
+import { FaGithub } from "react-icons/fa"; // move this down if not used
+import { motion } from "framer-motion"; // keep externals up top
+
+// Internal components
 import HeroSection from "./_components/HeroSection";
-import { motion } from "framer-motion";
 import FooterCTA from "./_components/FooterCTA";
-import conceptsList from "./_components/concepts";
 import InfiniteCarousel from "./_components/InfiniteCarousel";
 import Footer from "./_components/Footer";
 import HeroIntro from "./_components/HeroIntro";
@@ -12,24 +13,27 @@ import HeroIntro from "./_components/HeroIntro";
 const LandingPage = () => {
   return (
     <div className="w-full min-h-screen bg-black">
+      {/* Main hero section */}
       <HeroSection />
-      <section className="w-full py-3 md:py-6 px-6 md:px-8 bg-black">
-        <div className="w-full flex justify-center md:space-x-10 mb-3 md:mb-16">
+
+      {/* Carousel section */}
+      <section className="py-3 md:py-6">
+        <div className="w-full flex justify-center px-6 md:px-8 mb-3 ">
           <InfiniteCarousel />
         </div>
-
-        <section className="py-10">
-          <div>
-            <h1 className="text-6xl md:text-[172px] mb-16 text-white flex justify-center transition-all">
-              {`learn anything`}.
-            </h1>
-          </div>
-          <div className="max-w-2xl lg:max-w-5xl mx-auto">
-            <HeroIntro/>
-          </div>
-        </section>
       </section>
-      <FooterCTA />
+
+      {/* Learning section */}
+      <section className="py-10 bg-white text-center">
+        <div className="container mx-auto">
+          <HeroIntro />
+        </div>
+      </section>
+
+      {/* Footer sections */}
+      <div className="px-8 pt-2 pb-5 bg-white">
+        <FooterCTA />
+      </div>
       <Footer />
     </div>
   );
