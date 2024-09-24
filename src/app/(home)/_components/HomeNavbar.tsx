@@ -4,14 +4,17 @@ import React from "react";
 
 const HomeNavbar = () => {
   return (
-    <div className="w-full bg-zinc-100 py-2">
+    <header className="w-full border-b h-16">
       {/* Navbar content */}
-      <div className="flex items-center justify-center">
-        <div className="max-w-6xl">
-          <Logo size={30} textSize="sm" />
+      <nav className="h-full">
+        <div className="container mx-auto h-full flex justify-between items-center">
+          <Logo size={40} textSize="md" />
+          <div className="">
+            hey {/* you probs wanna style this eventually */}
+          </div>
         </div>
-      </div>
-    </div>
+      </nav>
+    </header>
   );
 };
 

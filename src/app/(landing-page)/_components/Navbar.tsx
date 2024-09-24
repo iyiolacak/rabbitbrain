@@ -31,7 +31,7 @@ const Navbar = () => {
       <div className="max-w-6xl mx-auto pl-4 sm:pl-6 pr-3 lg:px-8">
         <div className="flex items-center justify-between py-1">
           <div className="flex-shrink-0">
-            <Logo monochrome="white" textSize="sm" size={28} />
+            <Logo monochrome="white" textSize="sm" size={"size-6"} />
           </div>
 
           {/* Hidden on mobile screens */}

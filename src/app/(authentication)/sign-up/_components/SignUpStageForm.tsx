@@ -30,7 +30,11 @@ const SignUp = () => {
   return (
     <div className="flex flex-col items-center w-content h-content px-4 py-3">
       {/* Added some margin to the logo to avoid overlapping */}
-      <Logo className="flex w-content h-min mb-16" size={40} />
+      <Logo
+        size={"size-8"}
+        className="flex h-min mb-16 w-content"
+        textSize="text-2xl"
+      />
       <div className="flex flex-col h-full justify-center items-center">
         <SectionHeader
           title="Hop Into Rabbitbrain."
