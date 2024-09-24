@@ -84,11 +84,11 @@ const Navbar = () => {
             </SheetTrigger>
             <SheetContent
               side="top"
-              className="w-full bg-zinc-800/70 border-zinc-900 backdrop-blur-lg p-0"
+              className="w-full bg-zinc-800/70 border-zinc-900/60 backdrop-blur-lg p-0"
             >
-              <SheetHeader className="p-4 border-b border-zinc-700">
+              <SheetHeader className="p-4 border-b border-zinc-900/50">
                 <SheetTitle className="w-min">
-                  <Logo monochrome="white" textSize="sm" size={28} />
+                  <Logo monochrome="white" textSize="text-md" size={"size-6"} />
                 </SheetTitle>
               </SheetHeader>
               <div className="flex flex-col w-full h-full p-4 space-y-4">
