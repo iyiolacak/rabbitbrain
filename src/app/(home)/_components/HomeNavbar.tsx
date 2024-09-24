@@ -7,10 +7,12 @@ const HomeNavbar = () => {
     <header className="w-full border-b h-16">
       {/* Navbar content */}
       <nav className="h-full">
-        <div className="container mx-auto h-full flex justify-between items-center">
-          <Logo size={40} textSize="md" />
+        <div className="container pl-2 pr-4 md:px-12 mx-auto h-full flex justify-between items-center">
+          <Logo size={"md:size-8 size-7"} textSize="md:text-lg text-md" monochrome="black"/>
           <div className="">
-            hey {/* you probs wanna style this eventually */}
+            <div className="bg-zinc-200 rounded-full size-7">
+
+            </div>
           </div>
         </div>
       </nav>
