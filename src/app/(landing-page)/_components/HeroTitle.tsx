@@ -6,8 +6,7 @@ const HeroTitle = ({ title }: { title: string[][] }) => {
   // Define the animation behavior
   const containerVariants = {
     animate: {
-      transition: {
-      },
+      transition: {},
     },
   };
 
