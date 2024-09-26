@@ -58,12 +58,12 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const {
-    isLoaded: isSignUpLoaded,
+    isLoaded: isSignUpLoaded, // Sign up
     signUp,
     setActive: setSignUpActive,
   } = useClerkSignUp();
   const {
-    isLoaded: isSignInLoaded,
+    isLoaded: isSignInLoaded, // Sign in
     signIn,
     setActive: setSignInActive,
   } = useClerkSignIn();
@@ -125,11 +125,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           const supportedFirstFactors = signIn.supportedFirstFactors;
 
           const emailCodeFactor = supportedFirstFactors?.find(
-            (factor) => factor.strategy === "email_code",
+            (factor) => factor.strategy === "email_code"
           );
 
           const phoneCodeFactor = supportedFirstFactors?.find(
-            (factor) => factor.strategy === "phone_code",
+            (factor) => factor.strategy === "phone_code"
           );
 
           if (emailCodeFactor) {

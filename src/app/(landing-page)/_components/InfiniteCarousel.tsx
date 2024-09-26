@@ -13,7 +13,10 @@ const InfiniteCarousel = () => {
   const [index, setIndex] = useState(MAX_ITEMS);
   const [replacementIndex, setReplacementIndex] = useState(0);
   const [itemRemoved, setItemRemoved] = useState(false);
-  const [isActive, setIsActive] = useState(true); // state to track tab visibility
+  const [isActive, setIsActive] = useState(true); // track tab visibility
+  const [hoveredItems, setHoveredItems] = useState(
+    Array(MAX_ITEMS).fill(false)
+  );
 
   useEffect(() => {
     const updateConceptsDisplay = () => {
@@ -21,7 +24,9 @@ const InfiniteCarousel = () => {
 
       setConceptsDisplay((prevDisplay) => {
         const newDisplay = [...prevDisplay];
-        newDisplay.splice(replacementIndex, 1);
+        if (!hoveredItems[replacementIndex]) {
+          newDisplay.splice(replacementIndex, 1);
+        }
         return newDisplay;
       });
 
@@ -32,8 +37,8 @@ const InfiniteCarousel = () => {
       if (isActive) updateConceptsDisplay(); // only update if tab is active
     }, 750);
 
-    return () => clearInterval(interval); // Cleanup interval on unmount
-  }, [index, replacementIndex, isActive]);
+    return () => clearInterval(interval); // cleanup interval
+  }, [index, replacementIndex, isActive, hoveredItems]);
 
   const handleExitComplete = () => {
     setConceptsDisplay((prevDisplay) => {
@@ -50,14 +55,31 @@ const InfiniteCarousel = () => {
     setIndex((prev) => (prev + 1) % conceptsList.length);
   };
 
+  const handleMouseEnter = (hoverIndex: number) => {
+    setHoveredItems((prevHovered) => {
+      const newHovered = [...prevHovered];
+      newHovered[hoverIndex] = true;
+      return newHovered;
+    }); // freeze on hover
+  };
+
+  const handleMouseLeave = (hoverIndex: number) => {
+    setHoveredItems((prevHovered) => {
+      const newHovered = [...prevHovered];
+      newHovered[hoverIndex] = false;
+      return newHovered;
+    }); // freeze on hover
+  };
+
   useEffect(() => {
     const handleVisibilityChange = () => {
-      setIsActive(!document.hidden); // track if the tab is hidden or visible
+      setIsActive(!document.hidden); // track tab visibility
     };
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
-    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, []);
 
   const variants = {
@@ -68,8 +90,11 @@ const InfiniteCarousel = () => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 w-full">
-      <AnimatePresence onExitComplete={itemRemoved ? handleExitComplete : undefined} initial={false}>
-        {conceptsDisplay.map(({ name, icon: Icon, color, id }) => (
+      <AnimatePresence
+        onExitComplete={itemRemoved ? handleExitComplete : undefined}
+        initial={false}
+      >
+        {conceptsDisplay.map(({ name, icon: Icon, color, id }, idx) => (
           <motion.div
             className="h-16 flex flex-col items-center group cursor-pointer"
             key={id}
@@ -78,6 +103,8 @@ const InfiniteCarousel = () => {
             animate="animate"
             exit="exit"
             layout
+            onMouseEnter={() => handleMouseEnter(idx)} // track hover
+            onMouseLeave={() => handleMouseLeave(idx)} // untrack hover
           >
             <div className="flex items-center justify-center space-x-1">
               <span>
@@ -94,7 +121,7 @@ const InfiniteCarousel = () => {
   );
 };
 
-function generateUniqueId(): string {
+function generateUniqueId() {
   return Date.now() + Math.random().toString(36);
 }
 
