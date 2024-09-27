@@ -10,9 +10,11 @@ const HeroIntro = () => {
         rabbitbrain – It&apos;s your <span className="text-primary">interactive learning playground</span>, powered by{" "}
         AI and driven by you.
       </h2>
-      <p className="md:mt-12 mt-3 text-xl md:text-2xl text-primary items-center flex flex-col">
+      <p className="md:mt-12 mt-8 text-xl flex flex-col md:flex-row md:inline-flex md:text-2xl text-primary items-center">
         {" "}
-        rabbitbrain is a free, <br />
+        <div className="inline-flex">
+        <span className="font-semibold">rabbitbrain&nbsp;</span> is a free, <br />
+        </div>
         <a
           href="https://github.com/iyiolacak/rabbitbrain"
           target="_blank"
