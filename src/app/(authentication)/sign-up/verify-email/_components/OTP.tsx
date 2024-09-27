@@ -24,8 +24,8 @@ const VerifyEmail = () => {
         <OTPForm/>
         <div className="mt-10 text-center">
           <h3 className="text-md font-normal tracking-tight">
-            Didn&apos;t receive a code yet?
-            <span className="ml-0.5 cursor-pointer rounded-lg p-1 font-medium text-primary transition-colors hover:bg-blue-100">
+            Need another code?
+            <span className="ml-0.5 cursor-pointer rounded-lg p-1 font-medium text-primary transition-colors hover:bg-primary/10">
               Send a new code
             </span>
           </h3>

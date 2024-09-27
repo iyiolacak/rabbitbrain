@@ -12,9 +12,9 @@ const HeroIntro = () => {
       </h2>
       <p className="md:mt-12 mt-8 text-xl flex flex-col md:flex-row md:inline-flex md:text-2xl text-primary items-center">
         {" "}
-        <div className="inline-flex">
+        <span className="inline-flex">
         <span className="font-semibold">rabbitbrain&nbsp;</span> is a free, <br />
-        </div>
+        </span>
         <a
           href="https://github.com/iyiolacak/rabbitbrain"
           target="_blank"
