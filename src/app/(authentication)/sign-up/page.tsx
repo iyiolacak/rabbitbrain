@@ -9,6 +9,8 @@ import { SignUpButton } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/clerk-react";
 import AuthCompleted from "./_components/AuthCompleted";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, NavArrowLeft } from "iconoir-react";
 
 const transitionVariants = {
   initial: { opacity: 1, x: 150 },
@@ -19,21 +21,31 @@ const transitionVariants = {
 const SignUpPage = () => {
   const router = useRouter();
   const { isLoaded, isSignedIn } = useAuth();
+  
+  // use auth context and get/set authStage
+  const { authStage, setAuthStage } = useAuthContext();
+
   useEffect(() => {
     if (isLoaded && isSignedIn) {
       router.push("/dashboard");
     }
   }, [isLoaded, isSignedIn, router]);
 
-  
-  const { authStage } = useAuthContext();
   const transitionCubicBezier = [0.05, 0.66, 0.32, 0.92];
+
+  const handleBack = () => {
+    if (authStage === AuthStage.Verifying) {
+      setAuthStage(AuthStage.Form); // move back to form stage
+    }
+  };
+
   return (
     <div className="h-full justify-center items-center">
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" initial={false}>
         {authStage === AuthStage.Form && (
           <motion.div
             key="form"
+            initial="initial"
             animate="animate"
             exit="exit"
             variants={transitionVariants}
@@ -53,6 +65,13 @@ const SignUpPage = () => {
             transition={{ duration: 0.2, ease: [transitionCubicBezier] }}
             className="h-full"
           >
+            <Button
+              onClick={handleBack}
+              variant={"ghost"}
+            >
+              <NavArrowLeft/>
+
+            </Button>
             <VerifyEmail />
           </motion.div>
         )}

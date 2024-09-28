@@ -10,7 +10,7 @@ import {
   useSignUp as useClerkSignUp,
   useSignIn as useClerkSignIn,
 } from "@clerk/clerk-react";
-import { ClerkAPIError } from "@clerk/types";
+import { ClerkAPIError, SignInResource, SignUpResource } from "@clerk/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import React, { createContext, useContext } from "react";
@@ -82,75 +82,80 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     resetSubmittingState,
   } = useAuthStatus();
 
+  const handleSignUp = async (data: EmailForm, signUp: SignUpResource) => {
+    startSubmission();
+    try {
+      await signUp.create({
+        emailAddress: data.email,
+      });
+
+      await signUp.prepareEmailAddressVerification({
+        strategy: "email_code",
+      });
+      setSubmittedData(data);
+      setStage(AuthStage.Verifying);
+      markSuccess();
+    } catch (error) {
+      const clerkErrors = getClerkError(error);
+      if (clerkErrors) {
+        handleError(clerkErrors);
+      }
+    }
+  };
+
+  const handleSignIn = async (data: EmailForm, signIn: SignInResource) => {
+    startSubmission();
+    try {
+      await signIn.create({
+        identifier: data.email,
+      });
+
+      const supportedFirstFactors = signIn.supportedFirstFactors;
+
+      const emailCodeFactor = supportedFirstFactors?.find(
+        (factor) => factor.strategy === "email_code"
+      );
+
+      const phoneCodeFactor = supportedFirstFactors?.find(
+        (factor) => factor.strategy === "phone_code"
+      );
+
+      if (emailCodeFactor) {
+        await signIn.prepareFirstFactor({
+          strategy: "email_code",
+          emailAddressId: emailCodeFactor.emailAddressId,
+        });
+      } else if (phoneCodeFactor) {
+        await signIn.prepareFirstFactor({
+          strategy: "phone_code",
+          phoneNumberId: phoneCodeFactor.phoneNumberId,
+        });
+      } else {
+        throw new Error("No valid verification method found.");
+      }
+    } catch (error) {
+      const clerkErrors = getClerkError(error);
+      if (clerkErrors) {
+        handleError(clerkErrors);
+      }
+    }
+  };
+
   const onEmailFormSubmit = async (data: EmailForm, authAction: AuthAction) => {
     switch (authAction) {
       case "sign-up":
-        // TODO: Action-Specific Logic: Each action has its own dedicated section in the switch statement, making it easier to manage action-specific logic like isSignUpLoaded without interfering with other actions.
         if (!isSignUpLoaded) {
           console.warn("Sign-up not loaded yet");
           return;
         }
-
-        startSubmission();
-        try {
-          await signUp.create({
-            emailAddress: data.email,
-          });
-
-          await signUp.prepareEmailAddressVerification({
-            strategy: "email_code",
-          });
-          setSubmittedData(data);
-          setStage(AuthStage.Verifying);
-          markSuccess();
-        } catch (error) {
-          const clerkErrors = getClerkError(error);
-          if (clerkErrors) {
-            handleError(clerkErrors);
-          }
-        }
+        handleSignUp(data, signUp);
         break;
       case "sign-in":
         if (!isSignInLoaded) {
           console.warn("Sign-in not loaded yet");
           return;
         }
-
-        startSubmission();
-        try {
-          await signIn.create({
-            identifier: data.email,
-          });
-
-          const supportedFirstFactors = signIn.supportedFirstFactors;
-
-          const emailCodeFactor = supportedFirstFactors?.find(
-            (factor) => factor.strategy === "email_code"
-          );
-
-          const phoneCodeFactor = supportedFirstFactors?.find(
-            (factor) => factor.strategy === "phone_code"
-          );
-
-          if (emailCodeFactor) {
-            await signIn.prepareFirstFactor({
-              strategy: "email_code",
-              emailAddressId: emailCodeFactor.emailAddressId,
-            });
-          } else if (phoneCodeFactor) {
-            await signIn.prepareFirstFactor({
-              strategy: "phone_code",
-              phoneNumberId: phoneCodeFactor.phoneNumberId,
-            });
-          } else {
-            throw new Error("No valid verification method found.");
-          }
-        } catch (error) {
-          const clerkErrors = getClerkError(error);
-          if (clerkErrors) {
-            handleError(clerkErrors);
-          }
-        }
+        handleSignIn(data, signIn);
         break;
       default:
         console.error(`Unknown auth action: ${authAction}`);
@@ -180,21 +185,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }, SUBMISSION_TIMEOUT);
 
     try {
-      const completeSignUp = await signUp.attemptEmailAddressVerification({
+      const attemptSignUpEmail = await signUp.attemptEmailAddressVerification({
         code: OTPCodeData.OTPCode,
       });
 
       clearTimeout(timeoutId); // Clear the timeout if the submission completes
 
-      if (completeSignUp.status === "complete") {
+      if (attemptSignUpEmail.status === "complete") {
         setStage(AuthStage.Completed);
         markSuccess();
         await setSignUpActive({
           session: signUp.createdSessionId,
         });
-        router.push("/dashboard");
+        // router.push("/home");
       } else {
-        console.error(JSON.stringify(completeSignUp, null, 2)); // pulls up error and next step is; fix this so flow can continue.
+        console.error(JSON.stringify(attemptSignUpEmail, null, 2)); // pulls up error and next step is; fix this so flow can continue.
       }
     } catch (error) {
       const clerkErrors = getClerkError(error); // Returns err.errors | (property) ClerkAPIResponseError.errors: ClerkAPIError[]
