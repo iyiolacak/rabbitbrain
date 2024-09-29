@@ -25,12 +25,6 @@ const SignUpPage = () => {
   // use auth context and get/set authStage
   const { authStage, setAuthStage } = useAuthContext();
 
-  useEffect(() => {
-    if (isLoaded && isSignedIn) {
-      router.push("/home");
-    }
-  }, [isLoaded, isSignedIn, router]);
-
   const transitionCubicBezier = [0.05, 0.66, 0.32, 0.92];
 
   const handleBack = () => {
