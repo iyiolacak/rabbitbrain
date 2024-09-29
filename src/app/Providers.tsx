@@ -1,4 +1,5 @@
 "use client";
+
 import { ClerkProvider } from "@clerk/nextjs";
 import { useAuth } from "@clerk/clerk-react";
 import { ConvexReactClient } from "convex/react";
@@ -16,17 +17,18 @@ const convex = new ConvexReactClient(
 );
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
-  return(
+  return (
     <ClerkProvider
-    publishableKey={PUBLISHABLE_KEY}
-    signInFallbackRedirectUrl={"/home"}
-    signUpFallbackRedirectUrl={"/onboarding"}
+      publishableKey={PUBLISHABLE_KEY}
+      signInUrl="/sign-in"
+      signInFallbackRedirectUrl="/sign-in"
+      signUpFallbackRedirectUrl="/sign-up"
     >
-    <ConvexProviderWithClerk useAuth={useAuth} client={convex}>
-      {children}
-    </ConvexProviderWithClerk>
-  </ClerkProvider>
-  )
+      <ConvexProviderWithClerk useAuth={useAuth} client={convex}>
+        {children}
+      </ConvexProviderWithClerk>
+    </ClerkProvider>
+  );
 };
 
 export default Providers;

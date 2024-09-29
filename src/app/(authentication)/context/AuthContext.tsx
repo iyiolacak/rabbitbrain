@@ -149,12 +149,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           return;
         }
         handleSignUp(data, signUp);
+        console.log("Switch: Sign up case triggered on submit")
         break;
       case "sign-in":
         if (!isSignInLoaded) {
           console.warn("Sign-in not loaded yet");
           return;
         }
+        console.log("Switch: Sign in case triggered on submit")
         handleSignIn(data, signIn);
         break;
       default:
