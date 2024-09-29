@@ -27,11 +27,11 @@ const HeroSection = () => {
         <Button
           onClick={() => navigateTo("/sign-up")}
           className="text-black
-           bg-white px-8 py-4 text-md tracking-tight rounded-full
-           
-           hover:bg-neutral-300 mb-20"
+          bg-white px-8 py-4 text-sm tracking-tight rounded-full
+          
+          hover:bg-neutral-300 mb-20"
         >
-          Hop In Now—It&apos;s Free!
+          Hop In Now — It&apos;s Free
         </Button>
       </div>
     </section>

@@ -22,7 +22,7 @@ const FooterCTA = () => {
       <div className="flex md:flex-row flex-col w-min mx-auto">
         <Button
           onClick={() => navigateTo("/sign-up")}
-          className="bg-white text-black font-medium px-8 py-4 text-md  rounded-full hover:bg-neutral-300"
+          className="bg-white text-black px-8 py-4 text-sm  rounded-full hover:bg-neutral-300"
         >
           Get Started Now
         </Button>
