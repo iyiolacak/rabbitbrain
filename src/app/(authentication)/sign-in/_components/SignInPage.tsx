@@ -32,7 +32,7 @@ const SignInPage = () => {
   const { isLoaded, isSignedIn } = useAuth();
   useEffect(() => {
     if (isLoaded && isSignedIn) {
-      router.push("/dashboard");
+      router.push("/home");
     }
   }, [isLoaded, isSignedIn, router]);
 
