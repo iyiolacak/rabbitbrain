@@ -15,11 +15,7 @@ import {
 } from "@auth/context/AuthContext";
 import { AnimatePresence, motion } from "framer-motion";
 
-interface EmailFormProps {
-  authAction: AuthAction;
-}
-
-const EmailFormComponent: React.FC<EmailFormProps> = ({ authAction }) => {
+const EmailFormComponent = ({ authAction }: { authAction: AuthAction }) => {
   const { authState, authServerError, onEmailFormSubmit } = useAuthContext();
   const {
     control,
