@@ -1,80 +1,104 @@
-import React, { useEffect, useState } from "react";
-import conceptsList from "./concepts";
+import React, { useReducer, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import conceptsList from "./concepts";
+
+const MAX_ITEMS = 4;
+
+type State = {
+  conceptsDisplay: Array<{ id: string; name: string; icon: any; color: string }>;
+  index: number;
+  replacementIndex: number;
+  itemRemoved: boolean;
+  isActive: boolean;
+  hoveredItems: boolean[];
+};
+
+type Action =
+  | { type: "UPDATE_DISPLAY" }
+  | { type: "SET_ITEM_REMOVED"; payload: boolean }
+  | { type: "HANDLE_EXIT_COMPLETE" }
+  | { type: "SET_HOVER"; payload: { index: number; isHovered: boolean } }
+  | { type: "SET_ACTIVE"; payload: boolean };
+
+const initialState: State = {
+  conceptsDisplay: conceptsList.slice(0, MAX_ITEMS).map((item) => ({
+    ...item,
+    id: generateUniqueId(),
+  })),
+  index: MAX_ITEMS,
+  replacementIndex: 0,
+  itemRemoved: false,
+  isActive: true,
+  hoveredItems: Array(MAX_ITEMS).fill(false),
+};
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case "UPDATE_DISPLAY":
+      if (state.hoveredItems[state.replacementIndex]) {
+        return state;
+      }
+      return {
+        ...state,
+        conceptsDisplay: state.conceptsDisplay.filter(
+          (_, idx) => idx !== state.replacementIndex
+        ),
+        itemRemoved: true,
+      };
+    case "SET_ITEM_REMOVED":
+      return { ...state, itemRemoved: action.payload };
+    case "HANDLE_EXIT_COMPLETE":
+      const newItem = {
+        ...conceptsList[state.index % conceptsList.length],
+        id: generateUniqueId(),
+      };
+      return {
+        ...state,
+        conceptsDisplay: [
+          ...state.conceptsDisplay.slice(0, state.replacementIndex),
+          newItem,
+          ...state.conceptsDisplay.slice(state.replacementIndex),
+        ],
+        replacementIndex: (state.replacementIndex + 1) % MAX_ITEMS,
+        index: (state.index + 1) % conceptsList.length,
+      };
+    case "SET_HOVER":
+      return {
+        ...state,
+        hoveredItems: state.hoveredItems.map((item, idx) =>
+          idx === action.payload.index ? action.payload.isHovered : item
+        ),
+      };
+    case "SET_ACTIVE":
+      return { ...state, isActive: action.payload };
+    default:
+      return state;
+  }
+}
 
 const InfiniteCarousel = () => {
-  const MAX_ITEMS = 4;
-  const [conceptsDisplay, setConceptsDisplay] = useState(
-    conceptsList.slice(0, MAX_ITEMS).map((item) => ({
-      ...item,
-      id: generateUniqueId(),
-    }))
-  );
-
-  const [index, setIndex] = useState(MAX_ITEMS);
-  const [replacementIndex, setReplacementIndex] = useState(0);
-  const [itemRemoved, setItemRemoved] = useState(false);
-  const [isActive, setIsActive] = useState(true);
-  const [hoveredItems, setHoveredItems] = useState(Array(MAX_ITEMS).fill(false));
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    const updateConceptsDisplay = () => {
-      setItemRemoved(false);
-
-      setConceptsDisplay((prevDisplay) => {
-        const newDisplay = [...prevDisplay];
-        if (!hoveredItems[replacementIndex]) {
-          newDisplay.splice(replacementIndex, 1);
-        }
-        return newDisplay;
-      });
-
-      setItemRemoved(true);
-    };
-
     const interval = setInterval(() => {
-      if (isActive) updateConceptsDisplay();
+      if (state.isActive) dispatch({ type: "UPDATE_DISPLAY" });
     }, 750);
 
     return () => clearInterval(interval);
-  }, [index, replacementIndex, isActive, hoveredItems]);
+  }, [state.isActive]);
 
-  const handleExitComplete = () => {
-    setConceptsDisplay((prevDisplay) => {
-      const newDisplay = [...prevDisplay];
-      const newItem = {
-        ...conceptsList[index % conceptsList.length],
-        id: generateUniqueId(),
-      };
-      newDisplay.splice(replacementIndex, 0, newItem);
-      return newDisplay;
-    });
-
-    setReplacementIndex((prev) => (prev + 1) % MAX_ITEMS);
-    setIndex((prev) => (prev + 1) % conceptsList.length);
+  const handleMouseEnter = (index: number) => {
+    dispatch({ type: "SET_HOVER", payload: { index, isHovered: true } });
   };
 
-  const handleMouseEnter = (hoverIndex: number) => {
-    setHoveredItems((prevHovered) => {
-      const newHovered = [...prevHovered];
-      newHovered[hoverIndex] = true;
-      return newHovered;
-    });
-  };
-
-  const handleMouseLeave = (hoverIndex: number) => {
-    setHoveredItems((prevHovered) => {
-      const newHovered = [...prevHovered];
-      newHovered[hoverIndex] = false;
-      return newHovered;
-    });
+  const handleMouseLeave = (index: number) => {
+    dispatch({ type: "SET_HOVER", payload: { index, isHovered: false } });
   };
 
   useEffect(() => {
     const handleVisibilityChange = () => {
-      setIsActive(!document.hidden);
+      dispatch({ type: "SET_ACTIVE", payload: !document.hidden });
     };
-
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () =>
@@ -89,10 +113,12 @@ const InfiniteCarousel = () => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 w-full">
-      <AnimatePresence onExitComplete={itemRemoved ? handleExitComplete : undefined} initial={false}>
-        {conceptsDisplay.map(({ name, icon: Icon, color, id }, idx) => (
+      <AnimatePresence onExitComplete={state.itemRemoved ? () => dispatch({ type: "HANDLE_EXIT_COMPLETE" }) : undefined} initial={false}>
+        {state.conceptsDisplay.map(({ name, icon: Icon, color, id }, idx) => (
           <motion.div
-            className="h-16 flex flex-col items-center group cursor-pointer"
+            className={`h-16 flex flex-col items-center group cursor-pointer ${
+              state.hoveredItems.some((hovered) => hovered) && !state.hoveredItems[idx] ? 'opacity-50' : ''
+            }`}
             key={id}
             variants={variants}
             initial="initial"
