@@ -1,17 +1,13 @@
 import React, { useReducer, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import conceptsList from "./concepts";
+import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
+const MAX_ITEMS = 4;
 
-const onMobile: boolean = window.innerWidth < 768
-const MAX_ITEMS = window.innerWidth < 768 ? 2 : 4;
 type State = {
-  conceptsDisplay: Array<{
-    id: string;
-    name: string;
-    icon: any;
-    color: string;
-  }>;
+  conceptsDisplay: Array<{ id: string; name: string; icon: any; color: string }>;
   index: number;
   replacementIndex: number;
   itemRemoved: boolean;
@@ -41,7 +37,7 @@ const initialState: State = {
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "UPDATE_DISPLAY":
-      if (state.hoveredItems[state.replacementIndex]) {
+      if (state.hoveredItems.some(hovered => hovered)) {
         return state;
       }
       return {
@@ -117,19 +113,14 @@ const InfiniteCarousel = () => {
     exit: { opacity: 0, y: -20 },
   };
 
+  const isAnyItemHovered = state.hoveredItems.some(hovered => hovered);
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4 w-full">
-      <AnimatePresence
-        onExitComplete={
-          state.itemRemoved
-            ? () => dispatch({ type: "HANDLE_EXIT_COMPLETE" })
-            : undefined
-        }
-        initial={false}
-      >
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 w-full">
+      <AnimatePresence onExitComplete={state.itemRemoved ? () => dispatch({ type: "HANDLE_EXIT_COMPLETE" }) : undefined} initial={false}>
         {state.conceptsDisplay.map(({ name, icon: Icon, color, id }, idx) => (
           <motion.div
-            className={`h-16 flex flex-col items-center group cursor-pointer`}
+            className="h-16 flex flex-col items-center group cursor-pointer"
             key={id}
             variants={variants}
             initial="initial"
@@ -141,9 +132,19 @@ const InfiniteCarousel = () => {
           >
             <div className="flex items-center justify-center space-x-1">
               <span>
-                <Icon width={onMobile ? 32 : 48} height={onMobile ? 32 : 48} color={color} />
+                <Icon 
+                  width={48} 
+                  height={48} 
+                  className="transition-colors"
+                  color={isAnyItemHovered && !state.hoveredItems[idx] ? '#808080' : color} 
+                />
               </span>
-              <h3 className="font-serif text-xl md:text-3xl text-white truncate font-medium">
+              <h3 className={cn(`font-serif text-xl md:text-3xl transition-colors text-zinc-200 truncate font-medium`,
+                {
+                  "text-zinc-500": isAnyItemHovered && !state.hoveredItems[idx],
+                  "text-white": state.hoveredItems[idx]
+                }
+              )}>
                 {name}
               </h3>
             </div>
