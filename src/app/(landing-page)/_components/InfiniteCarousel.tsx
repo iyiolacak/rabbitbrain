@@ -2,10 +2,14 @@ import React, { useReducer, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import conceptsList from "./concepts";
 
-const MAX_ITEMS = 4;
-
+const MAX_ITEMS = window.innerWidth < 768 ? 2 : 4;
 type State = {
-  conceptsDisplay: Array<{ id: string; name: string; icon: any; color: string }>;
+  conceptsDisplay: Array<{
+    id: string;
+    name: string;
+    icon: any;
+    color: string;
+  }>;
   index: number;
   replacementIndex: number;
   itemRemoved: boolean;
@@ -112,13 +116,18 @@ const InfiniteCarousel = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 w-full">
-      <AnimatePresence onExitComplete={state.itemRemoved ? () => dispatch({ type: "HANDLE_EXIT_COMPLETE" }) : undefined} initial={false}>
+    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
+      <AnimatePresence
+        onExitComplete={
+          state.itemRemoved
+            ? () => dispatch({ type: "HANDLE_EXIT_COMPLETE" })
+            : undefined
+        }
+        initial={false}
+      >
         {state.conceptsDisplay.map(({ name, icon: Icon, color, id }, idx) => (
           <motion.div
-            className={`h-16 flex flex-col items-center group cursor-pointer ${
-              state.hoveredItems.some((hovered) => hovered) && !state.hoveredItems[idx] ? 'opacity-50' : ''
-            }`}
+            className={`h-16 flex flex-col items-center group cursor-pointer`}
             key={id}
             variants={variants}
             initial="initial"
