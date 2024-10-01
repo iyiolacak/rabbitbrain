@@ -19,17 +19,20 @@ const transitionVariants = {
 };
 
 const SignUpPage = () => {
-  const router = useRouter();
-  const { isLoaded, isSignedIn } = useAuth();
+
+  // useAuthRedirect hook will be used instead.
+  // const router = useRouter();
+  // const { isLoaded, isSignedIn } = useAuth();
   
   // use auth context and get/set authStage
-  const { authStage, setAuthStage } = useAuthContext();
+  // IMPORTANT TODO: ADD setAuthStage to useAuthContext
+  const { authStage } = useAuthContext();
 
   const transitionCubicBezier = [0.05, 0.66, 0.32, 0.92];
 
   const handleBack = () => {
     if (authStage === AuthStage.Verifying) {
-      setAuthStage(AuthStage.Form); // move back to form stage
+      // setAuthStage(AuthStage.Form); // move back to form stage
     }
   };
 
