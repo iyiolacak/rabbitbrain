@@ -1,12 +1,16 @@
 "use client";
-import { useUser } from '@clerk/clerk-react'
-import React from 'react'
+import { useUser } from "@clerk/clerk-react";
+import React from "react";
 
 const Home = () => {
-  const user = useUser()
-  return (
-    <div className='text-6xl'>Welcome {user.user?.primaryEmailAddress}.</div>
-  )
-}
+  const { user } = useUser();
 
-export default Home
+  const email = user?.primaryEmailAddress?.emailAddress || "No email found";
+  return (
+    <div className="text-6xl">
+      Currently logged in as {email}
+    </div>
+  );
+};
+
+export default Home;

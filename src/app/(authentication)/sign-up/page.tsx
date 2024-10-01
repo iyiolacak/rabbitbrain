@@ -1,16 +1,13 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import SignUpStageForm from "./_components/SignUpStageForm";
 import { useAuthContext } from "@auth/context/AuthContext";
 import VerifyEmail from "./verify-email/_components/OTP";
 import { motion, AnimatePresence } from "framer-motion";
-import { AuthStage, useAuthStatus } from "@auth/hooks/useAuthStatus";
-import { SignUpButton } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@clerk/clerk-react";
+import { AuthStage } from "@auth/hooks/useAuthStatus";
 import AuthCompleted from "./_components/AuthCompleted";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, NavArrowLeft } from "iconoir-react";
+import { NavArrowLeft } from "iconoir-react";
 
 const transitionVariants = {
   initial: { opacity: 1, x: 150 },
@@ -21,10 +18,9 @@ const transitionVariants = {
 const SignUpPage = () => {
 
   // useAuthRedirect hook will be used instead.
-  // const router = useRouter();
-  // const { isLoaded, isSignedIn } = useAuth();
+
   
-  // use auth context and get/set authStage
+  // use auth context and get/set authStage - A new hook for this functionality sounds sensible.
   // IMPORTANT TODO: ADD setAuthStage to useAuthContext
   const { authStage } = useAuthContext();
 

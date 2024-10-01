@@ -1,5 +1,4 @@
 "use client";
-import { SignInResource, UserResource } from '@clerk/types';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react'
 
