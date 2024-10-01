@@ -2,6 +2,8 @@ import React, { useReducer, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import conceptsList from "./concepts";
 
+
+const onMobile: boolean = window.innerWidth < 768
 const MAX_ITEMS = window.innerWidth < 768 ? 2 : 4;
 type State = {
   conceptsDisplay: Array<{
@@ -116,7 +118,7 @@ const InfiniteCarousel = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
+    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4 w-full">
       <AnimatePresence
         onExitComplete={
           state.itemRemoved
@@ -139,7 +141,7 @@ const InfiniteCarousel = () => {
           >
             <div className="flex items-center justify-center space-x-1">
               <span>
-                <Icon width={48} height={48} color={color} />
+                <Icon width={onMobile ? 32 : 48} height={onMobile ? 32 : 48} color={color} />
               </span>
               <h3 className="font-serif text-xl md:text-3xl text-white truncate font-medium">
                 {name}
