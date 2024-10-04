@@ -16,10 +16,8 @@ const transitionVariants = {
 };
 
 const SignUpPage = () => {
-
   // useAuthRedirect hook will be used instead.
 
-  
   // use auth context and get/set authStage - A new hook for this functionality sounds sensible.
   // IMPORTANT TODO: ADD setAuthStage to useAuthContext
   const { authStage } = useAuthContext();
@@ -58,12 +56,8 @@ const SignUpPage = () => {
             transition={{ duration: 0.2, ease: [transitionCubicBezier] }}
             className="h-full"
           >
-            <Button
-              onClick={handleBack}
-              variant={"ghost"}
-            >
-              <NavArrowLeft/>
-
+            <Button onClick={handleBack} variant={"ghost"}>
+              <NavArrowLeft />
             </Button>
             <VerifyEmail />
           </motion.div>

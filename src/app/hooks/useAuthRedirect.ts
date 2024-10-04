@@ -1,6 +1,6 @@
 "use client";
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react'
+import useNavigation from './useNavigation';
 
 const ROUTES = {
     home: "/home",
@@ -13,12 +13,14 @@ type AuthRedirectParams = {
     isSignedIn: boolean,
 }
 
+
+
 export const useAuthRedirect = ({isLoaded, isSignedIn}: AuthRedirectParams) => {
-    const router = useRouter();
+    const { navigateTo } = useNavigation();
 
     useEffect(() => {
         if (isLoaded && isSignedIn) {
-            router.push(ROUTES.home);
+            navigateTo(ROUTES.home);
         }
-    }, [isLoaded, isSignedIn, router])
+    }, [isLoaded, isSignedIn, navigateTo])
 }
