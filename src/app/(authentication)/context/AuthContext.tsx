@@ -41,6 +41,7 @@ export interface AuthContextValue {
   authState: AuthState;
   authServerError: ClerkAPIError[] | undefined;
   shakeState: Record<string, boolean>;
+  setStage: (stage: AuthStage) => void;
 }
 
 /**
@@ -227,6 +228,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     emailFormMethods,
     OTPFormMethods,
     submittedData,
+    setStage
   };
   return (
     <AuthContext.Provider value={values}>
