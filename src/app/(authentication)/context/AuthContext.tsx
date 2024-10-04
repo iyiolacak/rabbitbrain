@@ -30,6 +30,7 @@ export type EmailForm = z.infer<typeof emailFormSchema>;
 
 export type OTPCodeForm = z.infer<typeof otpCodeSchema>;
 
+
 export interface AuthContextValue {
   authStage: AuthStage;
   onEmailFormSubmit: (data: EmailForm, authAction: AuthAction) => Promise<void>;
@@ -48,15 +49,10 @@ export interface AuthContextValue {
  * @type {"sign-in" | "sign-up" | "forgot-password"}
  */
 export type AuthAction = "sign-up" | "sign-in" | "forgot-password";
-// Sign-up and OTP submission logic functions, `(onSignUpSubmit, onOTPSubmit)`
-//
 
 const AuthContext = createContext<AuthContextValue | null>(null);
-//
-//
-//
+
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const router = useRouter();
   const {
     isLoaded: isSignUpLoaded, // Sign up
     signUp,
@@ -247,4 +243,6 @@ export const useAuthContext = () => {
   return context;
 };
 
-export default { useAuthContext, AuthProvider };
+const authContextModule = { useAuthContext, AuthProvider };
+
+export default authContextModule;

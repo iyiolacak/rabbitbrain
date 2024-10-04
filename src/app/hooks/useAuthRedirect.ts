@@ -2,6 +2,7 @@
 import { useEffect } from 'react'
 import useNavigation from './useNavigation';
 
+
 const ROUTES = {
     home: "/home",
     signIn: "/sign-in",
@@ -12,8 +13,6 @@ type AuthRedirectParams = {
     isLoaded: boolean,
     isSignedIn: boolean,
 }
-
-
 
 export const useAuthRedirect = ({isLoaded, isSignedIn}: AuthRedirectParams) => {
     const { navigateTo } = useNavigation();
