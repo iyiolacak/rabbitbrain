@@ -4,14 +4,16 @@ import React from "react";
 
 const Home = () => {
   const { user } = useUser();
-
-  const email = user?.primaryEmailAddress?.emailAddress || "No email found";
-  const fullName = user?.fullName || "No name found";
+  
+  const email = user?.primaryEmailAddress?.emailAddress;
+  const fullName = user?.fullName;
 
   return (
-    <div className="text-6xl">
-      Currently logged in as {fullName || email}
-    </div>
+    <>
+      <div className="text-6xl">
+        Currently logged in as {fullName || email || "a guest"}
+      </div>
+    </>
   );
 };
 
