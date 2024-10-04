@@ -9,6 +9,8 @@ import AuthCompleted from "./_components/AuthCompleted";
 import { Button } from "@/components/ui/button";
 import { NavArrowLeft } from "iconoir-react";
 import { useHandleBack } from "@/app/hooks/useHandleBackNavigation";
+import { useAuthRedirect } from "@/app/hooks/useAuthRedirect";
+import { useSignIn, useUser } from "@clerk/clerk-react";
 
 const transitionVariants = {
   initial: { opacity: 1, x: 150 },
@@ -17,9 +19,10 @@ const transitionVariants = {
 };
 
 const SignUpPage = () => {
+  const { isLoaded, user } = useUser();
+  useAuthRedirect({ isLoaded, user });
   const handleBack = useHandleBack();
   // useAuthRedirect hook will be used instead.
-
   // use auth context and get/set authStage - A new hook for this functionality sounds sensible.
   // IMPORTANT TODO: ADD setAuthStage to useAuthContext
   const { authStage } = useAuthContext();

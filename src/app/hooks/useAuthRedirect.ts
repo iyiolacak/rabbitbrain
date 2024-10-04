@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from 'react'
 import useNavigation from './useNavigation';
+import { UserResource } from '@clerk/types';
 
 
 const ROUTES = {
@@ -11,15 +12,15 @@ const ROUTES = {
 
 type AuthRedirectParams = {
     isLoaded: boolean,
-    isSignedIn: boolean,
+    user: UserResource | null | undefined,
 }
 
-export const useAuthRedirect = ({isLoaded, isSignedIn}: AuthRedirectParams) => {
+export const useAuthRedirect = ({isLoaded, user}: AuthRedirectParams) => {
     const { navigateTo } = useNavigation();
 
     useEffect(() => {
-        if (isLoaded && isSignedIn) {
+        if (isLoaded && user) {
             navigateTo(ROUTES.home);
         }
-    }, [isLoaded, isSignedIn, navigateTo])
+    }, [isLoaded, user, navigateTo])
 }
