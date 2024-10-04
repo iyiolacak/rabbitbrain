@@ -8,6 +8,7 @@ import { AuthStage } from "@auth/hooks/useAuthStatus";
 import AuthCompleted from "./_components/AuthCompleted";
 import { Button } from "@/components/ui/button";
 import { NavArrowLeft } from "iconoir-react";
+import { useHandleBack } from "@/app/hooks/useHandleBackNavigation";
 
 const transitionVariants = {
   initial: { opacity: 1, x: 150 },
@@ -16,6 +17,7 @@ const transitionVariants = {
 };
 
 const SignUpPage = () => {
+  const handleBack = useHandleBack();
   // useAuthRedirect hook will be used instead.
 
   // use auth context and get/set authStage - A new hook for this functionality sounds sensible.
@@ -23,13 +25,6 @@ const SignUpPage = () => {
   const { authStage } = useAuthContext();
 
   const transitionCubicBezier = [0.05, 0.66, 0.32, 0.92];
-
-  const handleBack = () => {
-    if (authStage === AuthStage.Verifying) {
-      // setAuthStage(AuthStage.Form); // move back to form stage
-    }
-  };
-
   return (
     <div className="h-full justify-center items-center">
       <AnimatePresence mode="wait" initial={false}>
