@@ -2,7 +2,6 @@ import React, { useReducer, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import conceptsList from "./concepts";
 import ConceptDisplay from "./ConceptDisplay";
-import { Brain } from "iconoir-react";
 
 const MAX_ITEMS = 4;
 
@@ -47,12 +46,16 @@ function reducer(state: State, action: Action): State {
       if (Object.values(state.hoveredItems).some(Boolean)) {
         return state;
       }
+      const removedItem = state.conceptsDisplay[state.replacementIndex];
+      const newHoveredItems = { ...state.hoveredItems };
+      delete newHoveredItems[removedItem.id];
       return {
         ...state,
         conceptsDisplay: state.conceptsDisplay.filter(
           (_, idx) => idx !== state.replacementIndex
         ),
         itemRemoved: true,
+        hoveredItems: newHoveredItems,
       };
     case "SET_ITEM_REMOVED":
       return { ...state, itemRemoved: action.payload };

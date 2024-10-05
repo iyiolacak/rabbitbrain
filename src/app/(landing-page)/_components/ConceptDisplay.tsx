@@ -2,8 +2,6 @@ import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import React from "react";
 import { ConceptDisplay as ConceptDisplayType } from "./InfiniteCarousel";
-import { Iconoir, Shield } from "iconoir-react";
-import conceptsList from "./concepts";
 
 interface ConceptDisplayProps extends ConceptDisplayType {
   handleMouseEnter: (id: string) => void;
@@ -11,6 +9,12 @@ interface ConceptDisplayProps extends ConceptDisplayType {
   isHovered: boolean;
   hoveredItems: { [key: string]: boolean };
 }
+
+const variants = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -20 },
+};
 
 const ConceptDisplay = ({
   id,
@@ -22,11 +26,6 @@ const ConceptDisplay = ({
   isHovered,
   hoveredItems,
 }: ConceptDisplayProps) => {
-  const variants = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -20 },
-  };
 
   const isAnyItemHovered = Object.values(hoveredItems).some(Boolean);
 
@@ -48,9 +47,7 @@ const ConceptDisplay = ({
             width={48}
             height={48}
             className="transition-colors"
-            color={
-              isAnyItemHovered && !isHovered ? "#808080" : color
-            }
+            color={isAnyItemHovered && !isHovered ? "#808080" : color}
           />
         </span>
         <h3
