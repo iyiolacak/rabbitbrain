@@ -1,25 +1,31 @@
 import React, { useReducer, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import conceptsList from "./concepts";
-import clsx from "clsx";
-import { cn } from "@/lib/utils";
+import ConceptDisplay from "./ConceptDisplay";
 
 const MAX_ITEMS = 4;
 
+export interface ConceptDisplay { 
+  id: string; 
+  name: string; 
+  icon: React.FC; 
+  color: string 
+}
+
 type State = {
-  conceptsDisplay: Array<{ id: string; name: string; icon: any; color: string }>;
+  conceptsDisplay: Array<ConceptDisplay>;
   index: number;
   replacementIndex: number;
   itemRemoved: boolean;
   isActive: boolean;
-  hoveredItems: boolean[];
+  hoveredItems: { [key: string]: boolean };
 };
 
 type Action =
   | { type: "UPDATE_DISPLAY" }
   | { type: "SET_ITEM_REMOVED"; payload: boolean }
   | { type: "HANDLE_EXIT_COMPLETE" }
-  | { type: "SET_HOVER"; payload: { index: number; isHovered: boolean } }
+  | { type: "SET_HOVER"; payload: { id: string; isHovered: boolean } }
   | { type: "SET_ACTIVE"; payload: boolean };
 
 const initialState: State = {
@@ -31,13 +37,13 @@ const initialState: State = {
   replacementIndex: 0,
   itemRemoved: false,
   isActive: true,
-  hoveredItems: Array(MAX_ITEMS).fill(false),
+  hoveredItems: {},
 };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "UPDATE_DISPLAY":
-      if (state.hoveredItems.some(hovered => hovered)) {
+      if (Object.values(state.hoveredItems).some(Boolean)) {
         return state;
       }
       return {
@@ -67,9 +73,10 @@ function reducer(state: State, action: Action): State {
     case "SET_HOVER":
       return {
         ...state,
-        hoveredItems: state.hoveredItems.map((item, idx) =>
-          idx === action.payload.index ? action.payload.isHovered : item
-        ),
+        hoveredItems: {
+          ...state.hoveredItems,
+          [action.payload.id]: action.payload.isHovered,
+        }
       };
     case "SET_ACTIVE":
       return { ...state, isActive: action.payload };
@@ -85,16 +92,15 @@ const InfiniteCarousel = () => {
     const interval = setInterval(() => {
       if (state.isActive) dispatch({ type: "UPDATE_DISPLAY" });
     }, 750);
-
     return () => clearInterval(interval);
   }, [state.isActive]);
 
-  const handleMouseEnter = (index: number) => {
-    dispatch({ type: "SET_HOVER", payload: { index, isHovered: true } });
+  const handleMouseEnter = (id: string) => {
+    dispatch({ type: "SET_HOVER", payload: { id, isHovered: true } });
   };
 
-  const handleMouseLeave = (index: number) => {
-    dispatch({ type: "SET_HOVER", payload: { index, isHovered: false } });
+  const handleMouseLeave = (id: string) => {
+    dispatch({ type: "SET_HOVER", payload: { id, isHovered: false } });
   };
 
   useEffect(() => {
@@ -102,53 +108,25 @@ const InfiniteCarousel = () => {
       dispatch({ type: "SET_ACTIVE", payload: !document.hidden });
     };
     document.addEventListener("visibilitychange", handleVisibilityChange);
-
     return () =>
       document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, []);
 
-  const variants = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -20 },
-  };
-
-  const isAnyItemHovered = state.hoveredItems.some(hovered => hovered);
-
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 w-full">
       <AnimatePresence onExitComplete={state.itemRemoved ? () => dispatch({ type: "HANDLE_EXIT_COMPLETE" }) : undefined} initial={false}>
-        {state.conceptsDisplay.map(({ name, icon: Icon, color, id }, idx) => (
-          <motion.div
-            className="h-16 flex flex-col items-center group cursor-pointer"
+        {state.conceptsDisplay.map(({ name, icon: Icon, color, id }) => (
+          <ConceptDisplay
             key={id}
-            variants={variants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            layout
-            onMouseEnter={() => handleMouseEnter(idx)}
-            onMouseLeave={() => handleMouseLeave(idx)}
-          >
-            <div className="flex items-center justify-center space-x-1">
-              <span>
-                <Icon 
-                  width={48} 
-                  height={48} 
-                  className="transition-colors"
-                  color={isAnyItemHovered && !state.hoveredItems[idx] ? '#808080' : color} 
-                />
-              </span>
-              <h3 className={cn(`font-serif text-xl md:text-3xl transition-colors text-zinc-200 truncate font-medium`,
-                {
-                  "text-zinc-500": isAnyItemHovered && !state.hoveredItems[idx],
-                  "text-white": state.hoveredItems[idx]
-                }
-              )}>
-                {name}
-              </h3>
-            </div>
-          </motion.div>
+            id={id}
+            name={name}
+            icon={Icon}
+            color={color}
+            handleMouseEnter={handleMouseEnter}
+            handleMouseLeave={handleMouseLeave}
+            isHovered={state.hoveredItems[id]}
+            hoveredItems={state.hoveredItems}
+          />
         ))}
       </AnimatePresence>
     </div>
