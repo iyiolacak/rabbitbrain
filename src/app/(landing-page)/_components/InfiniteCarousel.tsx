@@ -2,14 +2,15 @@ import React, { useReducer, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import conceptsList from "./concepts";
 import ConceptDisplay from "./ConceptDisplay";
+import { Brain } from "iconoir-react";
 
 const MAX_ITEMS = 4;
 
-export interface ConceptDisplay { 
-  id: string; 
-  name: string; 
-  icon: React.FC; 
-  color: string 
+export interface ConceptDisplay {
+  id: string;
+  name: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; // Type for the icon component
+  color: string;
 }
 
 type State = {
@@ -76,7 +77,7 @@ function reducer(state: State, action: Action): State {
         hoveredItems: {
           ...state.hoveredItems,
           [action.payload.id]: action.payload.isHovered,
-        }
+        },
       };
     case "SET_ACTIVE":
       return { ...state, isActive: action.payload };
@@ -114,7 +115,14 @@ const InfiniteCarousel = () => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 w-full">
-      <AnimatePresence onExitComplete={state.itemRemoved ? () => dispatch({ type: "HANDLE_EXIT_COMPLETE" }) : undefined} initial={false}>
+      <AnimatePresence
+        onExitComplete={
+          state.itemRemoved
+            ? () => dispatch({ type: "HANDLE_EXIT_COMPLETE" })
+            : undefined
+        }
+        initial={false}
+      >
         {state.conceptsDisplay.map(({ name, icon: Icon, color, id }) => (
           <ConceptDisplay
             key={id}

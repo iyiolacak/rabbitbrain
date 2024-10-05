@@ -2,6 +2,8 @@ import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import React from "react";
 import { ConceptDisplay as ConceptDisplayType } from "./InfiniteCarousel";
+import { Iconoir, Shield } from "iconoir-react";
+import conceptsList from "./concepts";
 
 interface ConceptDisplayProps extends ConceptDisplayType {
   handleMouseEnter: (id: string) => void;
