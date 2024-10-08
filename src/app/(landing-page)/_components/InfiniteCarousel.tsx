@@ -19,6 +19,7 @@ type State = {
   itemRemoved: boolean;
   isActive: boolean;
   hoveredItems: { [key: string]: boolean };
+  removedItemId: string | null
 };
 
 type Action =
@@ -38,6 +39,7 @@ const initialState: State = {
   itemRemoved: false,
   isActive: true,
   hoveredItems: {},
+  removedItemId: null
 };
 
 function reducer(state: State, action: Action): State {
@@ -47,19 +49,21 @@ function reducer(state: State, action: Action): State {
         return state;
       }
       const removedItem = state.conceptsDisplay[state.replacementIndex];
-      const newHoveredItems = { ...state.hoveredItems };
-      delete newHoveredItems[removedItem.id];
       return {
         ...state,
         conceptsDisplay: state.conceptsDisplay.filter(
           (_, idx) => idx !== state.replacementIndex
         ),
         itemRemoved: true,
-        hoveredItems: newHoveredItems,
+        removedItemId: removedItem.id
       };
     case "SET_ITEM_REMOVED":
       return { ...state, itemRemoved: action.payload };
     case "HANDLE_EXIT_COMPLETE":
+      const newHoveredItems = { ...state.hoveredItems }
+      if(state.removedItemId) {
+        delete newHoveredItems[state.removedItemId]
+      }
       const newItem = {
         ...conceptsList[state.index % conceptsList.length],
         id: generateUniqueId(),
@@ -73,8 +77,13 @@ function reducer(state: State, action: Action): State {
         ],
         replacementIndex: (state.replacementIndex + 1) % MAX_ITEMS,
         index: (state.index + 1) % conceptsList.length,
+        hoveredItems: newHoveredItems,
+        removedItemId: null,
       };
     case "SET_HOVER":
+      if(!state.conceptsDisplay.find((item) => item.id === action.payload.id)) {
+        return state;
+      }
       return {
         ...state,
         hoveredItems: {
