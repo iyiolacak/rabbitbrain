@@ -31,7 +31,7 @@ const ConceptDisplay = ({
 
   return (
     <motion.div
-      className="h-16 flex flex-col items-center group cursor-pointer"
+      className="h-16 flex flex-col items-center justify-center group cursor-pointer "
       key={id}
       variants={variants}
       initial="initial"
@@ -41,7 +41,7 @@ const ConceptDisplay = ({
       onMouseEnter={() => handleMouseEnter(id)}
       onMouseLeave={() => handleMouseLeave(id)}
     >
-      <div className="flex items-center justify-center space-x-1">
+      <div className="relative flex items-center justify-center space-x-1">
         <span>
           <Icon
             width={48}
@@ -52,7 +52,7 @@ const ConceptDisplay = ({
         </span>
         <h3
           className={cn(
-            `font-serif text-xl md:text-3xl transition-colors text-zinc-200 truncate font-medium`,
+            `font-serif text-xl md:text-xl lg:text-2xl transition-colors text-zinc-200 truncate font-medium`,
             {
               "text-zinc-500": isAnyItemHovered && !isHovered,
               "text-white": isHovered,
@@ -61,6 +61,9 @@ const ConceptDisplay = ({
         >
           {name}
         </h3>
+        <div className="absolute bg-white/0 w-full h-full">
+
+        </div>
       </div>
     </motion.div>
   );
