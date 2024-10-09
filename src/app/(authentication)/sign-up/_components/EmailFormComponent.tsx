@@ -24,7 +24,9 @@ const EmailFormComponent = ({ authAction }: { authAction: AuthAction }) => {
     formState: { errors },
   } = useFormContext<EmailForm>();
 
-  const [buttonShowIcon, setButtonShowIcon] = useState<'idle' | 'error' | 'success'>('idle');
+  const [buttonShowIcon, setButtonShowIcon] = useState<
+    "idle" | "error" | "success"
+  >("idle");
 
   useEffect(() => {
     setFocus("email");
@@ -45,9 +47,9 @@ const EmailFormComponent = ({ authAction }: { authAction: AuthAction }) => {
 
   const renderButtonContent = () => {
     switch (buttonShowIcon) {
-      case 'error':
+      case "error":
         return <X className="mr-2" />;
-      case 'success':
+      case "success":
         return <Check className="mr-2" />;
       default:
         switch (authState) {
@@ -92,7 +94,7 @@ const EmailFormComponent = ({ authAction }: { authAction: AuthAction }) => {
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
-                  key={showErrorIcon ? "error" : authState}
+                  key={buttonShowIcon}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
