@@ -6,9 +6,10 @@ import LegalTOSText from "../_components/LegalTOSText";
 import Logo from "@/components/Logo"; // src/components/Logo.tsx
 import Divider from "../_components/Divider";
 import SectionHeader from "../_components/SectionHeader";
-import { useAuthStatus, AuthState } from "@auth/hooks/useAuthStatus";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { useAuthContext } from "../../context/AuthContext";
+import { AuthState } from "../../hooks/useAuthStatus";
 
 function RedirectToSignIn() {
   return (
@@ -26,7 +27,7 @@ function RedirectToSignIn() {
 }
 
 const SignUp = () => {
-  const { authState } = useAuthStatus();
+  const { authState } = useAuthContext();
   return (
     <div className="flex flex-col items-center w-content h-content px-4 py-3">
       {/* Added some margin to the logo to avoid overlapping */}
