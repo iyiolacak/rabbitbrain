@@ -24,33 +24,38 @@ const EmailFormComponent = ({ authAction }: { authAction: AuthAction }) => {
     formState: { errors },
   } = useFormContext<EmailForm>();
 
-  const [showErrorIcon, setShowErrorIcon] = useState(false);
+  const [buttonShowIcon, setButtonShowIcon] = useState<'idle' | 'error' | 'success'>('idle');
 
   useEffect(() => {
     setFocus("email");
-
     if (authState === AuthState.Error) {
-      setShowErrorIcon(true);
+      setButtonShowIcon("error");
       const timer = setTimeout(() => {
-        setShowErrorIcon(false);
+        setButtonShowIcon("idle");
       }, 1000);
-
+      return () => clearTimeout(timer);
+    } else if (authState === AuthState.Success) {
+      setButtonShowIcon("success");
+      const timer = setTimeout(() => {
+        setButtonShowIcon("idle");
+      }, 2000);
       return () => clearTimeout(timer);
     }
   }, [authState, setFocus]);
 
   const renderButtonContent = () => {
-    if (showErrorIcon) {
-      return <X className="mr-2" />;
-    }
-
-    switch (authState) {
-      case AuthState.Success:
-        return <Check />;
-      case AuthState.Submitting:
-        return <LoadingCircle />;
+    switch (buttonShowIcon) {
+      case 'error':
+        return <X className="mr-2" />;
+      case 'success':
+        return <Check className="mr-2" />;
       default:
-        return "Send code";
+        switch (authState) {
+          case AuthState.Submitting:
+            return <LoadingCircle />;
+          default:
+            return "Send code";
+        }
     }
   };
 
