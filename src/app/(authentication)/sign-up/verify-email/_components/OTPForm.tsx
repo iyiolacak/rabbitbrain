@@ -1,17 +1,13 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import {
-  Controller,
-} from "react-hook-form";
+import { Controller } from "react-hook-form";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import {
-  useAuthContext,
-} from "@auth/context/AuthContext";
+import { useAuthContext } from "@auth/context/AuthContext";
 import ErrorDisplay from "@auth/components/ErrorDisplay";
 import { AuthState } from "@auth/hooks/useAuthStatus";
 
@@ -70,6 +66,7 @@ const OTPForm = () => {
                     index={index}
                     shake={!!authServerError}
                     error={!!authServerError}
+                    data-testid={`otp-slot-${index}`} // Add this line
                   />
                 ))}
               </InputOTPGroup>
@@ -81,6 +78,7 @@ const OTPForm = () => {
                     index={index}
                     shake={!!authServerError}
                     error={!!authServerError}
+                    data-testid={`otp-slot-${index}`} // Add this line
                   />
                 ))}
               </InputOTPGroup>
