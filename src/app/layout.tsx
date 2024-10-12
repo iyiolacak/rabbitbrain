@@ -32,7 +32,7 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "rabbitbrain · Rethink learning – free.",
+  title: "rabbitbrain · Learning with no limits—free.",
   description:
     "Stop wasting time on outdated methods. rabbitbrain gives you the tools to learn faster, think smarter, and master anything – for free. No subscriptions, no limits, just results.",
 };
