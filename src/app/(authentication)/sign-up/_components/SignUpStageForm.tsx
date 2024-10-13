@@ -25,10 +25,10 @@ const SignUp = () => {
   const { authState } = useAuthContext();
 
   return (
-    <div className="flex flex-col items-center w-full max-w-md mx-auto px-4 py-8">
+    <div className="flex flex-col items-center w-full max-w-md mx-auto px-4 py-3">
       <Logo
         size="size-8"
-        className="mb-16"
+        className="mb-6 md:mb-16"
         textSize="text-2xl"
       />
       <div className="w-full">
@@ -36,8 +36,8 @@ const SignUp = () => {
           title="Hop Into Rabbitbrain."
           subtitle={
             <>
-              Quick, easy, and free—hop right in!
-              <span className="block mt-2 text-neutral-500">
+              Quick, easy, and free—hop right in!&nbsp;
+              <span className="text-neutral-500">
                 Brain training designed to keep you coming back.
               </span>
             </>
