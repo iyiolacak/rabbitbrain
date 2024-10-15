@@ -7,11 +7,11 @@ import { useAuthContext } from "@auth/context/AuthContext";
 const VerifyEmail = () => {
   const { submittedData } = useAuthContext();
   return (
-    <div className="flex min-h-full w-full items-center justify-center px-4">
+    <div className="flex min-h-full w-full items-center  px-4 max-w-md">
       <div className="flex w-full max-w-md flex-col items-center justify-center">
         <div className="mb-5 text-center">
-          <h2 className="scroll-m-20 font-serif text-3xl font-bold tracking-tight transition-colors first:mt-0">
-            We&apos;ve just sent you an email.
+          <h2 className="mb-5 md:mb-0 font-serif text-3xl md:text-3xl font-bold tracking-tight transition-colors first:mt-0">
+            We&apos;ve just sent<br className="md:hidden"/> you an email.
           </h2>
           <h3 className="scroll-m-20 text-[16px] font-normal tracking-tight md:mt-4">
             Enter the security code we sent to
