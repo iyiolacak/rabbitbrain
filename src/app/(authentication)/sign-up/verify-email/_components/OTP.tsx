@@ -15,7 +15,9 @@ const VerifyEmail = () => {
           </h2>
           <h3 className="scroll-m-20 text-[16px] font-normal tracking-tight md:mt-4">
             Enter the security code we sent to
-            <span className="inline-flex cursor-pointer items-center rounded-md px-1 font-regular text-primary hover:bg-blue-100">
+            <span 
+            onClick={}
+            className="ml-1 inline-flex cursor-pointer items-center justify-start rounded-md px-1 font-regular text-primary hover:bg-primary/10 transition-colors">
               {submittedData?.email}
               <PencilLine className="ml-0.5" size={20} />
             </span>
