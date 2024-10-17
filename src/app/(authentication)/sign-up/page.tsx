@@ -28,7 +28,7 @@ const SignUpPage = () => {
 
   const renderStageContent = useMemo(() => {
     switch (authStage) {
-      case AuthStage.Verifying:
+      case AuthStage.Form:
         return (
           <motion.div
             key="form"
@@ -42,7 +42,7 @@ const SignUpPage = () => {
             <SignUpStageForm />
           </motion.div>
         );
-      case AuthStage.Form:
+      case AuthStage.Verifying:
         return (
           <motion.div
             key="verifying"

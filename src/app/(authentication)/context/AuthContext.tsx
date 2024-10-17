@@ -12,8 +12,7 @@ import {
 } from "@clerk/clerk-react";
 import { ClerkAPIError, SignInResource, SignUpResource } from "@clerk/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import React, { createContext, useContext } from "react";
+import React, { createContext, useCallback, useContext, useState } from "react";
 import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 
@@ -30,10 +29,10 @@ export type EmailForm = z.infer<typeof emailFormSchema>;
 
 export type OTPCodeForm = z.infer<typeof otpCodeSchema>;
 
-
 export interface AuthContextValue {
   authStage: AuthStage;
   onEmailFormSubmit: (data: EmailForm, authAction: AuthAction) => Promise<void>;
+  emailAddress: string | null;
   onOTPFormSubmit: (data: OTPCodeForm) => Promise<void>;
   emailFormMethods: UseFormReturn<EmailForm>;
   OTPFormMethods: UseFormReturn<OTPCodeForm>;
@@ -42,25 +41,22 @@ export interface AuthContextValue {
   authServerError: ClerkAPIError[] | undefined;
   shakeState: Record<string, boolean>;
   setStage: (stage: AuthStage) => void;
+  resendEmailCode: () => Promise<void>;
+  isResendingCode: boolean;
 }
 
-/**
- * Represents the authentication action.
- *
- * @type {"sign-in" | "sign-up" | "forgot-password"}
- */
 export type AuthAction = "sign-up" | "sign-in" | "forgot-password";
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const {
-    isLoaded: isSignUpLoaded, // Sign up
+    isLoaded: isSignUpLoaded,
     signUp,
     setActive: setSignUpActive,
   } = useClerkSignUp();
   const {
-    isLoaded: isSignInLoaded, // Sign in
+    isLoaded: isSignInLoaded,
     signIn,
     setActive: setSignInActive,
   } = useClerkSignIn();
@@ -79,12 +75,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     resetSubmittingState,
   } = useAuthStatus();
 
+  const [emailAddress, setEmailAddress] = useState<string | null>(null);
+
   const handleSignUp = async (data: EmailForm, signUp: SignUpResource) => {
     startSubmission();
     try {
-      await signUp.create({
-        emailAddress: data.email,
-      });
+      await signUp.create({ emailAddress: data.email });
+      setEmailAddress(data.email);
 
       await signUp.prepareEmailAddressVerification({
         strategy: "email_code",
@@ -106,6 +103,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       await signIn.create({
         identifier: data.email,
       });
+      setEmailAddress(data.email);
 
       const supportedFirstFactors = signIn.supportedFirstFactors;
 
@@ -130,6 +128,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       } else {
         throw new Error("No valid verification method found.");
       }
+      setStage(AuthStage.Verifying);
+      markSuccess();
     } catch (error) {
       const clerkErrors = getClerkError(error);
       if (clerkErrors) {
@@ -164,18 +164,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  //
-
   const SUBMISSION_TIMEOUT = 30000; // 30 seconds
 
-  // TODO: Make it both compatible for sign up and sign in as well.
   const onOTPFormSubmit = async (OTPCodeData: OTPCodeForm) => {
     if (!isSignUpLoaded || !isSignInLoaded) return;
 
     startSubmission();
 
     let timeoutId = setTimeout(() => {
-      // Reset submission state after timeout
       resetSubmittingState();
       handleError([
         {
@@ -190,7 +186,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         code: OTPCodeData.OTPCode,
       });
 
-      clearTimeout(timeoutId); // Clear the timeout if the submission completes
+      clearTimeout(timeoutId);
 
       if (attemptSignUpEmail.status === "complete") {
         setStage(AuthStage.Completed);
@@ -198,18 +194,71 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         await setSignUpActive({
           session: signUp.createdSessionId,
         });
-        // router.push("/home");
       } else {
-        console.error(JSON.stringify(attemptSignUpEmail, null, 2)); // pulls up error and next step is; fix this so flow can continue.
+        console.error(JSON.stringify(attemptSignUpEmail, null, 2));
       }
     } catch (error) {
-      const clerkErrors = getClerkError(error); // Returns err.errors | (property) ClerkAPIResponseError.errors: ClerkAPIError[]
-      clearTimeout(timeoutId); // Clear the timeout if an error occurs
+      const clerkErrors = getClerkError(error);
+      clearTimeout(timeoutId);
       if (clerkErrors) {
-        handleError(clerkErrors); // Turns auth state AuthState.Error, gets the errors on the error state to reflect on the UI.
+        handleError(clerkErrors);
       }
     }
   };
+
+  const [isResendingCode, setIsResendingCode] = useState(false);
+
+  const resendEmailCode = useCallback(async () => {
+    if (!signUp || !signIn || authStage !== AuthStage.Verifying) {
+      console.warn(
+        "Cannot resend email code: resources not loaded or incorrect auth stage"
+      );
+      return;
+    }
+
+    setIsResendingCode(true);
+    startSubmission();
+
+    try {
+      if (signUp.status === "missing_requirements") {
+        await signUp.prepareEmailAddressVerification({
+          strategy: "email_code",
+        });
+      } else if (signIn.status === "needs_first_factor") {
+        const emailFactor = signIn.supportedFirstFactors?.find(
+          (factor) => factor.strategy === "email_code"
+        );
+
+        if (!emailFactor || !("emailAddressId" in emailFactor)) {
+          throw new Error("Email verification not available");
+        }
+
+        await signIn.prepareFirstFactor({
+          strategy: "email_code",
+          emailAddressId: emailFactor.emailAddressId,
+        });
+      } else {
+        throw new Error("Unexpected auth state for resending email code");
+      }
+
+      markSuccess();
+    } catch (error) {
+      const clerkErrors = getClerkError(error);
+      if (clerkErrors) {
+        handleError(clerkErrors);
+      } else {
+        console.error(
+          "An unexpected error occurred while resending the email code:",
+          error
+        );
+        handleError([
+          { code: "unexpected_error", message: "An unexpected error occurred" },
+        ]);
+      }
+    } finally {
+      setIsResendingCode(false);
+    }
+  }, [authStage, signUp, signIn, startSubmission, markSuccess, handleError]);
 
   const emailFormMethods = useForm<EmailForm>({
     resolver: zodResolver(emailFormSchema),
@@ -228,7 +277,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     emailFormMethods,
     OTPFormMethods,
     submittedData,
-    setStage
+    setStage,
+    emailAddress,
+    resendEmailCode,
+    isResendingCode,
   };
   return (
     <AuthContext.Provider value={values}>
