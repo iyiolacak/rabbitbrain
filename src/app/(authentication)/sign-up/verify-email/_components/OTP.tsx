@@ -3,9 +3,12 @@ import OTPForm from "./OTPForm";
 import { PencilLine } from "lucide-react";
 import AuthStageIndicator from "../../_components/SignUpStageIndicator";
 import { useAuthContext } from "@auth/context/AuthContext";
+import { useHandleBack } from "@/app/hooks/useHandleBackNavigation";
+import { AuthStage } from "@/app/(authentication)/hooks/useAuthStatus";
 
 const VerifyEmail = () => {
   const { submittedData } = useAuthContext();
+  const handleBack = useHandleBack(AuthStage.Verifying);
   return (
     <div className="flex min-h-full w-full items-center  px-4 max-w-md">
       <div className="flex w-full max-w-md flex-col items-center justify-center">
@@ -16,7 +19,7 @@ const VerifyEmail = () => {
           <h3 className="scroll-m-20 text-[16px] font-normal tracking-tight md:mt-4">
             Enter the security code we sent to
             <span 
-            onClick={}
+            onClick={handleBack}
             className="ml-1 inline-flex cursor-pointer items-center justify-start rounded-md px-1 font-regular text-primary hover:bg-primary/10 transition-colors">
               {submittedData?.email}
               <PencilLine className="ml-0.5" size={20} />
