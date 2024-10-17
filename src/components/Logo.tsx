@@ -8,9 +8,10 @@ type LogoProps = {
   className?: string;
   monochrome?: false | "white" | "black";
   textSize?: string;
+  textHidden?: boolean;
 }
 
-const Logo = ({ size = "9", className = '', monochrome = false, textSize = "text-2xl" }: LogoProps) => {
+const Logo = ({ size = "9", className = '', monochrome = false, textSize = "text-2xl", textHidden = false }: LogoProps) => {
   const logoSrc = monochrome === "white"
     ? '/white_rabbit.png'
     : monochrome === "black"
@@ -31,6 +32,7 @@ const Logo = ({ size = "9", className = '', monochrome = false, textSize = "text
         className={cn(
           "font-playful font-semibold select-none",
           monochrome === "white" ? 'text-white' : 'text-black',
+          textHidden ? 'hidden' : "block",
           textSize // tailwind text size
         )}
       >
