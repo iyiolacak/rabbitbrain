@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuthContext } from "@auth/context/AuthContext";
 import LoadingCircle from "../../_components/LoadingCircle";
+import { SendDiagonalSolid, TimerSolid } from "iconoir-react";
 
 const RESEND_COOLDOWN_SECONDS = 30; // Adjust the cooldown duration as needed
 
@@ -39,22 +40,28 @@ const ResendCode: React.FC = () => {
 
   return (
     <span
-      className={`ml-0.5 rounded-lg p-1 font-medium text-primary hover:bg-primary/10 inline-block transition-all ${
+      className={`ml-0.5 rounded-lg p-1 font-medium text-primary inline-block transition-all ${
         cooldown > 0 || isResendingCode
-          ? "cursor-not-allowed opacity-50"
+          ? "cursor-not-allowed opacity-70"
           : "cursor-pointer"
       }`}
       onClick={handleResendCode}
     >
       {cooldown > 0 ? (
-        `Send a new code in ${cooldown}s`
+        <div className="flex items-center">
+          Send a new code&nbsp;
+          <div className="opacity-100 flex p-1 bg-neutral-200 rounded-lg text-neutral-800 text-sm">
+            {cooldown}
+            <TimerSolid className="ml-1 text-xs" />
+          </div>
+        </div>
       ) : isResendingCode ? (
         <div className="flex items-center text-md text-start">
           <LoadingCircle color="#222222" size={20} />
-          Send a new code
-        </div>
+          <div className="flex items-center">Send a new code&nbsp;<SendDiagonalSolid className="text-primary text-xs"/></div>
+          </div>
       ) : (
-        "Send a new code"
+        <div className="flex items-center">Send a new code&nbsp;<SendDiagonalSolid className="text-primary text-xs"/></div>
       )}
     </span>
   );

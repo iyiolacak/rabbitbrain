@@ -85,7 +85,7 @@ const OTPForm = () => {
           )}
         />
       </div>
-      <div className="min-h-10">
+      <div className="min-h-10 items-center flex justify-center">
         {(errors.OTPCode?.message || authServerError) && (
           <ErrorDisplay
             alertIcon={false}

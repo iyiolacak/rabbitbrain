@@ -51,7 +51,9 @@ export const useAuthStatus = (): UseAuthStatusReturn => {
   >(undefined);
   const [authStage, setAuthStage] = useState<AuthStage>(AuthStage.Form);
   const [shakeState, setShakeState] = useState<Record<string, boolean>>({});
-  const [submittedData, setSubmittedData] = useState<AuthFormValuesType | undefined>(undefined);
+  const [submittedData, setSubmittedData] = useState<
+    AuthFormValuesType | undefined
+  >(undefined);
 
   /**
    * Triggers a visual shake effect for a specific field.
@@ -105,6 +107,8 @@ export const useAuthStatus = (): UseAuthStatusReturn => {
 
   const setStage = (stage: AuthStage) => {
     setAuthStage(stage);
+    setOAuthServerError(undefined);
+    setAuthServerError(undefined);
   };
 
   const resetSubmittingState = () => {

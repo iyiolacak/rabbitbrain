@@ -1,15 +1,14 @@
 "use client";
 import OTPForm from "./OTPForm";
-import { PencilLine } from "lucide-react";
-import AuthStageIndicator from "../../_components/SignUpStageIndicator";
 import { useAuthContext } from "@auth/context/AuthContext";
 import { useHandleBack } from "@/app/hooks/useHandleBackNavigation";
 import { AuthStage } from "@/app/(authentication)/hooks/useAuthStatus";
 import ResendCode from "./ResendOTPCode";
+import { EditPencil } from "iconoir-react";
 
 const VerifyEmail = () => {
   const { submittedData } = useAuthContext();
-  const handleBack = useHandleBack(AuthStage.Verifying);
+  const handleBack = useHandleBack(AuthStage.Form);
 
   return (
     <div className="flex min-h-full w-full px-4 max-w-md mx-auto">
@@ -22,10 +21,10 @@ const VerifyEmail = () => {
             Enter the security code we sent to
             <span
               onClick={handleBack}
-              className="ml-1 inline-flex cursor-pointer items-center rounded-md px-1 font-regular text-primary hover:bg-primary/10 transition-colors break-all"
+              className="ml-1 inline-flex cursor-pointer items-center rounded-md px-1 font-regular text-blue-600 transition-colors break-all"
             >
-              {submittedData?.email}terathefire@hotmail.com
-              <PencilLine className="ml-0.5 flex-shrink-0" size={20} />
+              {submittedData?.email}
+              <EditPencil className="ml-0.5 flex-shrink-0 text-xs" />
             </span>
           </h3>
         </div>
