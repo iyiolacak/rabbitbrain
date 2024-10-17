@@ -45,8 +45,8 @@ const InputOTPSlot = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "relative flex items-center justify-center md:rounded-3xl border text-xl transition-all",
-        "w-12 h-12 mx-1 rounded-2xl", // base size for mobile
+        "relative flex items-center justify-center md:rounded-3xl md:mx-2 border text-xl transition-all",
+        "w-12 h-12 mx-0.5 rounded-2xl", // base size for mobile
         "sm:w-12 sm:h-12 sm:mx-[2px]", // slightly larger for small screens
         "md:w-14 md:h-14 md:mx-[2px]", // larger for medium screens
         "lg:w-16 lg:h-16 lg:mx-[2px]", // original size for large screens
