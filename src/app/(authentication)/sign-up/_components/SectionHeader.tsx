@@ -7,6 +7,7 @@ const SectionHeader = ({
   title: string;
   subtitle: ReactNode;
 }) => {
+
   return (
     <div className="md:mb-6">
       <h2 className={`scroll-m-20 text-4xl font-serif font-bold tracking-tight transition-colors first:mt-0 md:mt-5 md:pb-1`}>

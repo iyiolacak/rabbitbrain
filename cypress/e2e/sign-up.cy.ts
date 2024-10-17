@@ -1,27 +1,25 @@
-describe("Rabbitbrain Authentication Flow - UI Redirection", () => {
-  beforeEach(() => {
-    // Visit the sign-up page before each test
-    cy.visit("/sign-up");
+// cypress/integration/authentication_flow.spec.js
 
-    // Preserve cookies and local storage across test steps to avoid Clerk session issues
-    cy.getCookies().then((cookies) => {
-      cookies.forEach((cookie) => {
-        cy.setCookie(cookie.name, cookie.value);
-      });
-    });
+describe("Rabbitbrain Authentication Flow - UI Redirection", () => {
+  // Handle uncaught exceptions, specifically ignoring ClerkJS errors
+  Cypress.on("uncaught:exception", (err) => {
+    if (err.message.includes("ClerkJS") || err.stack.includes("clerk")) {
+      console.warn("ClerkJS initialization error:", err);
+      return false; // Prevent Clerk errors from failing the test
+    }
+    throw err; // Let other exceptions fail the test
   });
 
-  // Handle uncaught exceptions, specifically ignoring ClerkJS errors
-  Cypress.on("uncaught:exception", (err, runnable) => {
-    if (err.message.includes("ClerkJS") || err.stack.includes("clerk")) {
-      return false; // prevent Clerk errors from failing the test
-    }
-    // Let other exceptions fail the test
-    return true;
+  beforeEach(() => {
+    // Visit the sign-up page and ensure it's fully loaded
+    cy.visit("/sign-up");
+    cy.contains("Sign up").should("be.visible");
+
+    // Wait for ClerkJS to initialize
+    cy.window().its("Clerk").should("exist");
   });
 
   it("should allow user to enter email and proceed with OTP flow", () => {
-
     // Enter the email address and submit the form
     cy.get('input[name="email"]').type("test+clerk_test@example.com");
     cy.get("button").contains("Send code").click();
@@ -30,7 +28,7 @@ describe("Rabbitbrain Authentication Flow - UI Redirection", () => {
     cy.contains("We've just sent you an email").should("be.visible");
 
     // Simulate entering the OTP code into the input fields
-    const otp = ['4', '2', '4', '2', '4', '2'];
+    const otp = ["4", "2", "4", "2", "4", "2"];
     otp.forEach((digit, index) => {
       cy.get(`[data-testid="otp-slot-${index}"]`).type(digit);
     });
@@ -39,6 +37,6 @@ describe("Rabbitbrain Authentication Flow - UI Redirection", () => {
     cy.get("button").contains("Verify").click();
 
     // Check for redirection or UI elements that only appear after successful login
-    cy.contains("Just a second while we set things up...").should("be.visible"); // Example of post-login confirmation
+    cy.contains("Just a second while we set things up...").should("be.visible");
   });
 });

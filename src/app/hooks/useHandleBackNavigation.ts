@@ -4,16 +4,18 @@ import { useCallback } from "react";
 
 /**
  * Custom hook to handle back action in the authentication flow.
- * Allows moving between different authentication stages, such as moving back from the OTP stage to the form stage.
+ * Allows moving between different authentication stages.
+ * @param {AuthStage} targetStage - The stage to move back to.
+ * @returns {() => void} A function to handle the back action.
  */
-export const useHandleBack = () => {
+export const useHandleBack = (targetStage: AuthStage = AuthStage.Form) => {
   const { authStage, setStage } = useAuthContext();
 
   const handleBack = useCallback(() => {
-    if (authStage === AuthStage.Verifying) {
-      setStage(AuthStage.Form); // Move back to the form stage when verifying
+    if (authStage !== targetStage) {
+      setStage(targetStage);
     }
-  }, [authStage, setStage]);
+  }, [authStage, setStage, targetStage]);
 
   return handleBack;
 };
