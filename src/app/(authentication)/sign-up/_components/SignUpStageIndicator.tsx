@@ -49,7 +49,7 @@ const AuthStageIndicator = ({ outOf, authAction }: AuthStageIndicatorProps) => {
 
   const filledStages = useMemo(() => {
     return Array.from({ length: stage }, (_, index) => (
-      <div key={index} className="flex h-2 flex-grow rounded-full bg-gray-200">
+      <div key={index} className="flex h-2 md:h-2.5 flex-grow rounded-full bg-gray-200">
         <motion.div
           className="h-full w-[100%] rounded-full bg-primary"
           initial={{ scaleX: 0 }}

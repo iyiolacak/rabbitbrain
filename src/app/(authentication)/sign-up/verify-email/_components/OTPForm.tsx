@@ -40,7 +40,6 @@ const OTPForm = () => {
   }, [authState]);
   const formRef = useRef<HTMLFormElement>(null);
   console.log(authState === AuthState.Success); // Check this before the return statement
-
   return (
     <form ref={formRef} onSubmit={handleSubmit(onOTPFormSubmit)}>
       <div className={`flex items-center justify-center`}>
@@ -70,7 +69,7 @@ const OTPForm = () => {
                   />
                 ))}
               </InputOTPGroup>
-              <InputOTPSeparator />
+              <InputOTPSeparator className="hidden md:block"/>
               <InputOTPGroup>
                 {[3, 4, 5].map((index) => (
                   <InputOTPSlot

@@ -27,8 +27,8 @@ const SignUp = () => {
   return (
     <div className="flex flex-col items-center w-full max-w-md mx-auto px-4 py-3">
       <Logo
-        size="size-8"
-        className="mb-6 md:mb-16"
+        size="size-7 md:size-8"
+        className="pt-2 mb-6 md:mb-16"
         textSize="text-2xl"
       />
       <div className="w-full">
