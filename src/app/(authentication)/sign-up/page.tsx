@@ -13,9 +13,9 @@ import { useAuthRedirect } from "@/app/hooks/useAuthRedirect";
 import { useUser } from "@clerk/clerk-react";
 
 const transitionVariants = {
-  initial: {opacity: 0, x: 150 },
-  animate: {opacity: 1, x: 0 },
-  exit: {opacity: 0, x: -150 },
+  initial: { opacity: 0, x: 150 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -150 },
 };
 
 const SignUpPage = () => {

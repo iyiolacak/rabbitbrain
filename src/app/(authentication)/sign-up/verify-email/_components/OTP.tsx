@@ -18,10 +18,10 @@ const VerifyEmail = () => {
             We&apos;ve just sent you an email.
           </h2>
           <h3 className="scroll-m-20 text-sm md:text-base font-normal tracking-tight py-5">
-            Enter the security code we sent to
+            Enter the security code we sent to&nbsp;
             <span
               onClick={handleBack}
-              className="ml-1 inline-flex cursor-pointer items-center rounded-md px-1 font-regular text-blue-600 transition-colors break-all"
+              className="inline-flex cursor-pointer items-center rounded-md px-1 font-regular text-blue-700 transition-colors break-all"
             >
               {submittedData?.email}
               <EditPencil className="ml-0.5 flex-shrink-0 text-xs" />
@@ -31,8 +31,7 @@ const VerifyEmail = () => {
         <OTPForm />
         <div className="mt-10 text-center w-full">
           <h3 className="text-sm md:text-base font-normal tracking-tight">
-            Need another code?{' '}
-            <ResendCode/>
+            Need another code? <ResendCode />
           </h3>
         </div>
       </div>
