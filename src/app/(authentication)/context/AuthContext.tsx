@@ -1,4 +1,19 @@
 "use client";
+
+// External libraries
+import React, { createContext, useCallback, useContext, useState } from "react";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
+
+// Clerk imports
+import {
+  useSignUp as useClerkSignUp,
+  useSignIn as useClerkSignIn,
+} from "@clerk/clerk-react";
+import { ClerkAPIError, SignInResource, SignUpResource } from "@clerk/types";
+
+// Auth-related utilities and hooks
 import { getClerkError } from "@auth/clerkErrorHandler";
 import {
   AuthFormValuesType,
@@ -6,15 +21,7 @@ import {
   AuthState,
   useAuthStatus,
 } from "@auth/hooks/useAuthStatus";
-import {
-  useSignUp as useClerkSignUp,
-  useSignIn as useClerkSignIn,
-} from "@clerk/clerk-react";
-import { ClerkAPIError, SignInResource, SignUpResource } from "@clerk/types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React, { createContext, useCallback, useContext, useState } from "react";
-import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
-import { z } from "zod";
+
 
 // Validation schema as z object - are sent to OTPForm component.
 export const otpCodeSchema = z.object({

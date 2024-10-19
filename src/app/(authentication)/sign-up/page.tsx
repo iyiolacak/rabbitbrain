@@ -1,17 +1,21 @@
 "use client";
+
 // External libraries
 import React, { useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavArrowLeft } from "iconoir-react";
 import { useUser } from "@clerk/clerk-react";
+
 // UI components
 import { Button } from "@/components/ui/button";
+
 // Auth-related components and hooks
 import SignUpStageForm from "./_components/SignUpStageForm";
 import VerifyEmail from "./verify-email/_components/OTP";
 import AuthCompleted from "./_components/AuthCompleted";
 import { useAuthContext } from "@auth/context/AuthContext";
 import { AuthStage } from "@auth/hooks/useAuthStatus";
+
 // Custom hooks
 import { useHandleBack } from "@/app/hooks/useHandleBackNavigation";
 import { useAuthRedirect } from "@/app/hooks/useAuthRedirect";
@@ -28,7 +32,10 @@ const SignUpPage = () => {
   const handleBack = useHandleBack();
   const { authStage } = useAuthContext();
 
-  const transitionCubicBezier = useMemo(() => [0.05, 0.66, 0.32, 0.92], []);
+  const transitionSettings = useMemo(() => ({
+    duration: 0.2,
+    ease: [0.05, 0.66, 0.32, 0.92],
+  }), []);
 
   const renderStageContent = useMemo(() => {
     switch (authStage) {
@@ -40,7 +47,7 @@ const SignUpPage = () => {
             animate="animate"
             exit="exit"
             variants={transitionVariants}
-            transition={{ duration: 0.2, ease: transitionCubicBezier }}
+            transition={transitionSettings}
             className="h-full"
           >
             <SignUpStageForm />
@@ -54,7 +61,7 @@ const SignUpPage = () => {
             animate="animate"
             exit="exit"
             variants={transitionVariants}
-            transition={{ duration: 0.2, ease: transitionCubicBezier }}
+            transition={transitionSettings}
             className="h-full"
           >
             <Button onClick={handleBack} variant="ghost">
@@ -71,7 +78,7 @@ const SignUpPage = () => {
             animate="animate"
             exit="exit"
             variants={transitionVariants}
-            transition={{ duration: 0.2, ease: transitionCubicBezier }}
+            transition={transitionSettings}
             className="h-full"
           >
             <AuthCompleted />
@@ -80,7 +87,7 @@ const SignUpPage = () => {
       default:
         return null;
     }
-  }, [authStage, handleBack, transitionCubicBezier]);
+  }, [authStage, handleBack, transitionSettings]);
 
   return (
     <div className="h-full flex justify-center items-center">
