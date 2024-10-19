@@ -1,16 +1,20 @@
 "use client";
+// External libraries
 import React, { useMemo } from "react";
-import SignUpStageForm from "./_components/SignUpStageForm";
-import { useAuthContext } from "@auth/context/AuthContext";
-import VerifyEmail from "./verify-email/_components/OTP";
 import { motion, AnimatePresence } from "framer-motion";
-import { AuthStage } from "@auth/hooks/useAuthStatus";
-import AuthCompleted from "./_components/AuthCompleted";
-import { Button } from "@/components/ui/button";
 import { NavArrowLeft } from "iconoir-react";
+import { useUser } from "@clerk/clerk-react";
+// UI components
+import { Button } from "@/components/ui/button";
+// Auth-related components and hooks
+import SignUpStageForm from "./_components/SignUpStageForm";
+import VerifyEmail from "./verify-email/_components/OTP";
+import AuthCompleted from "./_components/AuthCompleted";
+import { useAuthContext } from "@auth/context/AuthContext";
+import { AuthStage } from "@auth/hooks/useAuthStatus";
+// Custom hooks
 import { useHandleBack } from "@/app/hooks/useHandleBackNavigation";
 import { useAuthRedirect } from "@/app/hooks/useAuthRedirect";
-import { useUser } from "@clerk/clerk-react";
 
 const transitionVariants = {
   initial: { opacity: 0, x: 150 },
