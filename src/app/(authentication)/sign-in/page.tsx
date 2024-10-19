@@ -1,14 +1,107 @@
-import React from 'react'
-import SignInPage from './_components/SignInPage'
+"use client";
 
-// TODO: add AuthStage conditional rendering
+// External libraries
+import React, { useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { NavArrowLeft } from "iconoir-react";
+import { useUser } from "@clerk/clerk-react";
 
-const SignIn = () => {
+// UI components
+import { Button } from "@/components/ui/button";
+
+// Auth-related components and hooks
+import VerifyEmail from "./verify-email/_components/OTP";
+import AuthCompleted from "./_components/AuthCompleted";
+import { useAuthContext } from "@auth/context/AuthContext";
+import { AuthStage } from "@auth/hooks/useAuthStatus";
+
+// Custom hooks
+import { useHandleBack } from "@/app/hooks/useHandleBackNavigation";
+import { useAuthRedirect } from "@/app/hooks/useAuthRedirect";
+import SignInPage from "./_components/SignInPage";
+
+const transitionVariants = {
+  initial: { opacity: 0, x: 150 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -150 },
+};
+
+const SignUpPage = () => {
+  const { isLoaded, user } = useUser();
+
+  // Redirect logic if user data is loaded
+  useAuthRedirect({ isLoaded, user });
+
+  const handleBack = useHandleBack();
+  const { authStage } = useAuthContext();
+
+  const transitionSettings = useMemo(
+    () => ({
+      duration: 0.2,
+      ease: [0.05, 0.66, 0.32, 0.92],
+    }),
+    []
+  );
+
+  const renderStageContent = useMemo(() => {
+    switch (authStage) {
+      case AuthStage.Form:
+        return (
+          <motion.div
+            key="form"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={transitionVariants}
+            transition={transitionSettings}
+            className="h-full"
+            >
+            <SignInPage/>
+          </motion.div>
+        );
+      case AuthStage.Verifying:
+        return (
+          <motion.div
+          key="verifying"
+          initial="initial"
+          animate="animate"
+          exit="exit"
+            variants={transitionVariants}
+            transition={transitionSettings}
+            className="h-full"
+          >
+            <Button onClick={handleBack} variant="ghost">
+              <NavArrowLeft />
+            </Button>
+            <VerifyEmail authAction />
+          </motion.div>
+        );
+      case AuthStage.Completed:
+        return (
+          <motion.div
+            key="completed"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={transitionVariants}
+            transition={transitionSettings}
+            className="h-full"
+          >
+            <AuthCompleted />
+          </motion.div>
+        );
+      default:
+        return null;
+    }
+  }, [authStage, handleBack, transitionSettings]);
+
   return (
-    <div className='flex w-full h-full'>
-      <SignInPage/>
-            </div>
-  )
-}
+    <div className="h-full flex justify-center items-center">
+      <AnimatePresence mode="wait" initial={false}>
+        {renderStageContent}
+      </AnimatePresence>
+    </div>
+  );
+};
 
-export default SignIn
+export default SignUpPage;

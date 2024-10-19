@@ -28,14 +28,20 @@ const transitionVariants = {
 
 const SignUpPage = () => {
   const { isLoaded, user } = useUser();
+
+  // Redirect logic if user data is loaded
   useAuthRedirect({ isLoaded, user });
+
   const handleBack = useHandleBack();
   const { authStage } = useAuthContext();
 
-  const transitionSettings = useMemo(() => ({
-    duration: 0.2,
-    ease: [0.05, 0.66, 0.32, 0.92],
-  }), []);
+  const transitionSettings = useMemo(
+    () => ({
+      duration: 0.2,
+      ease: [0.05, 0.66, 0.32, 0.92],
+    }),
+    []
+  );
 
   const renderStageContent = useMemo(() => {
     switch (authStage) {

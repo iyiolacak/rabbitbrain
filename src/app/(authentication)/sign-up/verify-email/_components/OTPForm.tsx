@@ -1,23 +1,26 @@
-"use client";
-import React, { useEffect, useRef } from "react";
-import { Controller } from "react-hook-form";
+'use client';
+
+import React, { useEffect, useRef } from 'react';
+import { Controller } from 'react-hook-form';
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "@/components/ui/input-otp";
-import { useAuthContext } from "@auth/context/AuthContext";
-import ErrorDisplay from "@auth/components/ErrorDisplay";
-import { AuthState } from "@auth/hooks/useAuthStatus";
+} from '@/components/ui/input-otp';
+import { useAuthContext } from '@auth/context/AuthContext';
+import ErrorDisplay from '@auth/components/ErrorDisplay';
+import { AuthState } from '@auth/hooks/useAuthStatus';
 
-//
 // TODO: The OTP input validation schema will be handled better.
-//
+
 const OTPForm = () => {
-  const { onOTPFormSubmit, OTPFormMethods, authState, authServerError } =
-    useAuthContext();
-  console.log(authState === AuthState.Success); // Check this before the return statement
+  const {
+    onOTPFormSubmit,
+    OTPFormMethods,
+    authState,
+    authServerError,
+  } = useAuthContext();
 
   const {
     handleSubmit,
@@ -25,37 +28,30 @@ const OTPForm = () => {
     formState: { errors },
   } = OTPFormMethods;
 
-  const [showError, setShowError] = React.useState(false);
-
   const OTPInputRef = useRef<HTMLInputElement | null>(null);
-
-  useEffect(() => {
-    OTPInputRef.current?.focus();
-  }, []);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (authState !== AuthState.Submitting) {
       OTPInputRef.current?.focus();
     }
   }, [authState]);
-  const formRef = useRef<HTMLFormElement>(null);
-  console.log(authState === AuthState.Success); // Check this before the return statement
+
   return (
     <form ref={formRef} onSubmit={handleSubmit(onOTPFormSubmit)}>
-      <div className={`flex items-center justify-center`}>
+      <div className='flex items-center justify-center'>
         <Controller
-          name="OTPCode"
+          name='OTPCode'
           control={control}
-          defaultValue=""
+          defaultValue=''
           render={({ field: { onChange, value } }) => (
             <InputOTP
-              id="otp"
+              id='otp'
               maxLength={6}
               value={value}
               onChange={onChange}
               onComplete={handleSubmit(onOTPFormSubmit)}
               ref={OTPInputRef}
-              // onSubmit={handleOTPComplete}
               disabled={authState === AuthState.Submitting}
             >
               <InputOTPGroup>
@@ -65,11 +61,11 @@ const OTPForm = () => {
                     index={index}
                     shake={!!authServerError}
                     error={!!authServerError}
-                    data-testid={`otp-slot-${index}`} // Add this line
+                    data-testid={`otp-slot-${index}`}
                   />
                 ))}
               </InputOTPGroup>
-              <InputOTPSeparator className="hidden md:block"/>
+              <InputOTPSeparator className='hidden md:block' />
               <InputOTPGroup>
                 {[3, 4, 5].map((index) => (
                   <InputOTPSlot
@@ -77,7 +73,7 @@ const OTPForm = () => {
                     index={index}
                     shake={!!authServerError}
                     error={!!authServerError}
-                    data-testid={`otp-slot-${index}`} // Add this line
+                    data-testid={`otp-slot-${index}`}
                   />
                 ))}
               </InputOTPGroup>
@@ -85,11 +81,11 @@ const OTPForm = () => {
           )}
         />
       </div>
-      <div className="min-h-10 items-center flex justify-center">
+      <div className='min-h-10 flex items-center justify-center'>
         {(errors.OTPCode?.message || authServerError) && (
           <ErrorDisplay
             alertIcon={false}
-            className="flex justify-center"
+            className='flex justify-center'
             errors={errors.OTPCode?.message || authServerError}
           />
         )}
