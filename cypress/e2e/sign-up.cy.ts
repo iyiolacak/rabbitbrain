@@ -3,7 +3,7 @@
 describe("Rabbitbrain Authentication Flow - UI Redirection", () => {
   // Handle uncaught exceptions, specifically ignoring ClerkJS errors
   Cypress.on("uncaught:exception", (err) => {
-    if (err.message.includes("ClerkJS") || err.stack.includes("clerk")) {
+    if (err.message.includes("ClerkJS") || err.stack?.includes("clerk")) {
       console.warn("ClerkJS initialization error:", err);
       return false; // Prevent Clerk errors from failing the test
     }
