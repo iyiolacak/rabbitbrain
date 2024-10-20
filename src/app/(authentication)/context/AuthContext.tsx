@@ -1,4 +1,4 @@
-"use client";
+""use client";
 
 // External libraries
 import React, { createContext, useCallback, useContext, useState } from "react";
@@ -21,7 +21,7 @@ import {
   AuthState,
   useAuthStatus,
 } from "@auth/hooks/useAuthStatus";
-
+import useAuthAction from "@/app/hooks/auth/useAuthAction";
 
 // Validation schema as z object - are sent to OTPForm component.
 export const otpCodeSchema = z.object({
@@ -275,6 +275,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   });
 
   const values: AuthContextValue = {
+    authAction,
     authState,
     authServerError,
     shakeState,

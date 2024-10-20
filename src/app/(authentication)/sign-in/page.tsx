@@ -10,8 +10,6 @@ import { useUser } from "@clerk/clerk-react";
 import { Button } from "@/components/ui/button";
 
 // Auth-related components and hooks
-import VerifyEmail from "./verify-email/_components/OTP";
-import AuthCompleted from "./_components/AuthCompleted";
 import { useAuthContext } from "@auth/context/AuthContext";
 import { AuthStage } from "@auth/hooks/useAuthStatus";
 
@@ -19,6 +17,8 @@ import { AuthStage } from "@auth/hooks/useAuthStatus";
 import { useHandleBack } from "@/app/hooks/useHandleBackNavigation";
 import { useAuthRedirect } from "@/app/hooks/useAuthRedirect";
 import SignInPage from "./_components/SignInPage";
+import VerifyEmail from "../sign-up/verify-email/_components/OTP";
+import AuthCompleted from "../sign-up/_components/AuthCompleted";
 
 const transitionVariants = {
   initial: { opacity: 0, x: 150 },
@@ -73,7 +73,7 @@ const SignUpPage = () => {
             <Button onClick={handleBack} variant="ghost">
               <NavArrowLeft />
             </Button>
-            <VerifyEmail authAction />
+            <VerifyEmail />
           </motion.div>
         );
       case AuthStage.Completed:

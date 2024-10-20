@@ -114,7 +114,11 @@ export const useAuthStatus = (): UseAuthStatusReturn => {
   const resetSubmittingState = () => {
     setAuthState(AuthState.Idle);
   };
-
+/**
+ * resetAuth Resets the entire authentication state, errors, and form stage.
+ * 
+ * Clears the authentication state, any errors, and shake effects, and resets the form to its initial state.
+ */
   const resetAuth = () => {
     setAuthState(AuthState.Idle);
     setOAuthServerError(undefined);
