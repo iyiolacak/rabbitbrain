@@ -1,4 +1,4 @@
-import { useAuthContext } from "../(authentication)/context/AuthContext";
+import { useAuthContext } from "@auth/context/AuthContext";
 import { AuthStage } from "@auth/hooks/useAuthStatus";
 import { useCallback } from "react";
 

@@ -37,10 +37,11 @@ export type EmailForm = z.infer<typeof emailFormSchema>;
 export type OTPCodeForm = z.infer<typeof otpCodeSchema>;
 
 export interface AuthContextValue {
+  authAction: AuthAction | null;
   authStage: AuthStage;
   onEmailFormSubmit: (data: EmailForm, authAction: AuthAction) => Promise<void>;
   emailAddress: string | null;
-  onOTPFormSubmit: (data: OTPCodeForm) => Promise<void>;
+  onOTPFormSubmit: (authAction: AuthAction | null, data: OTPCodeForm) => Promise<void>;
   emailFormMethods: UseFormReturn<EmailForm>;
   OTPFormMethods: UseFormReturn<OTPCodeForm>;
   submittedData: AuthFormValuesType | undefined;
@@ -52,7 +53,7 @@ export interface AuthContextValue {
   isResendingCode: boolean;
 }
 
-export type AuthAction = "sign-up" | "sign-in" | "forgot-password";
+export type AuthAction = "sign-up" | "sign-in" | "reset-password";
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
@@ -81,6 +82,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     shakeState,
     resetSubmittingState,
   } = useAuthStatus();
+
+  const { authAction } = useAuthAction();
 
   const [emailAddress, setEmailAddress] = useState<string | null>(null);
 
@@ -145,36 +148,40 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const onEmailFormSubmit = async (data: EmailForm, authAction: AuthAction) => {
-    console.log(data, "is the received data");
-    console.log(authAction, "is the auth action");
+  const onEmailFormSubmit = async (
+    data: EmailForm,
+    authAction: AuthAction | null
+  ) => {
     switch (authAction) {
+      case null: {
+        handleInvalidAuthAction();
+      }
       case "sign-up":
         if (!isSignUpLoaded) {
-          console.warn("Sign-up not loaded yet");
           return;
         }
-        handleSignUp(data, signUp);
-        console.log("Switch: Sign up case triggered on submit");
+        await handleSignUp(data, signUp);
         break;
       case "sign-in":
         if (!isSignInLoaded) {
-          console.warn("Sign-in not loaded yet");
           return;
         }
-        console.log("Switch: Sign in case triggered on submit");
-        handleSignIn(data, signIn);
+        await handleSignIn(data, signIn);
         break;
       default:
-        console.error(`Unknown auth action: ${authAction}`);
         throw new Error(`Unsupported auth action: ${authAction}`);
     }
   };
 
   const SUBMISSION_TIMEOUT = 30000; // 30 seconds
 
-  const onOTPFormSubmit = async (OTPCodeData: OTPCodeForm) => {
-    if (!isSignUpLoaded || !isSignInLoaded) return;
+  const onOTPFormSubmit = async (
+    authAction: AuthAction,
+    OTPCodeData: OTPCodeForm
+  ) => {
+    if (!isSignUpLoaded || !isSignInLoaded) {
+      return;
+    }
 
     startSubmission();
 

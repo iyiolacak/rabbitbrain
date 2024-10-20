@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ClerkAPIError } from "@clerk/types";
-import { EmailForm } from "@auth/context/AuthContext";
+import { AuthAction, EmailForm } from "@auth/context/AuthContext";
 
 export enum AuthState {
   Idle = "Idle",
@@ -18,6 +18,8 @@ export enum AuthStage {
 export type AuthFormValuesType = EmailForm;
 
 type UseAuthStatusReturn = {
+  authAction: null | AuthAction;
+  setAuthAction: (authAction: AuthAction) => void;
   authState: AuthState;
   authServerError: ClerkAPIError[] | undefined;
   authStage: AuthStage;
@@ -37,11 +39,18 @@ type UseAuthStatusReturn = {
 };
 
 /**
- * useAuthStatus - A hook to manage authentication states, stages, and errors.
+ * useAuthStatus - A custom hook to manage authentication states, stages, and errors.
  *
- * @returns {UseAuthStatusReturn} - The current authentication state, error information, and handlers.
+ * This hook provides utilities for handling the authentication process, including managing 
+ * submission states, errors, and different stages of authentication flow. It is intended to 
+ * be used within the AuthContext to track and control the auth flow.
+ *
+ * @returns {UseAuthStatusReturn} An object containing authentication state, error handling,
+ * and utility functions such as starting a submission, marking success, handling errors, 
+ * and resetting the auth process.
  */
 export const useAuthStatus = (): UseAuthStatusReturn => {
+  const [authAction, setAuthAction] = useState<AuthAction | null>(null)
   const [authState, setAuthState] = useState<AuthState>(AuthState.Idle);
   const [authServerError, setAuthServerError] = useState<
     ClerkAPIError[] | undefined
@@ -129,6 +138,8 @@ export const useAuthStatus = (): UseAuthStatusReturn => {
   };
 
   return {
+    authAction,
+    setAuthAction,
     authState,
     authServerError,
     startSubmission,
