@@ -13,18 +13,20 @@ const useAuthAction = () => {
 
   const setAction = useCallback(
     (action: AuthAction) => {
-      resetAuth();
+      resetAuth(); // Resetting authentication before setting action
       setAuthAction(action);
     },
-    [resetAuth] // Ensuring setAction has the latest reference to resetAuth
+    [resetAuth] // Dependencies should include resetAuth to avoid stale closures
   );
 
   const handleFallback = useCallback(() => {
+    // Handles any unknown routes by defaulting to "sign-in"
     setAction("sign-in");
     router.push("/sign-in");
   }, [setAction, router]);
 
   useEffect(() => {
+    // Dynamic routing logic that sets the corresponding action
     switch (router.pathname) {
       case "/sign-in":
         setAction("sign-in");
@@ -40,7 +42,7 @@ const useAuthAction = () => {
     }
   }, [router.pathname, setAction, handleFallback]);
 
-  return { authAction };
+  return { authAction }; // Returning the current authAction state
 };
 
 export default useAuthAction;

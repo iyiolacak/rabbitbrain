@@ -10,6 +10,7 @@ import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
 import {
   useSignUp as useClerkSignUp,
   useSignIn as useClerkSignIn,
+  useAuth,
 } from "@clerk/clerk-react";
 import { ClerkAPIError, SignInResource, SignUpResource } from "@clerk/types";
 
@@ -56,6 +57,8 @@ export interface AuthContextValue {
 export type AuthAction = "sign-up" | "sign-in" | "reset-password";
 
 const AuthContext = createContext<AuthContextValue | null>(null);
+
+const { authAction } = useAuthAction();
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const {
@@ -148,31 +151,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const onEmailFormSubmit = async (
-    data: EmailForm,
-    authAction: AuthAction | null
-  ) => {
+  const onEmailFormSubmit = async (data: EmailForm) => {
     switch (authAction) {
-      case null: {
-        handleInvalidAuthAction();
-      }
       case "sign-up":
-        if (!isSignUpLoaded) {
-          return;
-        }
+        if (!isSignUpLoaded) return;
         await handleSignUp(data, signUp);
         break;
       case "sign-in":
-        if (!isSignInLoaded) {
-          return;
-        }
+        if (!isSignInLoaded) return;
         await handleSignIn(data, signIn);
         break;
+      case "reset-password":
+        console.log("Reset password form submission");
+        return;
       default:
         throw new Error(`Unsupported auth action: ${authAction}`);
     }
   };
-
+  
   const SUBMISSION_TIMEOUT = 30000; // 30 seconds
 
   const onOTPFormSubmit = async (
