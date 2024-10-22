@@ -40,9 +40,9 @@ export type OTPCodeForm = z.infer<typeof otpCodeSchema>;
 export interface AuthContextValue {
   authAction: AuthAction | null;
   authStage: AuthStage;
-  onEmailFormSubmit: (data: EmailForm, authAction: AuthAction) => Promise<void>;
+  onEmailFormSubmit: (data: EmailForm) => Promise<void>;
   emailAddress: string | null;
-  onOTPFormSubmit: (authAction: AuthAction | null, data: OTPCodeForm) => Promise<void>;
+  onOTPFormSubmit: (data: OTPCodeForm) => Promise<void>;
   emailFormMethods: UseFormReturn<EmailForm>;
   OTPFormMethods: UseFormReturn<OTPCodeForm>;
   submittedData: AuthFormValuesType | undefined;
@@ -168,11 +168,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         throw new Error(`Unsupported auth action: ${authAction}`);
     }
   };
-  
+
   const SUBMISSION_TIMEOUT = 30000; // 30 seconds
 
   const onOTPFormSubmit = async (
-    authAction: AuthAction,
     OTPCodeData: OTPCodeForm
   ) => {
     if (!isSignUpLoaded || !isSignInLoaded) {

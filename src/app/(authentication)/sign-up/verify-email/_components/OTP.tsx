@@ -1,7 +1,7 @@
 "use client";
 import OTPForm from "./OTPForm";
 import { useAuthContext } from "@auth/context/AuthContext";
-import { useHandleBack } from "@/app/hooks/useHandleBackNavigation";
+import { useHandleBack } from "@/app/hooks/auth/useHandleBackNavigation";
 import { AuthStage } from "@/app/(authentication)/hooks/useAuthStatus";
 import ResendCode from "./ResendOTPCode";
 import { EditPencil } from "iconoir-react";
