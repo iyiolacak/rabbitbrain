@@ -2,11 +2,13 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/router";
-import { AuthAction } from "@/app/(authentication)/context/AuthContext";
-import { useAuthStatus } from "@/app/(authentication)/hooks/useAuthStatus";
-
+import {
+  AuthAction,
+  useAuthContext,
+} from "@/app/(authentication)/context/AuthContext";
+0
 const useAuthAction = () => {
-  const { resetAuth } = useAuthStatus();
+  const { resetAuth } = useAuthContext();
   const router = useRouter();
 
   const [authAction, setAuthAction] = useState<AuthAction | null>(null);
@@ -15,6 +17,7 @@ const useAuthAction = () => {
     (action: AuthAction) => {
       resetAuth(); // Resetting authentication before setting action
       setAuthAction(action);
+      console.log(action);
     },
     [resetAuth] // Dependencies should include resetAuth to avoid stale closures
   );

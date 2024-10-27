@@ -1,4 +1,4 @@
-""use client";
+"use client";
 
 // External libraries
 import React, { createContext, useCallback, useContext, useState } from "react";
@@ -52,13 +52,13 @@ export interface AuthContextValue {
   setStage: (stage: AuthStage) => void;
   resendEmailCode: () => Promise<void>;
   isResendingCode: boolean;
+  resetAuth: () => void;
 }
 
 export type AuthAction = "sign-up" | "sign-in" | "reset-password";
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-const { authAction } = useAuthAction();
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const {
@@ -83,6 +83,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     authState,
     authServerError,
     shakeState,
+    resetAuth,
     resetSubmittingState,
   } = useAuthStatus();
 
@@ -291,6 +292,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     emailAddress,
     resendEmailCode,
     isResendingCode,
+    resetAuth
   };
   return (
     <AuthContext.Provider value={values}>
