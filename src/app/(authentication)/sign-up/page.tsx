@@ -96,7 +96,7 @@ const SignUpPage = () => {
   }, [authStage, handleBack, transitionSettings]);
 
   return (
-    <div className="h-full flex justify-center items-center">
+    <div className="h-full min-w-3xl flex justify-center items-center">
       <AnimatePresence mode="wait" initial={false}>
         {renderStageContent}
       </AnimatePresence>
