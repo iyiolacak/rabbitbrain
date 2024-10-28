@@ -3,7 +3,6 @@ import { useEffect, useState, useCallback } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import {
   AuthAction,
-  useAuthContext,
 } from "@/app/(authentication)/context/AuthContext";
 import { useAuthStatus } from "@/app/(authentication)/hooks/useAuthStatus";
 
@@ -45,6 +44,7 @@ const useAuthAction = () => {
       default:
         handleFallback();
     }
+    console.log("re-rendered dumbass")
   }, [pathname, setAction, handleFallback]);
 
   return { authAction }; // Returning the current authAction state

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { ClerkAPIError } from "@clerk/types";
 import { AuthAction, EmailForm } from "@auth/context/AuthContext";
 
@@ -128,14 +128,14 @@ export const useAuthStatus = (): UseAuthStatusReturn => {
  * 
  * Clears the authentication state, any errors, and shake effects, and resets the form to its initial state.
  */
-  const resetAuth = () => {
+  const resetAuth = useCallback(() => {
     setAuthState(AuthState.Idle);
     setOAuthServerError(undefined);
     setAuthServerError(undefined);
     setShakeState({});
     setStage(AuthStage.Form);
     setSubmittedData(undefined);
-  };
+  }, [  ]);
 
   return {
     authAction,
