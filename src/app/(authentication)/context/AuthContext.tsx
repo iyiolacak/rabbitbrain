@@ -1,20 +1,13 @@
 "use client";
-
-// External libraries
 import React, { createContext, useCallback, useContext, useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
-
-// Clerk imports
 import {
   useSignUp as useClerkSignUp,
   useSignIn as useClerkSignIn,
-  useAuth,
 } from "@clerk/clerk-react";
 import { ClerkAPIError, SignInResource, SignUpResource } from "@clerk/types";
-
-// Auth-related utilities and hooks
 import { getClerkError } from "@auth/clerkErrorHandler";
 import {
   AuthFormValuesType,
@@ -24,7 +17,13 @@ import {
 } from "@auth/hooks/useAuthStatus";
 import useAuthAction from "@/app/hooks/auth/useAuthAction";
 
-// Validation schema as z object - are sent to OTPForm component.
+// ============================================================================
+// Type Definitions and Schemas
+// ============================================================================
+
+export type AuthAction = "sign-up" | "sign-in" | "reset-password";
+
+// Validation schemas
 export const otpCodeSchema = z.object({
   OTPCode: z.string().min(6, "The one-time password must be 6 digits long"),
 });
@@ -34,38 +33,47 @@ const emailFormSchema = z.object({
 });
 
 export type EmailForm = z.infer<typeof emailFormSchema>;
-
 export type OTPCodeForm = z.infer<typeof otpCodeSchema>;
 
+// Context interface
 export interface AuthContextValue {
   authAction: AuthAction | null;
   authStage: AuthStage;
-  onEmailFormSubmit: (data: EmailForm) => Promise<void>;
-  emailAddress: string | null;
-  onOTPFormSubmit: (data: OTPCodeForm) => Promise<void>;
-  emailFormMethods: UseFormReturn<EmailForm>;
-  OTPFormMethods: UseFormReturn<OTPCodeForm>;
-  submittedData: AuthFormValuesType | undefined;
   authState: AuthState;
   authServerError: ClerkAPIError[] | undefined;
   shakeState: Record<string, boolean>;
+  emailAddress: string | null;
+  submittedData: AuthFormValuesType | undefined;
+  isResendingCode: boolean;
+  emailFormMethods: UseFormReturn<EmailForm>;
+  OTPFormMethods: UseFormReturn<OTPCodeForm>;
+  onEmailFormSubmit: (data: EmailForm) => Promise<void>;
+  onOTPFormSubmit: (data: OTPCodeForm) => Promise<void>;
   setStage: (stage: AuthStage) => void;
   resendEmailCode: () => Promise<void>;
-  isResendingCode: boolean;
   resetAuth: () => void;
 }
 
-export type AuthAction = "sign-up" | "sign-in" | "reset-password";
+// ============================================================================
+// Context Creation
+// ============================================================================
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
+// ============================================================================
+// Authentication Provider Component
+// ============================================================================
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  // Initialize hooks and state
   const {
     isLoaded: isSignUpLoaded,
     signUp,
     setActive: setSignUpActive,
   } = useClerkSignUp();
+
   const {
     isLoaded: isSignInLoaded,
     signIn,
@@ -88,8 +96,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   } = useAuthStatus();
 
   const { authAction } = useAuthAction();
-
   const [emailAddress, setEmailAddress] = useState<string | null>(null);
+  const [isResendingCode, setIsResendingCode] = useState(false);
+
+  // Form methods initialization
+  const emailFormMethods = useForm<EmailForm>({
+    resolver: zodResolver(emailFormSchema),
+  });
+
+  const OTPFormMethods = useForm<OTPCodeForm>({
+    resolver: zodResolver(otpCodeSchema),
+  });
+
+  // ============================================================================
+  // Authentication Handlers
+  // ============================================================================
 
   const handleSignUp = async (data: EmailForm, signUp: SignUpResource) => {
     startSubmission();
@@ -100,14 +121,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       await signUp.prepareEmailAddressVerification({
         strategy: "email_code",
       });
+
       setSubmittedData(data);
       setStage(AuthStage.Verifying);
       markSuccess();
     } catch (error) {
       const clerkErrors = getClerkError(error);
-      if (clerkErrors) {
-        handleError(clerkErrors);
-      }
+      if (clerkErrors) handleError(clerkErrors);
     }
   };
 
@@ -120,11 +140,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setEmailAddress(data.email);
 
       const supportedFirstFactors = signIn.supportedFirstFactors;
-
       const emailCodeFactor = supportedFirstFactors?.find(
         (factor) => factor.strategy === "email_code"
       );
-
       const phoneCodeFactor = supportedFirstFactors?.find(
         (factor) => factor.strategy === "phone_code"
       );
@@ -142,15 +160,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       } else {
         throw new Error("No valid verification method found.");
       }
+
       setStage(AuthStage.Verifying);
       markSuccess();
     } catch (error) {
       const clerkErrors = getClerkError(error);
-      if (clerkErrors) {
-        handleError(clerkErrors);
-      }
+      if (clerkErrors) handleError(clerkErrors);
     }
   };
+
+  // ============================================================================
+  // Form Submission Handlers
+  // ============================================================================
 
   const onEmailFormSubmit = async (data: EmailForm) => {
     switch (authAction) {
@@ -172,16 +193,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const SUBMISSION_TIMEOUT = 30000; // 30 seconds
 
-  const onOTPFormSubmit = async (
-    OTPCodeData: OTPCodeForm
-  ) => {
-    if (!isSignUpLoaded || !isSignInLoaded) {
-      return;
-    }
+  const onOTPFormSubmit = async (OTPCodeData: OTPCodeForm) => {
+    if (!isSignUpLoaded || !isSignInLoaded) return;
 
     startSubmission();
-
-    let timeoutId = setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       resetSubmittingState();
       handleError([
         {
@@ -208,15 +224,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         console.error(JSON.stringify(attemptSignUpEmail, null, 2));
       }
     } catch (error) {
-      const clerkErrors = getClerkError(error);
       clearTimeout(timeoutId);
-      if (clerkErrors) {
-        handleError(clerkErrors);
-      }
+      const clerkErrors = getClerkError(error);
+      if (clerkErrors) handleError(clerkErrors);
     }
   };
-
-  const [isResendingCode, setIsResendingCode] = useState(false);
 
   const resendEmailCode = useCallback(async () => {
     if (!signUp || !signIn || authStage !== AuthStage.Verifying) {
@@ -270,14 +282,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [authStage, signUp, signIn, startSubmission, markSuccess, handleError]);
 
-  const emailFormMethods = useForm<EmailForm>({
-    resolver: zodResolver(emailFormSchema),
-  });
-  const OTPFormMethods = useForm<OTPCodeForm>({
-    resolver: zodResolver(otpCodeSchema),
-  });
+  // ============================================================================
+  // Context Provider Setup
+  // ============================================================================
 
-  const values: AuthContextValue = {
+  const contextValue: AuthContextValue = {
     authAction,
     authState,
     authServerError,
@@ -292,14 +301,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     emailAddress,
     resendEmailCode,
     isResendingCode,
-    resetAuth
+    resetAuth,
   };
+
   return (
-    <AuthContext.Provider value={values}>
+    <AuthContext.Provider value={contextValue}>
       <FormProvider {...emailFormMethods}>{children}</FormProvider>
     </AuthContext.Provider>
   );
 };
+
+// ============================================================================
+// Custom Hook
+// ============================================================================
 
 export const useAuthContext = () => {
   const context = useContext(AuthContext);
@@ -309,6 +323,4 @@ export const useAuthContext = () => {
   return context;
 };
 
-const authContextModule = { useAuthContext, AuthProvider };
-
-export default authContextModule;
+export default { useAuthContext, AuthProvider };

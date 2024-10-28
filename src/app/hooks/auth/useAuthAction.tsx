@@ -1,23 +1,25 @@
 "use client";
-
 import { useEffect, useState, useCallback } from "react";
-import { useRouter } from "next/router";
+import { usePathname, useRouter } from "next/navigation";
 import {
   AuthAction,
   useAuthContext,
 } from "@/app/(authentication)/context/AuthContext";
-0
+import { useAuthStatus } from "@/app/(authentication)/hooks/useAuthStatus";
+
 const useAuthAction = () => {
-  const { resetAuth } = useAuthContext();
+  const pathname = usePathname();
   const router = useRouter();
+
+  const { resetAuth } = useAuthStatus();
 
   const [authAction, setAuthAction] = useState<AuthAction | null>(null);
 
   const setAction = useCallback(
     (action: AuthAction) => {
-      resetAuth(); // Resetting authentication before setting action
       setAuthAction(action);
       console.log(action);
+      resetAuth();
     },
     [resetAuth] // Dependencies should include resetAuth to avoid stale closures
   );
@@ -30,7 +32,7 @@ const useAuthAction = () => {
 
   useEffect(() => {
     // Dynamic routing logic that sets the corresponding action
-    switch (router.pathname) {
+    switch (pathname) {
       case "/sign-in":
         setAction("sign-in");
         break;
@@ -43,7 +45,7 @@ const useAuthAction = () => {
       default:
         handleFallback();
     }
-  }, [router.pathname, setAction, handleFallback]);
+  }, [pathname, setAction, handleFallback]);
 
   return { authAction }; // Returning the current authAction state
 };

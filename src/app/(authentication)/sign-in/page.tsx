@@ -14,8 +14,8 @@ import { useAuthContext } from "@auth/context/AuthContext";
 import { AuthStage } from "@auth/hooks/useAuthStatus";
 
 // Custom hooks
-import { useHandleBack } from "@/app/hooks/useHandleBackNavigation";
-import { useAuthRedirect } from "@/app/hooks/useAuthRedirect";
+import { useHandleBack } from "@/app/hooks/auth/useHandleBackNavigation";
+import { useAuthRedirect } from "@/app/hooks/auth/useAuthRedirect";
 import SignInPage from "./_components/SignInPage";
 import VerifyEmail from "../sign-up/verify-email/_components/OTP";
 import AuthCompleted from "../sign-up/_components/AuthCompleted";
