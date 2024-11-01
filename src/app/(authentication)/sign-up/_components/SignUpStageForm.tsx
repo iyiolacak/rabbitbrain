@@ -30,13 +30,13 @@ const SignUp = () => {
   return (
     <div className="flex flex-col items-center w-full h-full max-w-md w:min-w-3xl mx-auto px-4 py-3">
       <div className="flex h-full flex-col items-center justify-center mb-10">
-      <Logo
-        size="size-8 md:size-9"
-        className="mb-8"
-        textSize="text-2xl"
-        textHidden
-        monochrome="black"
-      />
+        <Logo
+          size="size-8 md:size-9"
+          className="mb-8"
+          textSize="text-2xl"
+          textHidden
+          monochrome="black"
+        />
         <div className="w-full">
           <SectionHeader
             title="Hop Into Rabbitbrain."

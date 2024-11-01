@@ -112,25 +112,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   // Authentication Handlers
   // ============================================================================
 
-  const handleSignUp = async (data: EmailForm, signUp: SignUpResource) => {
-    startSubmission();
-    try {
-      await signUp.create({ emailAddress: data.email });
-      setEmailAddress(data.email);
-
-      await signUp.prepareEmailAddressVerification({
-        strategy: "email_code",
-      });
-
-      setSubmittedData(data);
-      setStage(AuthStage.Verifying);
-      markSuccess();
-    } catch (error) {
-      const clerkErrors = getClerkError(error);
-      if (clerkErrors) handleError(clerkErrors);
-    }
-  };
-
   const handleSignIn = async (data: EmailForm, signIn: SignInResource) => {
     startSubmission();
     try {
