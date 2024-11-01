@@ -7,7 +7,11 @@ import { Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { AuthState } from "@auth/hooks/useAuthStatus";
-import { AuthAction, EmailForm, useAuthContext } from "@auth/context/AuthContext";
+import {
+  AuthAction,
+  EmailForm,
+  useAuthContext,
+} from "@auth/context/AuthContext";
 import AnimatedInput from "./AnimatedInput";
 import ErrorDisplay from "@auth/components/ErrorDisplay";
 import LoadingCircle from "./LoadingCircle";
@@ -23,14 +27,19 @@ const EmailFormComponent = ({ authAction }: { authAction: AuthAction }) => {
     formState: { errors },
   } = useFormContext<EmailForm>();
 
-  const [buttonIcon, setButtonIcon] = useState<"idle" | "error" | "success">("idle");
+  const [buttonIcon, setButtonIcon] = useState<"idle" | "error" | "success">(
+    "idle"
+  );
 
   useEffect(() => {
     setFocus("email");
-    
+
     if (authState === AuthState.Error || authState === AuthState.Success) {
       setButtonIcon(authState === AuthState.Error ? "error" : "success");
-      const timer = setTimeout(() => setButtonIcon("idle"), BUTTON_ICON_DURATION);
+      const timer = setTimeout(
+        () => setButtonIcon("idle"),
+        BUTTON_ICON_DURATION
+      );
       return () => clearTimeout(timer);
     }
   }, [authState, setFocus]);
@@ -39,13 +48,17 @@ const EmailFormComponent = ({ authAction }: { authAction: AuthAction }) => {
     const iconMap = {
       error: <X className="mr-2" />,
       success: <Check className="mr-2" />,
-      idle: authState === AuthState.Submitting ? <LoadingCircle /> : "Send code",
+      idle:
+        authState === AuthState.Submitting ? <LoadingCircle /> : "Send code",
     };
     return iconMap[buttonIcon];
   };
 
   return (
-    <form onSubmit={handleSubmit((data) => onEmailFormSubmit(data, authAction))} className="w-full">
+    <form
+      onSubmit={handleSubmit((data) => onEmailFormSubmit(data))}
+      className="w-full"
+    >
       <div className="flex flex-col gap-y-4">
         <Controller
           name="email"
