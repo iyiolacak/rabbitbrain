@@ -42,13 +42,17 @@ export interface AuthContextValue {
   authState: AuthState;
   authServerError: ClerkAPIError[] | undefined;
   shakeState: Record<string, boolean>;
-  emailAddress: string | null;
+
   submittedData: AuthFormValuesType | undefined;
+  setSubmittedData: (data: AuthFormValuesType) => void;
   isResendingCode: boolean;
+
   emailFormMethods: UseFormReturn<EmailForm>;
   OTPFormMethods: UseFormReturn<OTPCodeForm>;
+
   onEmailFormSubmit: (data: EmailForm) => Promise<void>;
   onOTPFormSubmit: (data: OTPCodeForm) => Promise<void>;
+
   setStage: (stage: AuthStage) => void;
   resendEmailCode: () => Promise<void>;
   resetAuth: () => void;
@@ -277,6 +281,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     onOTPFormSubmit,
     emailFormMethods,
     OTPFormMethods,
+    setSubmittedData,
     submittedData,
     setStage,
     emailAddress,
