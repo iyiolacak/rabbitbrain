@@ -15,7 +15,7 @@ Rabbitbrain is an **open-source platform** designed to sharpen your brain throug
 
 - **AI-Powered Challenges**: Engage with custom challenges that are generated in real-time using advanced AI models.
 - **Community Contributions**: Create, share, and tackle user-generated challenges to keep the platform fresh and evolving.
-- **Completely Free & Open-Source**: No subscriptions, no fees—Rabbitbrain is free for everyone, forever.
+- **Completely Free & Open-Source**: No subscriptions, no fees. Rabbitbrain is free for everyone, forever.
 - **Gamified Learning**: Earn **Brain LP**, level up, and track your progress as you challenge your mind.
 - **Customizable**: Create personalized challenges or let the AI guide you through new ones, all tailored to your pace.
 
@@ -55,10 +55,10 @@ Your app should be running on http://localhost:3000.
 ---
 
 ## 🧠 Contributing to Rabbitbrain
-Rabbitbrain is community-driven, and contributions are what make it thrive! Here's how you can help:
+Rabbitbrain is community-driven, and contributions are what make it thrive. Here's how you can help:
 
 1. **Create new challenges:**
-Whether you're into math, logic, science, biology, psychology or even communication—add your own brain-busting problems for the community to solve.
+Whether you're into math, logic, science, biology, psychology or even communication - add your own brain-busting problems for the community to solve.
 
 2. **Improve the platform:**
 Got ideas for new features or bug fixes? Fork the repo, make your changes, and submit a pull request.
