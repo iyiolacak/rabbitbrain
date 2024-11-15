@@ -3,7 +3,7 @@
 import { EmailForm } from "@/app/(authentication)/context/AuthContext";
 import { useState } from "react";
 
-const useAuthData = <T>(initialValue?: T) => {
+const useStoreAuthData = <T>(initialValue?: T) => {
   // An object with email data
   const [authData, setAuthData] = useState<T | undefined>(initialValue);
   return {
@@ -12,4 +12,4 @@ const useAuthData = <T>(initialValue?: T) => {
   };
 };
 1
-export default useAuthData;
+export default useStoreAuthData;
