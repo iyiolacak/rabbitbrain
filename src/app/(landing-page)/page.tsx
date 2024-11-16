@@ -1,7 +1,5 @@
 "use client";
 import React from "react";
-import { FaGithub } from "react-icons/fa"; // move this down if not used
-import { motion } from "framer-motion"; // keep externals up top
 
 // Internal components
 import HeroSection from "./_components/HeroSection";

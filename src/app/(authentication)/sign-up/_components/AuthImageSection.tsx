@@ -10,6 +10,7 @@ const AuthImageSection = () => {
           src="/background.webp"
           alt="background image"
           fill
+          priority
           className="z-0 object-cover object-center"
         />
         {/* Gradient overlay */}
