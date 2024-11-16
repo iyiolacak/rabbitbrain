@@ -16,6 +16,7 @@ import {
   useAuthStatus,
 } from "@auth/hooks/useAuthStatus";
 import useAuthAction from "@/app/hooks/auth/useAuthAction";
+import { AuthHandlers, handleSignIn, handleSignUp } from "@/app/hooks/auth/AuthHandlers";
 
 // ============================================================================
 // Type Definitions and Schemas
@@ -56,6 +57,15 @@ export interface AuthContextValue {
   setStage: (stage: AuthStage) => void;
   resendEmailCode: () => Promise<void>;
   resetAuth: () => void;
+}
+
+export interface UseAuthHandlersParams {
+  signUp: SignUpResource;
+  signIn: SignInResource;
+  authAction: AuthAction;
+  authHandlers: AuthHandlers;
+  isSignUpLoaded: boolean;
+  isSignInLoaded: boolean;
 }
 
 // ============================================================================
@@ -113,60 +123,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   });
 
   // ============================================================================
-  // Authentication Handlers
-  // ============================================================================
-
-  const handleSignIn = async (data: EmailForm, signIn: SignInResource) => {
-    startSubmission();
-    try {
-      await signIn.create({
-        identifier: data.email,
-      });
-      setEmailAddress(data.email);
-
-      const supportedFirstFactors = signIn.supportedFirstFactors;
-      const emailCodeFactor = supportedFirstFactors?.find(
-        (factor) => factor.strategy === "email_code"
-      );
-      const phoneCodeFactor = supportedFirstFactors?.find(
-        (factor) => factor.strategy === "phone_code"
-      );
-
-      if (emailCodeFactor) {
-        await signIn.prepareFirstFactor({
-          strategy: "email_code",
-          emailAddressId: emailCodeFactor.emailAddressId,
-        });
-      } else if (phoneCodeFactor) {
-        await signIn.prepareFirstFactor({
-          strategy: "phone_code",
-          phoneNumberId: phoneCodeFactor.phoneNumberId,
-        });
-      } else {
-        throw new Error("No valid verification method found.");
-      }
-
-      setStage(AuthStage.Verifying);
-      markSuccess();
-    } catch (error) {
-      const clerkErrors = getClerkError(error);
-      if (clerkErrors) handleError(clerkErrors);
-    }
-  };
-
-  // ============================================================================
   // Form Submission Handlers
   // ============================================================================
 
   const onEmailFormSubmit = async (data: EmailForm) => {
+    const authHandlerUtils = {
+      startSubmission,
+      markSuccess,
+      setStage,
+      setSubmittedData,
+      handleError,
+    };
     switch (authAction) {
       case "sign-up":
         if (!isSignUpLoaded) return;
-        await handleSignUp(data, signUp);
+        await handleSignUp(data, signUp, authHandlerUtils);
         break;
       case "sign-in":
         if (!isSignInLoaded) return;
-        await handleSignIn(data, signIn);
+        await handleSignIn(data, signIn, authHandlerUtils);
         break;
       case "reset-password":
         console.log("Reset password form submission");
@@ -284,7 +259,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setSubmittedData,
     submittedData,
     setStage,
-    emailAddress,
     resendEmailCode,
     isResendingCode,
     resetAuth,
