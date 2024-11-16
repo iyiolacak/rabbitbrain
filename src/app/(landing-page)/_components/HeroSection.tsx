@@ -1,9 +1,21 @@
+"use client";
 import HeroTitle from "./HeroTitle";
 import { Button } from "@/components/ui/button";
 import HeroBackgroundImage from "./HeroBackgroundImage";
 import useNavigation from "@/app/hooks/useNavigation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+
 
 const HeroSection = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.prefetch('/sign-up');
+    router.prefetch('/sign-in');
+    console.log("prefetched sign up and in")
+  }, [router])
   // Single title with multiple lines
   const heroTitles: string[] = ["AI-Powered Challenges,", "Built by You."];
   const heroTitleWords: string[][] = heroTitles.map((line) => line.split(" "));
