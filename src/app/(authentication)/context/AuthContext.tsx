@@ -22,7 +22,7 @@ import { AuthHandlers, handleSignIn, handleSignUp } from "@/app/hooks/auth/AuthH
 // Type Definitions and Schemas
 // ============================================================================
 
-export type AuthAction = "sign-up" | "sign-in" | "reset-password";
+export type AuthFlow = "sign-up" | "sign-in" | "reset-password";
 
 // Validation schemas
 export const otpCodeSchema = z.object({
@@ -38,7 +38,7 @@ export type OTPCodeForm = z.infer<typeof otpCodeSchema>;
 
 // Context interface
 export interface AuthContextValue {
-  authAction: AuthAction | null;
+  authFlow: AuthFlow | null;
   authStage: AuthStage;
   authState: AuthState;
   authServerError: ClerkAPIError[] | undefined;
