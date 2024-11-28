@@ -1,10 +1,11 @@
-import { getClerkError } from "@/app/(authentication)/clerkErrorHandler";
+import { getClerkError } from "@/app/features/authentication/clerkErrorHandler";
 import { useAuthStatus } from "./useAuthStatus";
-import { useSignUp } from "@clerk/clerk-react"; 
+import { useSignUp } from "@clerk/clerk-react";
 import { OAuthStrategy } from "@clerk/types";
 
 export const useOAuthHandler = () => {
-  const { startSubmission, markSuccess, handleOAuthServerError, resetAuth } = useAuthStatus();
+  const { startSubmission, markSuccess, handleOAuthServerError, resetAuth } =
+    useAuthStatus();
   const { signUp } = useSignUp();
 
   const handleOAuthClick = async (strategy: OAuthStrategy) => {

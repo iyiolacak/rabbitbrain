@@ -1,6 +1,6 @@
 "use client";
 
-import { EmailForm } from "@/app/(authentication)/context/AuthContext";
+import { EmailForm } from "@/app/features/authentication/context/AuthContext";
 import { useState } from "react";
 
 const useStoreAuthData = <T>(initialValue?: T) => {

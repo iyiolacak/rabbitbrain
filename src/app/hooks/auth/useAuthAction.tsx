@@ -3,8 +3,8 @@ import { useEffect, useState, useCallback } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import {
   AuthAction,
-} from "@/app/(authentication)/context/AuthContext";
-import { useAuthStatus } from "@/app/(authentication)/hooks/useAuthStatus";
+} from "@/app/features/authentication/context/AuthContext";
+import { useAuthStatus } from "@/app/features/authentication/hooks/useAuthStatus";
 
 const useAuthAction = () => {
   const pathname = usePathname();

@@ -8,9 +8,9 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { useAuthContext } from "@auth/context/AuthContext";
-import ErrorDisplay from "@auth/components/ErrorDisplay";
-import { AuthState } from "@auth/hooks/useAuthStatus";
+import { useAuthContext } from "@/app/features/authentication/context/AuthContext";
+import ErrorDisplay from "@/app/features/authentication/components/ErrorDisplay";
+import { AuthState } from "@/app/features/authentication/hooks/useAuthStatus";
 
 // TODO: The OTP input validation schema will be handled better.
 

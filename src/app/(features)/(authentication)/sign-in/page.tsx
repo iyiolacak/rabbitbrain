@@ -10,15 +10,15 @@ import { useUser } from "@clerk/clerk-react";
 import { Button } from "@/components/ui/button";
 
 // Auth-related components and hooks
-import SignUpStageForm from "./_components/SignUpStageForm";
-import VerifyEmail from "./verify-email/_components/OTP";
-import AuthCompleted from "./_components/AuthCompleted";
-import { useAuthContext } from "@auth/context/AuthContext";
-import { AuthStage } from "@auth/hooks/useAuthStatus";
+import { useAuthContext } from "@/app/features/authentication/context/AuthContext";
+import { AuthStage } from "@/app/features/authentication/hooks/useAuthStatus";
 
 // Custom hooks
 import { useHandleBack } from "@/app/hooks/auth/useHandleBackNavigation";
 import { useAuthRedirect } from "@/app/hooks/auth/useAuthRedirect";
+import SignInPage from "./_components/SignInPage";
+import VerifyEmail from "../sign-up/verify-email/_components/OTP";
+import AuthCompleted from "../sign-up/_components/AuthCompleted";
 
 const transitionVariants = {
   initial: { opacity: 0, x: 150 },
@@ -55,17 +55,17 @@ const SignUpPage = () => {
             variants={transitionVariants}
             transition={transitionSettings}
             className="h-full"
-          >
-            <SignUpStageForm />
+            >
+            <SignInPage/>
           </motion.div>
         );
       case AuthStage.Verifying:
         return (
           <motion.div
-            key="verifying"
-            initial="initial"
-            animate="animate"
-            exit="exit"
+          key="verifying"
+          initial="initial"
+          animate="animate"
+          exit="exit"
             variants={transitionVariants}
             transition={transitionSettings}
             className="h-full"
@@ -96,7 +96,7 @@ const SignUpPage = () => {
   }, [authStage, handleBack, transitionSettings]);
 
   return (
-    <div className="h-full min-w-3xl flex justify-center items-center">
+    <div className="h-full flex justify-center items-center">
       <AnimatePresence mode="wait" initial={false}>
         {renderStageContent}
       </AnimatePresence>

@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { ClerkAPIError } from "@clerk/types";
-import { AuthAction, EmailForm } from "@auth/context/AuthContext";
+import { AuthFlow, EmailForm } from "@/app/features/authentication/context/AuthContext";
 
 export enum AuthState {
   Idle = "Idle",
@@ -18,8 +18,8 @@ export enum AuthStage {
 export type AuthFormValuesType = EmailForm;
 
 type UseAuthStatusReturn = {
-  authAction: null | AuthAction;
-  setAuthAction: (authAction: AuthAction) => void;
+  authAction: null | AuthFlow;
+  setAuthAction: (authAction: AuthFlow) => void;
   authState: AuthState;
   authServerError: ClerkAPIError[] | undefined;
   authStage: AuthStage;
@@ -50,7 +50,7 @@ type UseAuthStatusReturn = {
  * and resetting the auth process.
  */
 export const useAuthStatus = (): UseAuthStatusReturn => {
-  const [authAction, setAuthAction] = useState<AuthAction | null>(null)
+  const [authAction, setAuthAction] = useState<AuthFlow | null>(null)
   const [authState, setAuthState] = useState<AuthState>(AuthState.Idle);
   const [authServerError, setAuthServerError] = useState<
     ClerkAPIError[] | undefined
@@ -120,6 +120,9 @@ export const useAuthStatus = (): UseAuthStatusReturn => {
     setAuthServerError(undefined);
   };
 
+  /**
+   * sets AuthState on Idle * 
+  */
   const resetSubmittingState = () => {
     setAuthState(AuthState.Idle);
   };

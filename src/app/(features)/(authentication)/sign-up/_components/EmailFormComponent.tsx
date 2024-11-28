@@ -6,14 +6,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { AuthState } from "@auth/hooks/useAuthStatus";
+import { AuthState } from "@/app/features/authentication/hooks/useAuthStatus";
 import {
   AuthAction,
   EmailForm,
   useAuthContext,
-} from "@auth/context/AuthContext";
+} from "@/app/features/authentication/context/AuthContext";
 import AnimatedInput from "./AnimatedInput";
-import ErrorDisplay from "@auth/components/ErrorDisplay";
+import ErrorDisplay from "@/app/features/authentication/components/ErrorDisplay";
 import LoadingCircle from "./LoadingCircle";
 
 const BUTTON_ICON_DURATION = 2000;

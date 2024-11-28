@@ -5,11 +5,11 @@ import { useSignUp } from "@clerk/nextjs";
 import { OAuthStrategy } from "@clerk/types";
 import React from "react";
 import { oauthMapping } from "./oauthMapping";
-import { useAuthContext } from "@auth/context/AuthContext";
-import ErrorDisplay from "@auth/components/ErrorDisplay";
-import { AuthState, useAuthStatus } from "@auth/hooks/useAuthStatus";
+import { useAuthContext } from "@/app/features/authentication/context/AuthContext";
+import ErrorDisplay from "@/app/features/authentication/components/ErrorDisplay";
+import { AuthState, useAuthStatus } from "@/app/features/authentication/hooks/useAuthStatus";
 import LoadingCircle from "./LoadingCircle";
-import useOAuthHandler from "@auth/hooks/useOAuthHandler";
+import useOAuthHandler from "@/app/features/authentication/hooks/useOAuthHandler";
 
 type OAuthButtonProps = {
   strategy: OAuthStrategy;
