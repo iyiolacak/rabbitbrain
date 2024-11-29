@@ -8,7 +8,7 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { useAuthContext } from "@/app/features/authentication/context/AuthContext";
+import { useAuthContext } from "@auth/app/features/authentication/context/AuthContext";
 import ErrorDisplay from "@/app/features/authentication/components/ErrorDisplay";
 import { AuthState } from "@/app/features/authentication/hooks/useAuthStatus";
 
