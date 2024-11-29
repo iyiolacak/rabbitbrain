@@ -207,7 +207,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
     setIsResendingCode(true);
     try {
-      await prepareEmailCodeResend();
+      await prepareEmailCodeResend(signUp, signIn);
       util.markSuccess();
     } catch (error) {
       handleAuthErrors(error);
