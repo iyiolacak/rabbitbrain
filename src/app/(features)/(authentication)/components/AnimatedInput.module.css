@@ -1,0 +1,21 @@
+@layer components {
+  /* The floating label effect */
+  .floating-label {
+    @apply absolute top-1/2 transform -translate-y-1/2 text-gray-500 text-base transition-all duration-200 ease-in-out;
+  }
+
+  /* Move the label when the input is focused or has a value */
+  input:focus + .floating-label,
+  input:not(:placeholder-shown) + .floating-label {
+    @apply top-1 transform translate-y-0 text-sm font-medium text-black;
+  }
+
+  /* Ensure the placeholder is hidden when not focused */
+  input::placeholder {
+    opacity: 0;
+  }
+
+  input:focus::placeholder {
+    opacity: 1;
+  }
+}

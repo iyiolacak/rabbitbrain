@@ -4,6 +4,7 @@ import React, { forwardRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import "@/app/globals.css";
 import { AlertCircleIcon, EyeIcon, EyeOffIcon } from "lucide-react";
+import styles from './AnimatedInput.module.css';
 
 interface AnimatedInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
