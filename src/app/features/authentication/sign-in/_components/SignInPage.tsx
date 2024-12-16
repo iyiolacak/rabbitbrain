@@ -7,7 +7,7 @@ import Divider from "../../sign-up/_components/Divider";
 import LegalTOSText from "../../sign-up/_components/LegalTOSText";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import EmailFormComponent from "../../sign-up/_components/EmailFormComponent";
+import EmailFormComponent from "../../components/shared/EmailFormComponent";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/clerk-react";
 import { AuthState, useAuthStatus } from "../../hooks/useAuthStatus";

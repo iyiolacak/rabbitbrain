@@ -180,4 +180,3 @@ export const handleResendCode = async (
     const clerkErrors = getClerkError(error);
     if (clerkErrors) utils.handleError(clerkErrors);
   }
-};

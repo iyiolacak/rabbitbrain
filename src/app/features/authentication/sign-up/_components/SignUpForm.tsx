@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useAuthContext } from "../../context/AuthContext";
 import { AuthState } from "../../hooks/useAuthStatus";
-import EmailFormComponent from "./EmailFormComponent";
+import EmailFormComponent from "../../components/shared/EmailFormComponent";
 import OAuthSignInButton from "./OAuthSignInButton";
 import LegalTOSText from "./LegalTOSText";
 import Logo from "@/components/Logo";
@@ -24,7 +24,7 @@ const RedirectToSignIn = () => (
   </p>
 );
 
-const SignUp = () => {
+const SignUpForm = () => {
   const { authState } = useAuthContext();
 
   return (
@@ -66,4 +66,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUpForm;

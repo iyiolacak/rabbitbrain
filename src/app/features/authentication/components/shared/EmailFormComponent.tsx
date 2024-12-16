@@ -8,10 +8,11 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { AuthState } from "@/app/features/authentication/hooks/useAuthStatus";
 import {
-  AuthActionz,
+  AuthAction,
   EmailForm,
   useAuthContext
-} from "@/app/features/authentication/context/AuthContext
+} from "@/app/features/authentication/context/AuthContext";
+const {
     control,
     handleSubmit,
     setFocus,

@@ -1,6 +1,6 @@
 import React from "react";
 import AuthImageSection from "@/app/features/authentication/sign-up/_components/AuthImageSection";
-import AuthStageIndicator from "@/app/features/authentication/sign-up/_components/SignUpStageIndicator";
+import AuthStageIndicator from "@/app/features/authentication/sign-up/_components/AuthStageIndicator";
 import { AuthProvider } from "@/app/features/authentication/context/AuthContext";
 import { Metadata } from "next";
 

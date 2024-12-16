@@ -6,7 +6,7 @@ import { OAuthStrategy } from "@clerk/types";
 import React from "react";
 import { oauthMapping } from "./oauthMapping";
 import { useAuthContext } from "@/app/features/authentication/context/AuthContext";
-import ErrorDisplay from "@/app/features/authentication/components/ErrorDisplay";
+import ErrorDisplay from "@/app/features/authentication/components/shared/ErrorDisplay";
 import { AuthState, useAuthStatus } from "@/app/features/authentication/hooks/useAuthStatus";
 import LoadingCircle from "./LoadingCircle";
 import useOAuthHandler from "@/app/features/authentication/hooks/useOAuthHandler";

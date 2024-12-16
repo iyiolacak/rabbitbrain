@@ -10,7 +10,7 @@ import { useUser } from "@clerk/clerk-react";
 import { Button } from "@/components/ui/button";
 
 // Auth-related components and hooks
-import SignUpStageForm from "./_components/SignUpStageForm";
+import SignUpStageForm from "./_components/SignUpForm";
 import VerifyEmail from "./verify-email/_components/OTP";
 import AuthCompleted from "./_components/AuthCompleted";
 import { useAuthContext } from "@/app/features/authentication/context/AuthContext";
