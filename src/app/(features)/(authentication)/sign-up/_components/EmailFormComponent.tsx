@@ -8,19 +8,10 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { AuthState } from "@/app/features/authentication/hooks/useAuthStatus";
 import {
-  AuthAction,
+  AuthActionz,
   EmailForm,
-  useAuthContext,
-} from "@/app/features/authentication/context/AuthContext";
-import AnimatedInput from "./AnimatedInput";
-import ErrorDisplay from "@/app/features/authentication/components/ErrorDisplay";
-import LoadingCircle from "./LoadingCircle";
-
-const BUTTON_ICON_DURATION = 2000;
-
-const EmailFormComponent = ({ authAction }: { authAction: AuthAction }) => {
-  const { authState, authServerError, onEmailFormSubmit } = useAuthContext();
-  const {
+  useAuthContext
+} from "@/app/features/authentication/context/AuthContext
     control,
     handleSubmit,
     setFocus,

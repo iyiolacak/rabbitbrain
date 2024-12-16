@@ -144,7 +144,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   // ========================================================================
   // Handlers
   // ========================================================================
-
   const onEmailFormSubmit = async (data: EmailForm): Promise<void> => {
     const authHandlerUtils = {
       startSubmission: util.startSubmission,

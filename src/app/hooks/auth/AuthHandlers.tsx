@@ -3,6 +3,7 @@ import { AuthHandlers } from "@/app/hooks/auth/AuthHandlers";
 import { AuthStage, useAuthStatus } from "@/app/features/authentication/hooks/useAuthStatus";
 import { EmailForm, OTPCodeForm } from "@/app/features/authentication/context/AuthContext";
 import { getClerkError } from "@auth/hooks/auth/clerkErrorHandler";
+import { AuthFlow } from "@/app/(features)/(authentication)/context/AuthContext";
 
 // =============================================================================
 // Types and Utilities
