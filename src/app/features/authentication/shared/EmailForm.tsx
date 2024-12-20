@@ -12,39 +12,45 @@ import {
   EmailForm,
   useAuthContext
 } from "@/app/features/authentication/context/AuthContext";
-const {
-    control,
-    handleSubmit,
-    setFocus,
-    formState: { errors },
-  } = useFormContext<EmailForm>();
-
-  const [buttonIcon, setButtonIcon] = useState<"idle" | "error" | "success">(
-    "idle"
-  );
-
-  useEffect(() => {
-    setFocus("email");
-
-    if (authState === AuthState.Error || authState === AuthState.Success) {
-      setButtonIcon(authState === AuthState.Error ? "error" : "success");
-      const timer = setTimeout(
-        () => setButtonIcon("idle"),
-        BUTTON_ICON_DURATION
-      );
-      return () => clearTimeout(timer);
-    }
-  }, [authState, setFocus]);
-
-  const renderButtonContent = () => {
-    const iconMap = {
-      error: <X className="mr-2" />,
-      success: <Check className="mr-2" />,
-      idle:
-        authState === AuthState.Submitting ? <LoadingCircle /> : "Send code",
-    };
-    return iconMap[buttonIcon];
+import { BUTTON_ICON_DURATION } from "../forms/email/constants";
+import { SignInWithMetamaskButton } from "@clerk/clerk-react";
+const renderButtonContent = () => {
+  const iconMap = {
+    error: <X className="mr-2" />,
+    success: <Check className="mr-2" />,
+    idle:
+    authState === AuthState.Submitting ? <LoadingCircle /> : "Send code",
   };
+  return iconMap[buttonIcon];
+};
+
+const EmailForm = () => {
+  
+  const {
+      control,
+      handleSubmit,
+      setFocus,
+      formState: { errors },
+    } = useFormContext<EmailForm>();
+  
+    const [buttonIcon, setButtonIcon] = useState<"idle" | "error" | "success">(
+      "idle"
+    );
+  
+    const buttonIconTimeout = setTimeout(
+      () => setButtonIcon("idle"),
+      BUTTON_ICON_DURATION
+    );
+    return () => clearTimeout(BUTTON_ICON_DURATION);
+  }
+    useEffect(() => {
+      setFocus("email");
+  
+      if (authState === AuthState.Error || authState === AuthState.Success) {
+        setButtonIcon(authState === AuthState.Error ? "error" : "success");
+        buttonIconTimeout();
+    }, [authState, setFocus]);
+  
 
   return (
     <form
@@ -73,7 +79,7 @@ const {
             type="submit"
             disabled={authState === AuthState.Submitting}
             className={cn("w-full bg-primary transition-all", {
-              "pulse-once-red": authState === AuthState.Error,
+              "pulse-once-red": "authState === AuthState.Error",
             })}
             size="lg"
           >
@@ -97,4 +103,4 @@ const {
   );
 };
 
-export default EmailFormComponent;
+export default EmailForm;

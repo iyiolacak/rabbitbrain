@@ -1,7 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
-const LegalTOSText = () => {
+const TermsText = () => {
   return (
     <p className="mt-8 flex flex-row px-4 text-center text-xs text-gray-400">
       <Link
@@ -22,4 +22,4 @@ const LegalTOSText = () => {
   );
 };
 
-export default LegalTOSText
+export default TermsText

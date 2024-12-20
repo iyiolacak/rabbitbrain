@@ -1,0 +1,1 @@
+export const BUTTON_ICON_DURATION = 1500; // Duration in ms
