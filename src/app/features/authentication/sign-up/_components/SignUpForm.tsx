@@ -5,9 +5,9 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useAuthContext } from "../../context/AuthContext";
 import { AuthState } from "../../hooks/useAuthStatus";
-import EmailFormComponent from "../../shared/EmailFormComponent";
+import EmailForm from "../../shared/EmailForm";
 import OAuthSignInButton from "./OAuthSignInButton";
-import LegalTOSText from "../../shared/LegalTOSText";
+import TermsText from "../../shared/TermsText";
 import Logo from "@/components/Logo";
 import Divider from "../../shared/Divider";
 import SectionHeader from "../../shared/SectionHeader";
@@ -57,10 +57,10 @@ const SignUpForm = () => {
             />
           </div>
           <Divider />
-          <EmailFormComponent authAction="sign-up" />
+          <EmailForm authAction="sign-up" />
           <RedirectToSignIn />
         </div>
-        <LegalTOSText />
+        <TermsText />
       </div>
     </div>
   );

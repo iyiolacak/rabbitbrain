@@ -4,10 +4,10 @@ import React, { useEffect } from "react";
 import SectionHeader from "../../shared/SectionHeader";
 import OAuthSignInButton from "../../sign-up/_components/OAuthSignInButton";
 import Divider from "../../shared/Divider";
-import LegalTOSText from "../../shared/LegalTOSText";
+import TermsText from "../../shared/TermsText";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import EmailFormComponent from "../../shared/EmailFormComponent";
+import EmailForm from "../../shared/EmailForm";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/clerk-react";
 import { AuthState, useAuthStatus } from "../../hooks/useAuthStatus";
@@ -61,10 +61,10 @@ const SignInPage = () => {
           />
         </div>
         <Divider />
-        <EmailFormComponent authAction={"sign-in"} />
+        <EmailForm authAction={"sign-in"} />
         <RedirectToCreateAccount />
       </div>
-      <LegalTOSText />
+      <TermsText />
     </div>
   );
 };
