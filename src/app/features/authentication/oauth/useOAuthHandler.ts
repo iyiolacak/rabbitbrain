@@ -1,4 +1,4 @@
-import { getClerkError } from "@/app/features/authentication/clerkErrorHandler";
+import { getClerkError } from "@/app/features/authentication/utils/clerkErrorHandler";
 import { useAuthStatus } from "./useAuthStatus";
 import { useSignUp } from "@clerk/clerk-react";
 import { OAuthStrategy } from "@clerk/types";

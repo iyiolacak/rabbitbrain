@@ -9,7 +9,7 @@ import {
   useSignIn as useClerkSignIn,
 } from "@clerk/clerk-react";
 import { ClerkAPIError, SignInResource, SignUpResource } from "@clerk/types";
-import { getClerkError } from "@/app/features/authentication/clerkErrorHandler";
+import { getClerkError } from "@/app/features/authentication/utils/clerkErrorHandler";
 import {
   AuthFormValuesType,
   AuthStage,

@@ -5,12 +5,12 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useAuthContext } from "../../context/AuthContext";
 import { AuthState } from "../../hooks/useAuthStatus";
-import EmailFormComponent from "../../components/shared/EmailFormComponent";
+import EmailFormComponent from "../../shared/EmailFormComponent";
 import OAuthSignInButton from "./OAuthSignInButton";
-import LegalTOSText from "./LegalTOSText";
+import LegalTOSText from "../../shared/LegalTOSText";
 import Logo from "@/components/Logo";
-import Divider from "./Divider";
-import SectionHeader from "./SectionHeader";
+import Divider from "../../shared/Divider";
+import SectionHeader from "../../shared/SectionHeader";
 
 const RedirectToSignIn = () => (
   <p className="flex flex-wrap w-full justify-center text-sm mt-10">

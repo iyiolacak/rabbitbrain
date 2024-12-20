@@ -18,7 +18,7 @@ import { useHandleBack } from "@/app/hooks/auth/useHandleBackNavigation";
 import { useAuthRedirect } from "@/app/hooks/auth/useAuthRedirect";
 import SignInPage from "./_components/SignInPage";
 import VerifyEmail from "../sign-up/verify-email/_components/OTP";
-import AuthCompleted from "../sign-up/_components/AuthCompleted";
+import AuthCompleted from "../shared/AuthCompleted";
 
 const transitionVariants = {
   initial: { opacity: 0, x: 150 },

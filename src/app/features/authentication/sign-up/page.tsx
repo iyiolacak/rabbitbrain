@@ -11,8 +11,8 @@ import { Button } from "@/components/ui/button";
 
 // Auth-related components and hooks
 import SignUpStageForm from "./_components/SignUpForm";
-import VerifyEmail from "./verify-email/_components/OTP";
-import AuthCompleted from "./_components/AuthCompleted";
+import VerifyEmail from "../verify-email/OTP";
+import AuthCompleted from "../shared/AuthCompleted";
 import { useAuthContext } from "@/app/features/authentication/context/AuthContext";
 import { AuthStage } from "@/app/features/authentication/hooks/useAuthStatus";
 

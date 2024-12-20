@@ -1,5 +1,7 @@
 import React from "react";
 
+// Sign In/Up with OAuth *"OR" divider component* 
+
 const Divider = () => {
   return (
     <div className="my-3 flex w-full items-center">

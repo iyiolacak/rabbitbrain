@@ -1,13 +1,13 @@
 "use client";
 import Logo from "@/components/Logo";
 import React, { useEffect } from "react";
-import SectionHeader from "../../sign-up/_components/SectionHeader";
+import SectionHeader from "../../shared/SectionHeader";
 import OAuthSignInButton from "../../sign-up/_components/OAuthSignInButton";
-import Divider from "../../sign-up/_components/Divider";
-import LegalTOSText from "../../sign-up/_components/LegalTOSText";
+import Divider from "../../shared/Divider";
+import LegalTOSText from "../../shared/LegalTOSText";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import EmailFormComponent from "../../components/shared/EmailFormComponent";
+import EmailFormComponent from "../../shared/EmailFormComponent";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/clerk-react";
 import { AuthState, useAuthStatus } from "../../hooks/useAuthStatus";

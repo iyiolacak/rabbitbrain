@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useAuthContext } from "@/app/features/authentication/context/AuthContext";
-import LoadingCircle from "../../_components/LoadingCircle";
+import LoadingCircle from "../shared/LoadingCircle";
 import { SendDiagonalSolid, TimerSolid } from "iconoir-react";
 
 const RESEND_COOLDOWN_SECONDS = 30; // Adjust the cooldown duration as needed
