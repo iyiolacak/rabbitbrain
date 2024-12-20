@@ -1,21 +1,7 @@
 import { useCallback, useState } from "react";
 import { ClerkAPIError } from "@clerk/types";
 import { AuthFlow, EmailForm } from "@/app/features/authentication/context/AuthContext";
-
-export enum AuthState {
-  Idle = "Idle",
-  Submitting = "Submitting",
-  Success = "Success",
-  Error = "Error",
-}
-
-export enum AuthStage {
-  Form = "Form",
-  Verifying = "Verifying",
-  Completed = "Completed",
-}
-
-export type AuthFormValuesType = EmailForm;
+import { AuthFormValuesType, AuthStage, AuthState } from "../types";
 
 type UseAuthStatusReturn = {
   authAction: null | AuthFlow;
@@ -72,6 +58,7 @@ export const useAuthStatus = (): UseAuthStatusReturn => {
       ...prevState,
       [field]: true,
     }));
+    // 🤡🤡🤡🤡🤡
     setTimeout(() => resetShake(field), 500);
   };
 
