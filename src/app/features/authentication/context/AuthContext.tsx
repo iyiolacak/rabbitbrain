@@ -10,12 +10,14 @@ import {
 } from "@clerk/clerk-react";
 import { ClerkAPIError, SignInResource, SignUpResource } from "@clerk/types";
 import { getClerkError } from "@/app/features/authentication/utils/clerkErrorHandler";
+import { useAuthStatus } from "@/app/features/authentication/hooks/useAuthStatus";
 import {
   AuthFormValuesType,
   AuthStage,
   AuthState,
-  useAuthStatus,
-} from "@/app/features/authentication/hooks/useAuthStatus";
+  EmailForm,
+  OTPCodeForm,
+} from "../types";
 import useAuthAction from "@/app/hooks/auth/useAuthAction";
 import { handleSignIn, handleSignUp } from "@/app/hooks/auth/AuthHandlers";
 
@@ -35,9 +37,6 @@ export const emailFormSchema = z.object({
 export const otpCodeSchema = z.object({
   OTPCode: z.string().length(6, "The one-time password must be 6 digits long"),
 });
-
-export type EmailForm = z.infer<typeof emailFormSchema>;
-export type OTPCodeForm = z.infer<typeof otpCodeSchema>;
 
 // Context interface
 export interface AuthContextValue {
@@ -171,6 +170,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const onOTPFormSubmit = async (OTPCodeData: OTPCodeForm): Promise<void> => {
+    if (!signUp || !signIn) return;
     try {
       util.startSubmission();
       const result = await signUp.attemptEmailAddressVerification({

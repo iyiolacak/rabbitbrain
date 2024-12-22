@@ -36,19 +36,27 @@ type UseAuthStatusReturn = {
  * and resetting the auth process.
  */
 export const useAuthStatus = (): UseAuthStatusReturn => {
-  const [authAction, setAuthAction] = useState<AuthFlow | null>(null)
+  const [authFlow, setAuthFlow] = useState<AuthFlow | null>(null)
   const [authState, setAuthState] = useState<AuthState>(AuthState.Idle);
   const [authServerError, setAuthServerError] = useState<
-    ClerkAPIError[] | undefined
+  ClerkAPIError[] | undefined
   >(undefined);
   const [oauthServerError, setOAuthServerError] = useState<
-    ClerkAPIError[] | undefined
+  ClerkAPIError[] | undefined
   >(undefined);
   const [authStage, setAuthStage] = useState<AuthStage>(AuthStage.Form);
   const [shakeState, setShakeState] = useState<Record<string, boolean>>({});
   const [submittedData, setSubmittedData] = useState<
-    AuthFormValuesType | undefined
+  AuthFormValuesType | undefined
   >(undefined);
+  const initialState = {
+    authFlow: null,
+    authState: AuthState.Idle,
+    errors: [],
+    authStage: AuthStage.Form,
+    shakeState: {},
+    submittedData: undefined
+  }
 
   /**
    * Triggers a visual shake effect for a specific field.
