@@ -3,6 +3,11 @@
  * When authState becomes Error or Success, the icon updates and reverts after a timeout.
  */
 
-import { AuthState } from "../../hooks/useAuthStatus";
+import { AuthState } from "../../types";
 
-export function useButtonIconState(authState: AuthState)
+export function useButtonIconState(authState: AuthState) {
+    switch(authState) {
+        case (AuthState.Submitting): return 
+    }
+
+}
