@@ -14,15 +14,6 @@ import {
 } from "@/app/features/authentication/context/AuthContext";
 import { BUTTON_ICON_DURATION } from "../forms/email/constants";
 import { SignInWithMetamaskButton } from "@clerk/clerk-react";
-const renderButtonContent = () => {
-  const iconMap = {
-    error: <X className="mr-2" />,
-    success: <Check className="mr-2" />,
-    idle:
-    authState === AuthState.Submitting ? <LoadingCircle /> : "Send code",
-  };
-  return iconMap[buttonIcon];
-};
 
 const EmailForm = () => {
   
@@ -75,27 +66,6 @@ const EmailForm = () => {
           )}
         />
         <div>
-          <Button
-            type="submit"
-            disabled={authState === AuthState.Submitting}
-            className={cn("w-full bg-primary transition-all", {
-              "pulse-once-red": "authState === AuthState.Error",
-            })}
-            size="lg"
-          >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={buttonIcon}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.1, ease: "easeInOut" }}
-                className="flex items-center justify-center"
-              >
-                {renderButtonContent()}
-              </motion.div>
-            </AnimatePresence>
-          </Button>
           <ErrorDisplay className="mt-2" errors={authServerError} />
         </div>
       </div>
