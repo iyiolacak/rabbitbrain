@@ -14,8 +14,13 @@ import {
 } from "@/app/features/authentication/context/AuthContext";
 import { BUTTON_ICON_DURATION } from "../forms/email/constants";
 import { SignInWithMetamaskButton } from "@clerk/clerk-react";
+import ErrorDisplay from "./ErrorDisplay";
+import AnimatedInput from "./AnimatedInput";
 
 const EmailForm = () => {
+
+  const { authState, authServerError } = useAuthContext();
+  const { onEmailFormSubmit } = useEmailFormSubmit();
   
   const {
       control,
@@ -23,25 +28,10 @@ const EmailForm = () => {
       setFocus,
       formState: { errors },
     } = useFormContext<EmailForm>();
-  
-    const [buttonIcon, setButtonIcon] = useState<"idle" | "error" | "success">(
-      "idle"
-    );
-  
-    const buttonIconTimeout = setTimeout(
-      () => setButtonIcon("idle"),
-      BUTTON_ICON_DURATION
-    );
-    return () => clearTimeout(BUTTON_ICON_DURATION);
-  }
+    
     useEffect(() => {
       setFocus("email");
-  
-      if (authState === AuthState.Error || authState === AuthState.Success) {
-        setButtonIcon(authState === AuthState.Error ? "error" : "success");
-        buttonIconTimeout();
-    }, [authState, setFocus]);
-  
+    }, [setFocus])  
 
   return (
     <form
@@ -66,7 +56,7 @@ const EmailForm = () => {
           )}
         />
         <div>
-          <ErrorDisplay className="mt-2" errors={authServerError} />
+          <ErrorDisplay className="mt-2" errors={errors} />
         </div>
       </div>
     </form>

@@ -20,6 +20,7 @@ import {
 } from "../types";
 import useAuthAction from "@/app/hooks/auth/useAuthAction";
 import { handleSignIn, handleSignUp } from "@/app/hooks/auth/AuthHandlers";
+import { emailFormSchema, otpCodeSchema } from "../utils/validationSchemas";
 
 // ============================================================================
 // Constants and Types
@@ -27,16 +28,6 @@ import { handleSignIn, handleSignUp } from "@/app/hooks/auth/AuthHandlers";
 
 const SUBMISSION_TIMEOUT_MS = 30_000;
 
-export type AuthFlow = "sign-up" | "sign-in" | "reset-password";
-
-// Validation schemas
-export const emailFormSchema = z.object({
-  email: z.string().email("Invalid email address"),
-});
-
-export const otpCodeSchema = z.object({
-  OTPCode: z.string().length(6, "The one-time password must be 6 digits long"),
-});
 
 // Context interface
 export interface AuthContextValue {
