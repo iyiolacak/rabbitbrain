@@ -1,3 +1,4 @@
+import { z } from "zod";
 
 // Validation schemas
 export const emailFormSchema = z.object({
