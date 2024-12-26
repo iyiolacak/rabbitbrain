@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { emailFormSchema, otpCodeSchema } from "./context/AuthContext";
+import { emailFormSchema, otpCodeSchema } from "./utils/validationSchemas";
 
 
 type AuthError = {
@@ -13,15 +13,30 @@ type AuthError = {
 type AuthFlow = "SignUp" | "SignIn" | "ResetPassword";
 type AuthMethod = "Email" | "Phone"
 
-interface AuthStateMachine {
+// AuthState represents the status of a process.
+export type AuthFormState = 
+  | "Idle"
+  | "Submitting"
+  | "Success"
+  | "Error";
+  
+// AuthStage represents the current phase in a multi-step flow.
+export type AuthStage =
+| "Form"
+| "Verifying"
+| "Completed";
+
+// AuthStateMachine represents the current state of the authentication process.
+export interface AuthContext {
   flow:   AuthFlow;
   method: AuthMethod;
-  stage:  "Form" | "Verifying" | "Completed";
-  state:  "Idle" | "Submitting" | "Success" | "Error" 
-  error:  AuthError;
+  stage:  AuthStage;
+  state:  AuthFormState 
+  error?:  AuthError;
 
 }
 type AuthAction = {
+  | "IDLE"
   | "EMAIL_SUBMIT"
   | "EMAIL_SUCCESS"
   | "EMAIL_ERROR"
@@ -30,20 +45,16 @@ type AuthAction = {
   | "OTP_ERROR"
   | "RESET"
 };
-// AuthState represents the status of a process.
-export enum AuthState {
-    Idle = "Idle",
-    Submitting = "Submitting",
-    Success = "Success",
-    Error = "Error",
-  }
 
-// AuthStage represents the current phase in a multi-step flow.
-export enum AuthStage {
-  Form = "Form",
-  Verifying = "Verifying",
-  Completed = "Completed",
-}
+// --- Initial Context ---
+const initialAuthContext: AuthContext = {
+  flow: "SignIn", // Default flow
+  method: "Email",
+  stage: "Form",
+  state: "Idle",
+  error: null,
+  email: null,
+};
 /* Email Form Submission
 
   AuthStage.Form: the stage where the user fills out the email form.
