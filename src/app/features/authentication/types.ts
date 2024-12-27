@@ -3,14 +3,14 @@ import { emailFormSchema, otpCodeSchema } from "./utils/validationSchemas";
 
 
 type AuthError = {
-  type: "Validation" | "Server" | "ClerkAPI" | "Unknown";
+  type: "Validation" | "Server" | "AuthAPI" | "Unknown";
   message: string;
   longMessage?: string;
   code?: string;
   meta?: unknown;
 }
 
-type AuthFlow = "SignUp" | "SignIn" | "ResetPassword";
+type AuthFlow = "SignUp" | "SignIn";
 type AuthMethod = "Email" | "Phone"
 
 // AuthState represents the status of a process.
