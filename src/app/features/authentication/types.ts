@@ -1,41 +1,42 @@
 import { z } from "zod";
 import { emailFormSchema, otpCodeSchema } from "./utils/validationSchemas";
 
+// AuthStateMachine represents the current state of the authentication process.
+export interface AuthContext {
+  flow: AuthFlow;
+  method: AuthMethod;
+  stage: AuthStage;
+  state: AuthFormState;
+  error: AuthError | null;
+}
+
+const AuthErrorTypes = ["Validation", "Server", "AuthAPI", "Unknown"];
+
+type AuthErrorType = (typeof AuthErrorTypes)[number];
 
 type AuthError = {
-  type: "Validation" | "Server" | "AuthAPI" | "Unknown";
+  type: AuthErrorType;
   message: string;
   longMessage?: string;
   code?: string;
-  meta?: unknown;
-}
+  meta?: AuthErrorMeta;
+};
+
+type AuthErrorMeta =
+  | [{ field?: string; validationRule?: string }] /* Validation error */
+  | { endpoint?: string; statusCode?: number } /* Server */
+  | { [key: string]: unknown }; /* Fallback for unknown */
 
 type AuthFlow = "SignUp" | "SignIn";
-type AuthMethod = "Email" | "Phone"
+type AuthMethod = "Email" | "Phone";
 
 // AuthState represents the status of a process.
-export type AuthFormState = 
-  | "Idle"
-  | "Submitting"
-  | "Success"
-  | "Error";
-  
+export type AuthFormState = "Idle" | "Submitting" | "Success" | "Error";
+
 // AuthStage represents the current phase in a multi-step flow.
-export type AuthStage =
-| "Form"
-| "Verifying"
-| "Completed";
+export type AuthStage = "Form" | "Verifying" | "Completed";
 
-// AuthStateMachine represents the current state of the authentication process.
-export interface AuthContext {
-  flow:   AuthFlow;
-  method: AuthMethod;
-  stage:  AuthStage;
-  state:  AuthFormState 
-  error:  AuthError | null;
-
-}
-type AuthAction = {
+export type AuthAction =
   | "IDLE"
   | "EMAIL_SUBMIT"
   | "EMAIL_SUCCESS"
@@ -43,8 +44,7 @@ type AuthAction = {
   | "OTP_SUBMIT"
   | "OTP_SUCCESS"
   | "OTP_ERROR"
-  | "RESET"
-};
+  | "RESET";
 
 /* Email Form Submission
 
@@ -69,5 +69,3 @@ export type EmailForm = z.infer<typeof emailFormSchema>;
 export type OTPCodeForm = z.infer<typeof otpCodeSchema>;
 
 export type AuthFormValuesType = EmailForm;
-  
-
