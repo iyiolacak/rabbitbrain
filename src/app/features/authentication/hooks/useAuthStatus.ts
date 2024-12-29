@@ -3,6 +3,8 @@ import { ClerkAPIError } from "@clerk/types";
 import { AuthFlow, EmailForm } from "@/app/features/authentication/context/AuthContext";
 import { AuthFormValuesType, AuthStage, AuthState } from "../types";
 
+
+
 type UseAuthStatusReturn = {
   authAction: null | AuthFlow;
   setAuthAction: (authAction: AuthFlow) => void;
@@ -49,15 +51,6 @@ export const useAuthStatus = (): UseAuthStatusReturn => {
   const [submittedData, setSubmittedData] = useState<
   AuthFormValuesType | undefined
   >(undefined);
-  const initialState = {
-    authFlow: null,
-    authState: AuthState.Idle,
-    errors: [],
-    authStage: AuthStage.Form,
-    shakeState: {},
-    submittedData: undefined
-  }
-
   /**
    * Triggers a visual shake effect for a specific field.
    */

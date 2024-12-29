@@ -32,7 +32,7 @@ export interface AuthContext {
   method: AuthMethod;
   stage:  AuthStage;
   state:  AuthFormState 
-  error?:  AuthError;
+  error:  AuthError | null;
 
 }
 type AuthAction = {
@@ -46,15 +46,6 @@ type AuthAction = {
   | "RESET"
 };
 
-// --- Initial Context ---
-const initialAuthContext: AuthContext = {
-  flow: "SignIn", // Default flow
-  method: "Email",
-  stage: "Form",
-  state: "Idle",
-  error: null,
-  email: null,
-};
 /* Email Form Submission
 
   AuthStage.Form: the stage where the user fills out the email form.

@@ -8,7 +8,7 @@ import { oauthMapping } from "./oauthMapping";
 import { useAuthContext } from "@/app/features/authentication/context/AuthContext";
 import ErrorDisplay from "@/app/features/authentication/shared/ErrorDisplay";
 import { AuthState, useAuthStatus } from "@/app/features/authentication/hooks/useAuthStatus";
-import LoadingCircle from "./LoadingCircle";
+import LoadingCircle from "../shared/LoadingCircle";
 import useOAuthHandler from "@/app/features/authentication/hooks/useOAuthHandler";
 
 type OAuthButtonProps = {
