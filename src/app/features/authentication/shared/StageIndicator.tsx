@@ -18,6 +18,7 @@ type StageMapping = {
 const AuthStageIndicator = ({ outOf, authAction }: AuthStageIndicatorProps) => {
   const { authStage } = useAuthContext();
   const [stage, setStage] = useState<number>(1);
+  'porno'
 
   useEffect(() => {
     const stageMapping: StageMapping = {

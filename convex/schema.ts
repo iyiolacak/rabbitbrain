@@ -6,6 +6,5 @@ export default defineSchema({
     ...authTables,
     users: defineTable({
         name: v.string(),
-        token
     })
 })
