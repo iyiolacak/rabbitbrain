@@ -5,7 +5,8 @@ import { Quicksand as FontPlayful } from "next/font/google";
 import "./globals.css";
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
-import Providers from "@/app/Providers";
+import { ConvexClientProvider } from "@/app/ConvexAuthProvider";
+import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 
 // Import Merriweather (serif font)
 const fontSerif = FontSerif({
@@ -32,9 +33,10 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "rabbitbrain · Learning with no limits—free.",
+  title: "rabbitbrain · For thinkers who break the mold",
   description:
-    "Stop wasting time on outdated methods. rabbitbrain gives you the tools to learn faster, think smarter, and master anything – for free. No subscriptions, no limits, just results.",
+// metadata
+    "Rabbitbrain turns challenges into obsession. Crack riddles, master puzzles, and create brain-twisting levels that push the limits of logic, math, and creativity. This isn’t just learning—it’s leveling up. Dive in and dominate.",
 };
 
 export default function RootLayout({
@@ -43,7 +45,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Providers>
+    <ConvexAuthNextjsServerProvider>
       <html lang="en">
         <body
           className={cn(
@@ -54,9 +56,9 @@ export default function RootLayout({
             fontMono.variable // Use the monospace font for code
           )}
         >
-          {children}
+          <ConvexClientProvider>{children}</ConvexClientProvider>
         </body>
       </html>
-    </Providers>
+    </ConvexAuthNextjsServerProvider>
   );
 }
