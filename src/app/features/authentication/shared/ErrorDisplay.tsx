@@ -3,7 +3,7 @@ import { AlertCircleIcon } from "lucide-react";
 import { ClerkAPIError } from "@clerk/types";
 
 interface ErrorDisplayProps {
-  errors: ClerkAPIError[] | string | undefined;
+  errors: string | undefined;
   className?: string;
   alertIcon?: boolean;
 }
