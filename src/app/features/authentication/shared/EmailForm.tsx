@@ -2,12 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { AnimatePresence, motion } from "framer-motion";
-import { Check, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { BUTTON_ICON_DURATION } from "../forms/email/constants";
-import { SignInWithMetamaskButton } from "@clerk/clerk-react";
 import ErrorDisplay from "./ErrorDisplay";
 import AnimatedInput from "./AnimatedInput";
 import { EmailForm as EmailFormValues } from "../types";
@@ -21,7 +15,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
   onSuccess,
   disabled = false,
 }) => {
-  
+
   /* centralizes form logic */
   const {
     control,
