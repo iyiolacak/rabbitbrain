@@ -35,7 +35,7 @@ const fontSans = FontSans({
 export const metadata: Metadata = {
   title: "rabbitbrain · For thinkers who break the mold",
   description:
-// metadata
+    // metadata
     "Rabbitbrain turns challenges into obsession. Crack riddles, master puzzles, and create brain-twisting levels that push the limits of logic, math, and creativity. This isn’t just learning—it’s leveling up. Dive in and dominate.",
 };
 
@@ -46,19 +46,19 @@ export default function RootLayout({
 }>) {
   return (
     <ConvexAuthNextjsServerProvider>
-      <html lang="en">
-        <body
-          className={cn(
-            "min-h-screen bg-background font-sans antialiased",
-            fontSans.variable, // Use the sans-serif font
-            fontSerif.variable, // Use the serif font
-            fontPlayful.variable, // Use the playful font
-            fontMono.variable // Use the monospace font for code
-          )}
-        >
-          <ConvexClientProvider>{children}</ConvexClientProvider>
-        </body>
-      </html>
-    </ConvexAuthNextjsServerProvider>
+        <html lang="en">
+          <body
+            className={cn(
+              "min-h-screen bg-background font-sans antialiased",
+              fontSans.variable, // Use the sans-serif font
+              fontSerif.variable, // Use the serif font
+              fontPlayful.variable, // Use the playful font
+              fontMono.variable // Use the monospace font for code
+            )}
+          >
+            <ConvexClientProvider>{children}</ConvexClientProvider>
+          </body>
+        </html>
+      </ConvexAuthNextjsServerProvider>
   );
 }
