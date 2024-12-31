@@ -12,9 +12,9 @@ export interface AuthContext {
 
 const AuthErrorTypes = ["Validation", "Server", "AuthAPI", "Unknown"];
 
-type AuthErrorType = (typeof AuthErrorTypes)[number];
+export type AuthErrorType = (typeof AuthErrorTypes)[number];
 
-type AuthError = {
+export type AuthError = {
   type: AuthErrorType;
   message: string;
   longMessage?: string;
@@ -46,25 +46,6 @@ export type AuthAction =
   | "OTP_ERROR"
   | "RESET";
 
-/* Email Form Submission
-
-  AuthStage.Form: the stage where the user fills out the email form.
-  AuthState.Submitting: Tracks the submission state.
-  AuthState.Success: Indicates successful form submission.
-  AuthState.Error: e.g., invalid email, server error.
-
-OTP Verification
-
-  AuthStage.Verifying: Represents the OTP verification stage.
-  AuthState.Submitting: Tracks the state while the OTP is being verified.
-  AuthState.Success: Indicates successful OTP verification.
-  AuthState.Error: e.g., incorrect or expired OTP.
-
-Completion
-
-AuthStage.Completed: Represents the final state after successful authentication.
-
-**/
 export type EmailForm = z.infer<typeof emailFormSchema>;
 export type OTPCodeForm = z.infer<typeof otpCodeSchema>;
 

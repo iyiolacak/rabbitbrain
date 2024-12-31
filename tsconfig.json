@@ -1,7 +1,14 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "typeRoots": [".node/modules/@types", "../src/types"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "typeRoots": [
+      ".node/modules/@types",
+      "../src/types"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -18,22 +25,35 @@
         "name": "next"
       }
     ],
-    "baseUrl": ".",  // Ensure this is set
+    "baseUrl": ".", // Ensure this is set
     "paths": {
-      "@/*": ["./src/*"],
-      "@auth/*": ["src/app/features/authentication/*"],
-      "@features/*": ["src/(features)/*"],
-      "@shared/*": ["src/(shared)/*"],
-      "@core/*": ["src/(core)/*"]
-
-    }
+      "@/*": [
+        "./src/*"
+      ],
+      "@auth/*": [
+        "src/app/features/authentication/*"
+      ],
+      "@features/*": [
+        "src/(features)/*"
+      ],
+      "@shared/*": [
+        "src/(shared)/*"
+      ],
+      "@core/*": [
+        "src/(core)/*"
+      ]
+    },
+    "target": "ES2017"
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "convex/auth.config.js"
-, "node_modules/Providers.tsx"  ],
-  "exclude": ["node_modules"]
+    "convex/auth.config.js",
+    "node_modules/Providers.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
