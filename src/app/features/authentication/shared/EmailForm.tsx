@@ -6,32 +6,33 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { AuthState } from "@/app/features/authentication/hooks/useAuthStatus";
-import {
-  AuthAction,
-  EmailForm,
-  useAuthContext
-} from "@/app/features/authentication/context/AuthContext";
 import { BUTTON_ICON_DURATION } from "../forms/email/constants";
 import { SignInWithMetamaskButton } from "@clerk/clerk-react";
 import ErrorDisplay from "./ErrorDisplay";
 import AnimatedInput from "./AnimatedInput";
+import { EmailForm as EmailFormValues } from "../types";
 
-const EmailForm = () => {
+type EmailFormProps = {
+  onSuccess: (data: EmailFormValues) => void;
+  disabled?: boolean;
+};
 
-  const { authState, authServerError } = useAuthContext();
-  const { onEmailFormSubmit } = useEmailFormSubmit();
+const EmailForm: React.FC<EmailFormProps> = ({
+  onSuccess,
+  disabled = false,
+}) => {
   
+  /* centralizes form logic */
   const {
-      control,
-      handleSubmit,
-      setFocus,
-      formState: { errors },
-    } = useFormContext<EmailForm>();
-    
-    useEffect(() => {
-      setFocus("email");
-    }, [setFocus])  
+    control,
+    handleSubmit,
+    setFocus,
+    formState: { errors },
+  } = useFormContext<EmailFormValues>();
+
+  useEffect(() => {
+    setFocus("email");
+  }, [setFocus]);
 
   return (
     <form
