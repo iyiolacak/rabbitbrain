@@ -39,7 +39,11 @@ const SignInPage = () => {
   const { authState } = useAuthStatus();
   return (
     <div className="flex items-center w-content flex-col h-content px-4 py-3">
-      <Logo size={"size-8"} className="flex h-min mb-16 w-content" textSize="text-2xl" />
+      <Logo
+        size={"size-8"}
+        className="flex h-min mb-16 w-content"
+        textSize="text-2xl"
+      />
       <div className="flex flex-col justify-center items-center">
         <SectionHeader
           title="Jump back in."
@@ -61,7 +65,7 @@ const SignInPage = () => {
           />
         </div>
         <Divider />
-        <EmailForm authAction={"sign-in"} />
+        <EmailForm />
         <RedirectToCreateAccount />
       </div>
       <TermsText />

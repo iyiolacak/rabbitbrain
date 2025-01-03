@@ -5,6 +5,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import ErrorDisplay from "./ErrorDisplay";
 import AnimatedInput from "./AnimatedInput";
 import { EmailForm as EmailFormValues } from "../types";
+import useAuthAction from "@/app/hooks/auth/useAuthAction";
 
 type EmailFormProps = {
   onSuccess: (data: EmailFormValues) => void;
@@ -28,9 +29,10 @@ const EmailForm: React.FC<EmailFormProps> = ({
     setFocus("email");
   }, [setFocus]);
 
+  const { signIn } = useAuthAction();
   return (
     <form
-      onSubmit={handleSubmit((data) => onEmailFormSubmit(data))}
+      onSubmit={handleSubmit((data) => )}
       className="w-full"
     >
       <div className="flex flex-col gap-y-4">
