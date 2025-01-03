@@ -3,16 +3,13 @@ import { emailFormSchema, otpCodeSchema } from "./utils/validationSchemas";
 
 // AuthStateMachine represents the current state of the authentication process.
 export interface AuthContext {
-  flow: AuthFlow;
   method: AuthMethod;
   stage: AuthStage;
   state: AuthFormState;
   error: AuthError | null;
 }
 
-const AuthErrorTypes = ["Validation", "Server", "AuthAPI", "Unknown"];
-
-export type AuthErrorType = (typeof AuthErrorTypes)[number];
+export type AuthErrorType = "Validation" | "Server" | "AuthAPI" | "Unknown";
 
 export type AuthError = {
   type: AuthErrorType;
@@ -27,7 +24,6 @@ type AuthErrorMeta =
   | { endpoint?: string; statusCode?: number } /* Server */
   | { [key: string]: unknown }; /* Fallback for unknown */
 
-type AuthFlow = "SignUp" | "SignIn";
 type AuthMethod = "Email" | "Phone";
 
 // AuthState represents the status of a process.
