@@ -5,18 +5,12 @@ import { Controller, useFormContext } from "react-hook-form";
 import ErrorDisplay from "./ErrorDisplay";
 import AnimatedInput from "./AnimatedInput";
 import { EmailForm as EmailFormValues } from "../types";
-import useAuthAction from "@/app/hooks/auth/useAuthAction";
-
+import { useAuthActions } from "@convex-dev/auth/react";
 type EmailFormProps = {
-  onSuccess: (data: EmailFormValues) => void;
   disabled?: boolean;
 };
 
-const EmailForm: React.FC<EmailFormProps> = ({
-  onSuccess,
-  disabled = false,
-}) => {
-
+const EmailForm: React.FC<EmailFormProps> = () => {
   /* centralizes form logic */
   const {
     control,
@@ -29,10 +23,11 @@ const EmailForm: React.FC<EmailFormProps> = ({
     setFocus("email");
   }, [setFocus]);
 
-  const { signIn } = useAuthAction();
+  const { signIn } = useAuthActions();
+
   return (
     <form
-      onSubmit={handleSubmit((data) => )}
+      onSubmit={handleSubmit((data) => signIn("resend-otp", data))}
       className="w-full"
     >
       <div className="flex flex-col gap-y-4">
@@ -46,7 +41,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
               type="email"
               prompt="Enter your email"
               placeholder="example@example.com"
-              disabled={authState === AuthState.Submitting}
+              disabled={}
               error={errors.email?.message}
               {...field}
             />

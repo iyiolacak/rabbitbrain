@@ -1,25 +1,15 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useState } from "react";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
-import {
-  useSignUp as useClerkSignUp,
-  useSignIn as useClerkSignIn,
-} from "@clerk/clerk-react";
-import { ClerkAPIError, SignInResource, SignUpResource } from "@clerk/types";
-import { getClerkError } from "@/app/features/authentication/utils/clerkErrorHandler";
 import { useAuthStatus } from "@/app/features/authentication/hooks/useAuthStatus";
 import {
   AuthFormValuesType,
   AuthStage,
-  AuthState,
   EmailForm,
   OTPCodeForm,
 } from "../types";
-import useAuthAction from "@/app/hooks/auth/useAuthAction";
-import { handleSignIn, handleSignUp } from "@/app/hooks/auth/AuthHandlers";
 import { emailFormSchema, otpCodeSchema } from "../utils/validationSchemas";
 
 // ============================================================================
@@ -31,10 +21,7 @@ const SUBMISSION_TIMEOUT_MS = 30_000;
 
 // Context interface
 export interface AuthContextValue {
-  authFlow: AuthFlow | null;
   authStage: AuthStage;
-  authState: AuthState;
-  authServerError: ClerkAPIError[] | undefined;
   shakeState: Record<string, boolean>;
   submittedData: AuthFormValuesType | undefined;
   isResendingCode: boolean;
@@ -72,20 +59,7 @@ export const useAuthContext = (): AuthContextValue => {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const {
-    isLoaded: isSignUpLoaded,
-    signUp,
-    setActive: setSignUpActive,
-  } = useClerkSignUp();
-  const {
-    isLoaded: isSignInLoaded,
-    signIn,
-    setActive: setSignInActive,
-  } = useClerkSignIn();
-  const { authAction } = useAuthAction();
   const util = useAuthStatus();
-
-  const [isResendingCode, setIsResendingCode] = useState(false);
 
   const emailFormMethods = useForm<EmailForm>({
     resolver: zodResolver(emailFormSchema),
@@ -97,39 +71,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   // ========================================================================
   // Utility Functions
   // ========================================================================
-
-  const handleAuthErrors = (error: unknown): void => {
-    const clerkErrors = getClerkError(error);
-    if (clerkErrors) {
-      util.handleError(clerkErrors);
-    } else {
-      util.handleError([
-        { code: "unexpected_error", message: "An unexpected error occurred" },
-      ]);
-    }
-  };
-
-  const prepareEmailCodeResend = async (
-    signUp: SignUpResource,
-    signIn: SignInResource
-  ): Promise<void> => {
-    if (signUp.status === "missing_requirements") {
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-    } else if (signIn.status === "needs_first_factor") {
-      const emailFactor = signIn.supportedFirstFactors?.find(
-        (factor) => factor.strategy === "email_code"
-      );
-      if (!emailFactor || !("emailAddressId" in emailFactor)) {
-        throw new Error("Email verification not available");
-      }
-      await signIn.prepareFirstFactor({
-        strategy: "email_code",
-        emailAddressId: emailFactor.emailAddressId,
-      });
-    } else {
-      throw new Error("Unexpected auth state for resending email code");
-    }
-  };
 
   // ========================================================================
   // Handlers
@@ -143,46 +84,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       handleError: util.handleError,
     };
 
-    if (!authAction) {
-      throw new Error("No auth action specified");
-    }
-
-    try {
-      if (authAction === "sign-up" && isSignUpLoaded) {
-        await handleSignUp(data, signUp, authHandlerUtils);
-      } else if (authAction === "sign-in" && isSignInLoaded) {
-        await handleSignIn(data, signIn, authHandlerUtils);
-      } else {
-        console.warn("Unsupported or unavailable auth action");
-      }
-    } catch (error) {
-      handleAuthErrors(error);
-    }
-  };
-
   const onOTPFormSubmit = async (OTPCodeData: OTPCodeForm): Promise<void> => {
-    if (!signUp || !signIn) return;
     try {
       util.startSubmission();
-      const result = await signUp.attemptEmailAddressVerification({
-        code: OTPCodeData.OTPCode,
-      });
-
-      if (result.status === "complete") {
-        util.setStage(AuthStage.Completed);
         util.markSuccess();
-        await setSignUpActive({ session: signUp.createdSessionId });
-      } else {
-        console.error(
-          "Verification incomplete:",
-          JSON.stringify(result, null, 2)
-        );
-      }
-    } catch (error) {
-      handleAuthErrors(error);
     }
-  };
-
   const resendEmailCode = useCallback(async (): Promise<void> => {
     if (
       !isSignUpLoaded ||
@@ -211,13 +117,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   // ========================================================================
 
   const contextValue: AuthContextValue = {
-    authFlow: util.authFlow,
     authStage: util.authStage,
     authState: util.authState,
     authServerError: util.authServerError,
     shakeState: util.shakeState,
     submittedData: util.submittedData,
-    isResendingCode,
 
     emailFormMethods,
     OTPFormMethods,
@@ -229,7 +133,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     resendEmailCode,
     resetAuth: util.resetAuth,
   };
-
+  
   return (
     <AuthContext.Provider value={contextValue}>
       <FormProvider {...emailFormMethods}>{children}</FormProvider>

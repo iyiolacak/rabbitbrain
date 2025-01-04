@@ -1,7 +1,7 @@
 "use client";
 
 // External libraries
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavArrowLeft } from "iconoir-react";
 import { useUser } from "@clerk/clerk-react";
@@ -27,10 +27,11 @@ const transitionVariants = {
 };
 
 const SignUpPage = () => {
-  const { isLoaded, user } = useUser();
+  // TODO: implement useUser() for 
+  const { user } = useUser();
 
   // Redirect logic if user data is loaded
-  useAuthRedirect({ isLoaded, user });
+  useAuthRedirect({ user });
 
   const handleBack = useHandleBack();
   const { authStage } = useAuthContext();

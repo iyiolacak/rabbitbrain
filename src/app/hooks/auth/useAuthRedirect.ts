@@ -6,20 +6,18 @@ import { UserResource } from "@clerk/types";
 const ROUTES = {
   home: "/home",
   signIn: "/sign-in",
-  signUp: "/sign-up",
 };
 
 type AuthRedirectParams = {
-  isLoaded: boolean;
   user: UserResource | null | undefined;
 };
 
-export const useAuthRedirect = ({ isLoaded, user }: AuthRedirectParams) => {
+export const useAuthRedirect = ({ user }: AuthRedirectParams) => {
   const { navigateTo } = useNavigation();
 
   useEffect(() => {
-    if (isLoaded && user) {
+    if (user) {
       navigateTo(ROUTES.home);
     }
-  }, [isLoaded, user, navigateTo]);
+  }, [user, navigateTo]);
 };
