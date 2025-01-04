@@ -6,6 +6,7 @@ import ErrorDisplay from "./ErrorDisplay";
 import AnimatedInput from "./AnimatedInput";
 import { EmailForm as EmailFormValues } from "../types";
 import { useAuthActions } from "@convex-dev/auth/react";
+import { useAuthContext } from "../context/AuthContext";
 type EmailFormProps = {
   disabled?: boolean;
 };
@@ -24,6 +25,9 @@ const EmailForm: React.FC<EmailFormProps> = () => {
   }, [setFocus]);
 
   const { signIn } = useAuthActions();
+  const { authStatus } = useAuthContext();
+  
+  const disabled = authStatus.state === "Submitting";
 
   return (
     <form
@@ -41,7 +45,7 @@ const EmailForm: React.FC<EmailFormProps> = () => {
               type="email"
               prompt="Enter your email"
               placeholder="example@example.com"
-              disabled={}
+              disabled={disabled}
               error={errors.email?.message}
               {...field}
             />
