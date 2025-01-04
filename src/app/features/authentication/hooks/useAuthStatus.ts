@@ -1,22 +1,13 @@
 import { useCallback, useState } from "react";
 import { ClerkAPIError } from "@clerk/types";
-import { AuthFlow, EmailForm } from "@/app/features/authentication/context/AuthContext";
-import { AuthFormValuesType, AuthStage, AuthState } from "../types";
+import { AuthState, AuthFormValuesType, AuthStage } from "../types";
 
 
 
 type UseAuthStatusReturn = {
-  authAction: null | AuthFlow;
-  setAuthAction: (authAction: AuthFlow) => void;
-  authState: AuthState;
-  authServerError: ClerkAPIError[] | undefined;
-  authStage: AuthStage;
-  startSubmission: () => void;
-  markSuccess: () => void;
-  handleError: (errors: ClerkAPIError[]) => void;
-  handleOAuthServerError: (errors: ClerkAPIError[]) => void;
-  oauthServerError: ClerkAPIError[] | undefined;
-  setStage: (stage: AuthStage) => void;
+  startSubmission: (prev: AuthState) => void;
+  markSuccess: (prev: AuthState) => void;
+  setStep: (prev: AuthState) => void;
   resetSubmittingState: () => void;
   resetAuth: () => void;
   shakeState: Record<string, boolean>;
@@ -38,8 +29,6 @@ type UseAuthStatusReturn = {
  * and resetting the auth process.
  */
 export const useAuthStatus = (): UseAuthStatusReturn => {
-  const [authFlow, setAuthFlow] = useState<AuthFlow | null>(null)
-  const [authState, setAuthState] = useState<AuthState>(AuthState.Idle);
   const [authServerError, setAuthServerError] = useState<
   ClerkAPIError[] | undefined
   >(undefined);
@@ -69,13 +58,6 @@ export const useAuthStatus = (): UseAuthStatusReturn => {
       [field]: false,
     }));
   };
-
-  const startSubmission = () => {
-    setAuthState(AuthState.Submitting);
-    setAuthServerError(undefined);
-    setOAuthServerError(undefined);
-  };
-
   const markSuccess = () => {
     setAuthState(AuthState.Success);
   };
