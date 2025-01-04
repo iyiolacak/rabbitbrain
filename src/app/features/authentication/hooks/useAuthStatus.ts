@@ -35,7 +35,6 @@ export const useAuthStatus = (): UseAuthStatusReturn => {
   const [oauthServerError, setOAuthServerError] = useState<
   ClerkAPIError[] | undefined
   >(undefined);
-  const [authStage, setAuthStage] = useState<AuthStage>(AuthStage.Form);
   const [shakeState, setShakeState] = useState<Record<string, boolean>>({});
   const [submittedData, setSubmittedData] = useState<
   AuthFormValuesType | undefined
@@ -57,9 +56,6 @@ export const useAuthStatus = (): UseAuthStatusReturn => {
       ...prevState,
       [field]: false,
     }));
-  };
-  const markSuccess = () => {
-    setAuthState(AuthState.Success);
   };
 
   const handleServerError = (errors: ClerkAPIError[]) => {
