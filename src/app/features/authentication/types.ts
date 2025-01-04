@@ -2,7 +2,7 @@ import { z } from "zod";
 import { emailFormSchema, otpCodeSchema } from "./utils/validationSchemas";
 
 // AuthStateMachine represents the current state of the authentication process.
-export interface AuthContext {
+export interface AuthState {
   method: AuthMethod;
   stage: AuthStage;
   state: AuthFormState;
@@ -30,17 +30,7 @@ type AuthMethod = "Email" | "Phone";
 export type AuthFormState = "Idle" | "Submitting" | "Success" | "Error";
 
 // AuthStage represents the current phase in a multi-step flow.
-export type AuthStage = "Form" | "Verifying" | "Completed";
-
-export type AuthAction =
-  | "IDLE"
-  | "EMAIL_SUBMIT"
-  | "EMAIL_SUCCESS"
-  | "EMAIL_ERROR"
-  | "OTP_SUBMIT"
-  | "OTP_SUCCESS"
-  | "OTP_ERROR"
-  | "RESET";
+export type AuthStage = "signIn" | EmailForm;
 
 export type EmailForm = z.infer<typeof emailFormSchema>;
 export type OTPCodeForm = z.infer<typeof otpCodeSchema>;
