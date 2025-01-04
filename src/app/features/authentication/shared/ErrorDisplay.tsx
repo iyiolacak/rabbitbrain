@@ -1,6 +1,6 @@
 import React from "react";
 import { AlertCircleIcon } from "lucide-react";
-import { AuthError} from "../types";
+import { AuthError } from "../types";
 
 type Errors = Record<string, AuthError> | AuthError[];
 type ErrorDisplayProps = {
@@ -25,6 +25,7 @@ const ErrorDisplay = ({
 
   return (
     <div className={`flex flex-col space-y-1 ${className}`}>
+      {alertIcon ? <AlertCircleIcon /> : ""}
       {errorArray.map((error, index) => renderError(error, index))}
     </div>
   );

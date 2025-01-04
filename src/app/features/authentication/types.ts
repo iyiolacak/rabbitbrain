@@ -30,7 +30,7 @@ type AuthMethod = "Email" | "Phone";
 export type AuthFormState = "Idle" | "Submitting" | "Success" | "Error";
 
 // AuthStage represents the current phase in a multi-step flow.
-export type AuthStage = "signIn" | EmailForm;
+export type AuthStage = "signIn" | AuthFormValuesType;
 
 export type EmailForm = z.infer<typeof emailFormSchema>;
 export type OTPCodeForm = z.infer<typeof otpCodeSchema>;
