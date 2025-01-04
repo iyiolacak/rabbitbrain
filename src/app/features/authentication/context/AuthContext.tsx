@@ -5,37 +5,41 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
 import { useAuthStatus } from "@/app/features/authentication/hooks/useAuthStatus";
 import {
-  AuthFormValuesType,
+  AuthState,
   AuthStage,
   EmailForm,
   OTPCodeForm,
 } from "../types";
 import { emailFormSchema, otpCodeSchema } from "../utils/validationSchemas";
-
-// ============================================================================
-// Constants and Types
-// ============================================================================
-
-const SUBMISSION_TIMEOUT_MS = 30_000;
-
+import { initialAuthStatus } from "../forms/email/constants";
 
 // Context interface
+const [authStatus, setAuthStatus] = useState<AuthState>(initialAuthStatus)
+
+function startSubmission() {
+  setAuthStatus((prev) => ({...prev, state: "Submitting"}))
+}
+function markSuccess(newStage?: AuthStage) {
+  setAuthStatus((prev) => ({
+    ...prev,
+    state: "Success",
+    stage: newStage ?? prev.stage
+  }))
+}
+function resetInitialAuthStatus() {
+  setAuthStatus((prev) => ({...prev}))
+}
+
 export interface AuthContextValue {
-  authStage: AuthStage;
+  authStatus: AuthState;
   shakeState: Record<string, boolean>;
-  submittedData: AuthFormValuesType | undefined;
-  isResendingCode: boolean;
 
   emailFormMethods: UseFormReturn<EmailForm>;
   OTPFormMethods: UseFormReturn<OTPCodeForm>;
 
   onEmailFormSubmit: (data: EmailForm) => Promise<void>;
-  onOTPFormSubmit: (data: OTPCodeForm) => Promise<void>;
+  // onOTPFormSubmit: (data: OTPCodeForm) => Promise<void>;
 
-  setSubmittedData: (data: AuthFormValuesType) => void;
-  setStage: (stage: AuthStage) => void;
-  resendEmailCode: () => Promise<void>;
-  resetAuth: () => void;
 }
 
 // ============================================================================
@@ -64,7 +68,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const emailFormMethods = useForm<EmailForm>({
     resolver: zodResolver(emailFormSchema),
   });
-  const OTPFormMethods = useForm<OTPCodeForm>({
+  const CodeFormMethods = useForm<OTPCodeForm>({
     resolver: zodResolver(otpCodeSchema),
   });
 
@@ -77,61 +81,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   // ========================================================================
   const onEmailFormSubmit = async (data: EmailForm): Promise<void> => {
     const authHandlerUtils = {
-      startSubmission: util.startSubmission,
-      markSuccess: util.markSuccess,
-      setStage: util.setStage,
+      startSubmission: startSubmission(),
+      markSuccess: markSuccess(),
       setSubmittedData: util.setSubmittedData,
-      handleError: util.handleError,
     };
-
-  const onOTPFormSubmit = async (OTPCodeData: OTPCodeForm): Promise<void> => {
-    try {
-      util.startSubmission();
-        util.markSuccess();
-    }
-  const resendEmailCode = useCallback(async (): Promise<void> => {
-    if (
-      !isSignUpLoaded ||
-      !isSignInLoaded ||
-      util.authStage !== AuthStage.Verifying
-    ) {
-      console.warn(
-        "Cannot resend email code: invalid state or resources not loaded"
-      );
-      return;
-    }
-
-    setIsResendingCode(true);
-    try {
-      await prepareEmailCodeResend(signUp, signIn);
-      util.markSuccess();
-    } catch (error) {
-      handleAuthErrors(error);
-    } finally {
-      setIsResendingCode(false);
-    }
-  }, [isSignUpLoaded, isSignInLoaded, util.authStage]);
-
   // ========================================================================
   // Context Value
   // ========================================================================
 
   const contextValue: AuthContextValue = {
-    authStage: util.authStage,
-    authState: util.authState,
-    authServerError: util.authServerError,
+    authState,
     shakeState: util.shakeState,
-    submittedData: util.submittedData,
-
     emailFormMethods,
-    OTPFormMethods,
+    CodeFormMethods,
 
     onEmailFormSubmit,
-    onOTPFormSubmit,
-    setSubmittedData: util.setSubmittedData,
-    setStage: util.setStage,
-    resendEmailCode,
-    resetAuth: util.resetAuth,
+    // onOTPFormSubmit,
   };
   
   return (
