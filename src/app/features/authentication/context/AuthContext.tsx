@@ -14,7 +14,6 @@ import { emailFormSchema, otpCodeSchema } from "../utils/validationSchemas";
 import { initialAuthStatus } from "../forms/email/constants";
 
 // Context interface
-const [authStatus, setAuthStatus] = useState<AuthState>(initialAuthStatus)
 
 function startSubmission() {
   setAuthStatus((prev) => ({...prev, state: "Submitting"}))
@@ -27,7 +26,12 @@ function markSuccess(newStage?: AuthStage) {
   }))
 }
 function resetInitialAuthStatus() {
-  setAuthStatus((prev) => ({...prev}))
+  setAuthStatus((prev) => {
+    return {
+      ...initialAuthStatus,
+      method: prev?.method
+    }
+  })
 }
 
 export interface AuthContextValue {
@@ -35,7 +39,7 @@ export interface AuthContextValue {
   shakeState: Record<string, boolean>;
 
   emailFormMethods: UseFormReturn<EmailForm>;
-  OTPFormMethods: UseFormReturn<OTPCodeForm>;
+  CodeFormMethods: UseFormReturn<OTPCodeForm>;
 
   onEmailFormSubmit: (data: EmailForm) => Promise<void>;
   // onOTPFormSubmit: (data: OTPCodeForm) => Promise<void>;
@@ -65,6 +69,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const util = useAuthStatus();
 
+  const [authStatus, setAuthStatus] = useState<AuthState>(initialAuthStatus)
+
+
   const emailFormMethods = useForm<EmailForm>({
     resolver: zodResolver(emailFormSchema),
   });
@@ -90,7 +97,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   // ========================================================================
 
   const contextValue: AuthContextValue = {
-    authState,
+    authStatus,
     shakeState: util.shakeState,
     emailFormMethods,
     CodeFormMethods,
@@ -105,5 +112,5 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     </AuthContext.Provider>
   );
 };
-
+}
 export default { useAuthContext, AuthProvider };
