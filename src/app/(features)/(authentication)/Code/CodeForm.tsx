@@ -8,33 +8,32 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { useAuthContext } from "@auth/app/features/authentication/context/AuthContext";
-import ErrorDisplay from "@/app/features/authentication/shared/ErrorDisplay";
-import { AuthState } from "@/app/features/authentication/hooks/useAuthStatus";
+import { useAuthContext } from "../context/AuthContext";
+import ErrorDisplay from "../shared/ErrorDisplay";
 
 // TODO: The OTP input validation schema will be handled better.
 
 const OTPForm = () => {
-  const { onOTPFormSubmit, OTPFormMethods, authState, authServerError } =
-    useAuthContext();
+  const { CodeFormMethods, authObject } = useAuthContext();
 
   const {
     handleSubmit,
     control,
-    formState: { errors },
-  } = OTPFormMethods;
+    formState: { errors: ValidationError },
+  } = CodeFormMethods;
 
   const OTPInputRef = useRef<HTMLInputElement | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    if (authState !== AuthState.Submitting) {
+    if (authObject.state !== "Submitting") {
       OTPInputRef.current?.focus();
     }
-  }, [authState]);
+  }, [authObject.state]);
 
+  const apiError = authObject.error;
   return (
-    <form ref={formRef} onSubmit={handleSubmit(onOTPFormSubmit)}>
+    <form ref={formRef} onSubmit={handleSubmit(onCodeSubmit)}>
       <div className="flex items-center justify-center">
         <Controller
           name="OTPCode"
@@ -46,17 +45,17 @@ const OTPForm = () => {
               maxLength={6}
               value={value}
               onChange={onChange}
-              onComplete={handleSubmit(onOTPFormSubmit)}
+              onComplete={handleSubmit(onCodeSubmit)}
               ref={OTPInputRef}
-              disabled={authState === AuthState.Submitting}
+              disabled={authObject.state === "Submitting"}
             >
               <InputOTPGroup>
                 {[0, 1, 2].map((index) => (
                   <InputOTPSlot
                     key={index}
                     index={index}
-                    shake={!!authServerError}
-                    error={!!authServerError}
+                    shake={!!apiError}
+                    error={!!apiError}
                     data-testid={`otp-slot-${index}`}
                   />
                 ))}
@@ -67,8 +66,8 @@ const OTPForm = () => {
                   <InputOTPSlot
                     key={index}
                     index={index}
-                    shake={!!authServerError}
-                    error={!!authServerError}
+                    shake={!!apiError}
+                    error={!!apiError}
                     data-testid={`otp-slot-${index}`}
                   />
                 ))}
@@ -78,11 +77,11 @@ const OTPForm = () => {
         />
       </div>
       <div className="min-h-10 flex items-center justify-center">
-        {(errors.OTPCode?.message || authServerError) && (
+        {(ValidationError.OTPCode?.message || apiError) && (
           <ErrorDisplay
             alertIcon={false}
             className="flex justify-center"
-            errors={errors.OTPCode?.message || authServerError}
+            errors={ValidationError.OTPCode?.message || apiError}
           />
         )}
       </div>

@@ -5,9 +5,9 @@ import { useSignUp } from "@clerk/nextjs";
 import { OAuthStrategy } from "@clerk/types";
 import React from "react";
 import { oauthMapping } from "./oauthMapping";
-import { useAuthContext } from "@/app/features/authentication/context/AuthContext";
-import ErrorDisplay from "@/app/features/authentication/shared/ErrorDisplay";
-import { AuthState, useAuthStatus } from "@/app/features/authentication/hooks/useAuthStatus";
+import { useAuthContext } from "@/app/_features/_authentication/context/AuthContext";
+import ErrorDisplay from "@/app/_features/_authentication/shared/ErrorDisplay";
+import { AuthState, useAuthStatus } from "@/app/_features/_authentication/hooks/useAuthStatus";
 import LoadingCircle from "../shared/LoadingCircle";
 import useOAuthHandler from "@/app/features/authentication/hooks/useOAuthHandler";
 

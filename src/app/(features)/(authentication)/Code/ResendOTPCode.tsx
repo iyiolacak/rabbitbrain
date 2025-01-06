@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useAuthContext } from "@/app/features/authentication/context/AuthContext";
+import { useAuthContext } from "@/app/_features/_authentication/context/AuthContext";
 import LoadingCircle from "../shared/LoadingCircle";
 import { SendDiagonalSolid, TimerSolid } from "iconoir-react";
 

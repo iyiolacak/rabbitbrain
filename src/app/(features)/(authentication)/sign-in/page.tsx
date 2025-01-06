@@ -1,7 +1,7 @@
 "use client";
 
 // External libraries
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavArrowLeft } from "iconoir-react";
 import { useUser } from "@clerk/clerk-react";
@@ -10,30 +10,19 @@ import { useUser } from "@clerk/clerk-react";
 import { Button } from "@/components/ui/button";
 
 // Auth-related components and hooks
-import SignUpStageForm from "./_components/SignUpForm";
-import VerifyEmail from "../verify-email/OTP";
-import AuthCompleted from "../shared/AuthCompleted";
-import { useAuthContext } from "@/app/features/authentication/context/AuthContext";
-import { AuthStage } from "@/app/features/authentication/hooks/useAuthStatus";
+import { useAuthContext } from "@/app/_features/_authentication/context/AuthContext";
 
 // Custom hooks
 import { useHandleBack } from "@/app/hooks/auth/useHandleBackNavigation";
 import { useAuthRedirect } from "@/app/hooks/auth/useAuthRedirect";
+import SignInPage from "./_components/SignInPage";
+import CodePage from "../sign-up/verify-email/_components/OTP";
+import AuthCompleted from "../shared/AuthCompleted";
+import EmailForm from "../shared/EmailForm";
+import { transitionVariants } from "../forms/email/constants";
 
-const transitionVariants = {
-  initial: { opacity: 0, x: 150 },
-  animate: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: -150 },
-};
 
 const SignUpPage = () => {
-  const { isLoaded, user } = useUser();
-
-  // Redirect logic if user data is loaded
-  useAuthRedirect({ isLoaded, user });
-
-  const handleBack = useHandleBack();
-  const { authStage } = useAuthContext();
 
   const transitionSettings = useMemo(
     () => ({
@@ -43,10 +32,10 @@ const SignUpPage = () => {
     []
   );
 
+  const { authStatus } = useAuthContext();
+
   const renderStageContent = useMemo(() => {
-    switch (authStage) {
-      case AuthStage.Form:
-        return (
+        return authStatus.stage === "signIn" ? (
           <motion.div
             key="form"
             initial="initial"
@@ -55,29 +44,27 @@ const SignUpPage = () => {
             variants={transitionVariants}
             transition={transitionSettings}
             className="h-full"
-          >
-            <SignUpStageForm />
+            >
+            <SignInPage/>
           </motion.div>
-        );
-      case AuthStage.Verifying:
-        return (
+        ) :
+        (
           <motion.div
-            key="verifying"
-            initial="initial"
-            animate="animate"
-            exit="exit"
+          key="verifying"
+          initial="initial"
+          animate="animate"
+          exit="exit"
             variants={transitionVariants}
             transition={transitionSettings}
             className="h-full"
           >
-            <Button onClick={handleBack} variant="ghost">
+            {/* <Button onClick={} variant="ghost">
               <NavArrowLeft />
-            </Button>
+            </Button> */}
             <VerifyEmail />
           </motion.div>
         );
-      case AuthStage.Completed:
-        return (
+        (
           <motion.div
             key="completed"
             initial="initial"
@@ -90,13 +77,11 @@ const SignUpPage = () => {
             <AuthCompleted />
           </motion.div>
         );
-      default:
-        return null;
     }
-  }, [authStage, handleBack, transitionSettings]);
+  }, [authStage, transitionSettings]);
 
   return (
-    <div className="h-full min-w-3xl flex justify-center items-center">
+    <div className="h-full flex justify-center items-center">
       <AnimatePresence mode="wait" initial={false}>
         {renderStageContent}
       </AnimatePresence>

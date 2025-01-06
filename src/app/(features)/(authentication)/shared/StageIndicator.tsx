@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { AuthAction, useAuthContext } from "@/app/features/authentication/context/AuthContext";
-import { AuthStage } from "@/app/features/authentication/hooks/useAuthStatus";
+import { AuthAction, useAuthContext } from "@/app/_features/_authentication/context/AuthContext";
+import { AuthStage } from "@/app/_features/_authentication/hooks/useAuthStatus";
 
 type AuthStageIndicatorProps = {
   outOf: number;

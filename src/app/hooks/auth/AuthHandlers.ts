@@ -1,9 +1,9 @@
 import { ClerkAPIError, SignInResource, SignUpResource } from "@clerk/types";
 import { AuthHandlers } from "@/app/hooks/auth/AuthHandlers";
-import { AuthStage, useAuthStatus } from "@/app/features/authentication/hooks/useAuthStatus";
-import { EmailForm, OTPCodeForm } from "@/app/features/authentication/context/AuthContext";
+import { AuthStage, useAuthStatus } from "@/app/_features/_authentication/hooks/useAuthStatus";
+import { EmailForm, OTPCodeForm } from "@/app/_features/_authentication/context/AuthContext";
 import { getClerkError } from "@auth/hooks/auth/clerkErrorHandler";
-import { AuthFlow } from "@/app/features/authentication/context/AuthContext";
+import { AuthFlow } from "@/app/_features/_authentication/context/AuthContext";
 
 // =============================================================================
 // Types and Utilities

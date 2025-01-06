@@ -1,25 +1,31 @@
 "use client";
 
-import React, { createContext, useContext, useReducer, useState } from "react";
+import React, {
+  createContext,
+  Dispatch,
+  useContext,
+  useReducer,
+  useState,
+} from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
-import { useAuthStatus } from "@/app/features/authentication/hooks/useAuthStatus";
-import { AuthObject, EmailForm, OTPCodeForm } from "../types";
+import { useAuthStatus } from "@/app/_features/_authentication/hooks/useAuthStatus";
+import { AuthObject, EmailForm, CodeForm } from "../types";
 import { emailFormSchema, otpCodeSchema } from "../utils/validationSchemas";
 import { initialAuthObject } from "../forms/email/constants";
-import { authObjectReducer } from "../utils/utils";
+import { authObjectReducer, AuthReducerAction } from "../utils/utils";
 
 // Context interface
 export interface AuthContextValue {
-  authStatus: AuthObject;
   shakeState: Record<string, boolean>;
 
   emailFormMethods: UseFormReturn<EmailForm>;
-  CodeFormMethods: UseFormReturn<OTPCodeForm>;
+  CodeFormMethods: UseFormReturn<CodeForm>;
 
-  // onEmailFormSubmit: (data: EmailForm) => Promise<void>;
-  // onOTPFormSubmit: (data: OTPCodeForm) => Promise<void>;
+  authObject: AuthObject;
+  dispatch: Dispatch<AuthReducerAction>;
 }
+
 // Context Creation
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -39,22 +45,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const util = useAuthStatus();
 
-  const [authObject, dispatch] = useReducer(authObjectReducer, initialAuthObject);
+  const [authObject, dispatch] = useReducer(
+    authObjectReducer,
+    initialAuthObject
+  );
+
+  const isCodeStage = typeof authObject.stage !== "string";
 
   const emailFormMethods = useForm<EmailForm>({
     resolver: zodResolver(emailFormSchema),
   });
-  const CodeFormMethods = useForm<OTPCodeForm>({
+  const CodeFormMethods = useForm<CodeForm>({
     resolver: zodResolver(otpCodeSchema),
   });
 
   // Context Value
 
   const contextValue: AuthContextValue = {
-    authStatus: authObject,
     shakeState: util.shakeState,
     emailFormMethods,
     CodeFormMethods,
+    authObject,
+    dispatch,
     // onOTPFormSubmit,
   };
 

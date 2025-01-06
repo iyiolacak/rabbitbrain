@@ -9,7 +9,6 @@ export interface AuthObject {
   error: AuthError | null;
 }
 
-
 export type AuthErrorType = "Validation" | "Server" | "AuthAPI" | "Unknown";
 
 export type AuthError = {
@@ -25,15 +24,14 @@ type AuthErrorMeta =
   | { endpoint?: string; statusCode?: number } /* Server */
   | { [key: string]: unknown }; /* Fallback for unknown */
 
-type AuthMethod = "Email" | "Phone";
+export type AuthMethod = "Email" | "Phone";
 
-// AuthState represents the status of a process.
 export type AuthFormState = "Idle" | "Submitting" | "Success" | "Error";
 
-// AuthStage represents the current phase in a multi-step flow.
-export type AuthStage = "signIn" | AuthFormValuesType;
+export type AuthStage = "signIn" | SignInForm; // When email submitted, authStage becomes the submitted object from email-undefined("signIn") stage
 
 export type EmailForm = z.infer<typeof emailFormSchema>;
-export type OTPCodeForm = z.infer<typeof otpCodeSchema>;
+export type CodeForm = z.infer<typeof otpCodeSchema>;
 
-export type AuthFormValuesType = EmailForm;
+export type SignInForm = EmailForm;
+export type SignInAndCodeForm = EmailForm & CodeForm;

@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { ClerkAPIError } from "@clerk/types";
-import { AuthObject, AuthFormValuesType, AuthStage } from "../types";
+import { AuthObject, SignInForm, AuthStage } from "../types";
 
 
 
@@ -13,8 +13,8 @@ type UseAuthStatusReturn = {
   shakeState: Record<string, boolean>;
   triggerShake: (field: string) => void;
   resetShake: (field: string) => void;
-  setSubmittedData: (submittedData: AuthFormValuesType | undefined) => void;
-  submittedData: AuthFormValuesType | undefined;
+  setSubmittedData: (submittedData: SignInForm | undefined) => void;
+  submittedData: SignInForm | undefined;
 };
 
 /**
@@ -37,7 +37,7 @@ export const useAuthStatus = (): UseAuthStatusReturn => {
   >(undefined);
   const [shakeState, setShakeState] = useState<Record<string, boolean>>({});
   const [submittedData, setSubmittedData] = useState<
-  AuthFormValuesType | undefined
+  SignInForm | undefined
   >(undefined);
   /**
    * Triggers a visual shake effect for a specific field.

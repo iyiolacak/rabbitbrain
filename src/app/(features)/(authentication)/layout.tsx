@@ -1,7 +1,7 @@
 import React from "react";
-import AuthImageSection from "@/app/features/authentication/shared/AuthImageSection";
-import AuthStageIndicator from "@/app/features/authentication/shared/StageIndicator";
-import { AuthProvider } from "@/app/features/authentication/context/AuthContext";
+import AuthImageSection from "@/app/_features/_authentication/shared/AuthImageSection";
+import AuthStageIndicator from "@/app/_features/_authentication/shared/StageIndicator";
+import { AuthProvider } from "@/app/_features/_authentication/context/AuthContext";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

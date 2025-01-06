@@ -31,7 +31,7 @@
         "./src/*"
       ],
       "@auth/*": [
-        "src/app/features/authentication/*"
+        "src/app/(features)/_authentication/*"
       ],
       "@features/*": [
         "src/(features)/*"

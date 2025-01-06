@@ -1,11 +1,11 @@
 "use client";
-import OTPForm from "./OTPForm";
-import { useAuthContext } from "@/app/features/authentication/context/AuthContext";
+import OTPForm from "./CodeForm";
+import { useAuthContext } from "@/app/_features/_authentication/context/AuthContext";
 import { useHandleBack } from "@/app/hooks/auth/useHandleBackNavigation";
 import ResendCode from "./ResendOTPCode";
 import { EditPencil } from "iconoir-react";
 
-const VerifyEmail = () => {
+const CodePage = () => {
   const { authStatus } = useAuthContext();
   const handleBack = useHandleBack(setStep("signUp"));
 
@@ -38,4 +38,4 @@ const VerifyEmail = () => {
   );
 };
 
-export default VerifyEmail;
+export default CodePage;
