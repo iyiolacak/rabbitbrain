@@ -2,15 +2,13 @@
 import Logo from "@/components/Logo";
 import React, { useEffect } from "react";
 import SectionHeader from "../../shared/SectionHeader";
-import OAuthSignInButton from "../../sign-up/_components/OAuthSignInButton";
 import Divider from "../../shared/Divider";
 import TermsText from "../../shared/TermsText";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import EmailForm from "../../shared/EmailForm";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@clerk/clerk-react";
-import { AuthState, useAuthStatus } from "../../hooks/useAuthStatus";
+import { useAuthContext } from "../../context/AuthContext";
+import OAuthSignInButton from "../../oauth/OAuthSignInButton";
 
 function RedirectToCreateAccount() {
   return (
@@ -28,15 +26,8 @@ function RedirectToCreateAccount() {
 }
 
 const SignInPage = () => {
-  const router = useRouter();
-  const { isLoaded, isSignedIn } = useAuth();
-  useEffect(() => {
-    if (isLoaded && isSignedIn) {
-      router.push("/home");
-    }
-  }, [isLoaded, isSignedIn, router]);
 
-  const { authState } = useAuthStatus();
+  const { authObject } = useAuthContext();
   return (
     <div className="flex items-center w-content flex-col h-content px-4 py-3">
       <Logo
@@ -61,7 +52,7 @@ const SignInPage = () => {
           <OAuthSignInButton
             strategy="oauth_google"
             className="border bg-white font-semibold"
-            disabled={authState === AuthState.Submitting}
+            disabled={authObject.state === "Submitting"}
           />
         </div>
         <Divider />
