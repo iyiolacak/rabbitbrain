@@ -1,5 +1,5 @@
 "use client";
-import OTPForm from "./CodeForm";
+import CodeForm from "./CodeForm";
 import { useHandleBack } from "@/app/hooks/auth/useHandleBackNavigation";
 import ResendCode from "./ResendOTPCode";
 import { EditPencil } from "iconoir-react";
@@ -31,7 +31,7 @@ const CodePage = () => {
             </span>
           </h3>
         </div>
-        <OTPForm />
+        <CodeForm />
         <div className="mt-10 text-center w-full">
           <h3 className="text-sm md:text-base font-normal tracking-tight">
             Need another code? <ResendCode />

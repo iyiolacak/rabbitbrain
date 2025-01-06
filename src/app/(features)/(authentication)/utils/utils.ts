@@ -26,16 +26,16 @@ export function authObjectReducer(
         ...authObject,
         stage: action.payload,
       };
+      case "set_submitting":
+        return {
+          ...authObject,
+          state: "Submitting",
+        };
     case "error_occured":
       return {
         ...authObject,
         state: "Error",
         error: action.payload,
-      };
-    case "set_submitting":
-      return {
-        ...authObject,
-        state: "Submitting",
       };
     default:
       return authObject;

@@ -13,7 +13,7 @@ import APIErrorComponent from "../shared/ErrorDisplay";
 
 // TODO: The OTP input validation schema will be handled better.
 
-const OTPForm = () => {
+const CodeForm = () => {
   const { CodeFormMethods, authObject } = useAuthContext();
 
   const {
@@ -30,6 +30,9 @@ const OTPForm = () => {
       OTPInputRef.current?.focus();
     }
   }, [authObject.state]);
+
+  // IMPLEMENT LOGIC!!!
+  const onCodeSubmit = () => {};
 
   const apiError = authObject.error;
 
@@ -90,4 +93,4 @@ const OTPForm = () => {
   );
 };
 
-export default OTPForm;
+export default CodeForm;
