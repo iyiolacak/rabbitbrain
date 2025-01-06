@@ -81,6 +81,11 @@ const CodeForm = () => {
         />
       </div>
       <div className="min-h-10 flex items-center justify-center">
+        {ValidationErrors.OTPCode && (
+          <p className="text-red-600 text-xs">
+            ValidationErrors.OTPCode.message
+          </p>
+        )}
         {apiError && (
           <APIErrorComponent
             alertIcon={false}

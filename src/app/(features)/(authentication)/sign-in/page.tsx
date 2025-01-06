@@ -32,7 +32,9 @@ const SignUpPage = () => {
     []
   );
 
-  const { authObject } = useAuthContext();
+  const { authObject, dispatch } = useAuthContext();
+
+  const handleGoBack = () => dispatch({ type: "auth_reset" })
 
 /**
  * SignInForm and CodeForm are derived from your zod schemas, e.g.:
@@ -54,7 +56,7 @@ const SignUpPage = () => {
             >
             <SignInPage/>
           </motion.div>
-        ) :
+        ) : // authObject.stage === { email: string; }
         (
           <motion.div
           key="verifying"
@@ -65,14 +67,13 @@ const SignUpPage = () => {
             transition={transitionSettings}
             className="h-full"
           >
-            {/* <Button onClick={} variant="ghost">
+            <Button onClick={handleBackNav} variant="ghost">
               <NavArrowLeft />
-            </Button> */}
+            </Button>
             <CodePage />
           </motion.div>
         );
-    })
-  }, [authStage, transitionSettings]);
+    }, [authObject.stage, transitionSettings]);
 
   return (
     <div className="h-full flex justify-center items-center">
@@ -81,6 +82,6 @@ const SignUpPage = () => {
       </AnimatePresence>
     </div>
   );
-};
+;
 
 export default SignUpPage;
