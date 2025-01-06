@@ -2,31 +2,25 @@ import React from "react";
 import { AlertCircleIcon } from "lucide-react";
 import { AuthError } from "../types";
 
-type Errors = Record<string, AuthError> | AuthError[];
 type ErrorDisplayProps = {
-  errors: Errors | null;
+  error: AuthError | null;
   className?: string;
   alertIcon?: boolean;
 };
 
-const renderError = (error: AuthError, index: number) => (
-  <div key={index} className="flex flex-row items-center p-2 text-red-600">
-    {AlertCircleIcon && <AlertCircleIcon className="mr-2" size={18} />}
-    <p className="text-sm font-medium">{error.longMessage || error.message}</p>
-  </div>
-);
-const ErrorDisplay = ({
-  errors,
+const ErrorDisplay: React.FC<ErrorDisplayProps> = ({
+  error,
   className = "",
   alertIcon = true,
-}: ErrorDisplayProps) => {
-  if (!errors) return null;
-  const errorArray = Array.isArray(errors) ? errors : Object.values(errors);
+}) => {
+  if (!error) return null;
 
   return (
-    <div className={`flex flex-col space-y-1 ${className}`}>
-      {alertIcon ? <AlertCircleIcon /> : ""}
-      {errorArray.map((error, index) => renderError(error, index))}
+    <div className={`flex items-center space-x-2 text-red-600 ${className}`}>
+      {alertIcon && <AlertCircleIcon size={18} className="shrink-0" />}
+      <p className="text-sm font-medium">
+        {error.longMessage || error.message}
+      </p>
     </div>
   );
 };

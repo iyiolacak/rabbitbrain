@@ -25,8 +25,9 @@ const EmailForm: React.FC<EmailFormProps> = () => {
   }, [setFocus]);
 
   const { signIn } = useAuthActions();
+
   const { authStatus } = useAuthContext();
-  
+
   const disabled = authStatus.state === "Submitting";
 
   return (
@@ -51,9 +52,7 @@ const EmailForm: React.FC<EmailFormProps> = () => {
             />
           )}
         />
-        <div>
-          <ErrorDisplay className="mt-2" errors={errors} />
-        </div>
+          <ErrorDisplay className="mt-2" error={authStatus.error} />
       </div>
     </form>
   );
