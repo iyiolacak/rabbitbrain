@@ -19,7 +19,7 @@ const OTPForm = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors: ValidationError },
+    formState: { errors: ValidationErrors },
   } = CodeFormMethods;
 
   const OTPInputRef = useRef<HTMLInputElement | null>(null);
@@ -77,11 +77,11 @@ const OTPForm = () => {
         />
       </div>
       <div className="min-h-10 flex items-center justify-center">
-        {(ValidationError.OTPCode?.message || apiError) && (
+        {(ValidationErrors.OTPCode?.message || apiError) && (
           <ErrorDisplay
             alertIcon={false}
             className="flex justify-center"
-            errors={ValidationError.OTPCode?.message || apiError}
+            error={ValidationErrors.OTPCode?.message || apiError}
           />
         )}
       </div>

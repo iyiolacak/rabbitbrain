@@ -17,7 +17,7 @@ const EmailForm: React.FC<EmailFormProps> = () => {
     control,
     handleSubmit,
     setFocus,
-    formState: { errors },
+    formState: { errors: ValidationErrors },
   } = useFormContext<EmailFormValues>();
 
   useEffect(() => {
@@ -26,9 +26,9 @@ const EmailForm: React.FC<EmailFormProps> = () => {
 
   const { signIn } = useAuthActions();
 
-  const { authStatus } = useAuthContext();
+  const { authObject } = useAuthContext();
 
-  const disabled = authStatus.state === "Submitting";
+  const disabled = authObject.state === "Submitting";
 
   return (
     <form
@@ -47,12 +47,12 @@ const EmailForm: React.FC<EmailFormProps> = () => {
               prompt="Enter your email"
               placeholder="example@example.com"
               disabled={disabled}
-              error={errors.email?.message}
+              error={ValidationErrors.email?.message}
               {...field}
             />
           )}
         />
-          <ErrorDisplay className="mt-2" error={authStatus.error} />
+          <ErrorDisplay className="mt-2" error={authObject.error} />
       </div>
     </form>
   );
