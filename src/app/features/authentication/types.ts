@@ -2,12 +2,13 @@ import { z } from "zod";
 import { emailFormSchema, otpCodeSchema } from "./utils/validationSchemas";
 
 // AuthStateMachine represents the current state of the authentication process.
-export interface AuthState {
+export interface AuthObject {
   method: AuthMethod;
   stage: AuthStage;
   state: AuthFormState;
   error: AuthError | null;
 }
+
 
 export type AuthErrorType = "Validation" | "Server" | "AuthAPI" | "Unknown";
 

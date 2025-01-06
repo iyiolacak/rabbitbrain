@@ -5,16 +5,16 @@
 
 import { useState } from "react";
 import LoadingCircle from "../../shared/LoadingCircle";
-import { AuthState } from "../../types";
+import { AuthObject } from "../../types";
 import { Check, X } from "iconoir-react";
 
 type ButtonStates = JSX.Element | typeof idleText;
 
 const idleText = "Send code";
 
-export function SubmitButton(authState: AuthState) {
+export function SubmitButton(authState: AuthObject) {
   /* This is the default (idle) text for the button. */
-  const buttonStates: Record<AuthState, ButtonStates> = {
+  const buttonStates: Record<AuthObject, ButtonStates> = {
     [AuthState.Idle]: idleText,
     [AuthState.Submitting]: <LoadingCircle />,
     [AuthState.Success]: <Check className="mr-2" />,

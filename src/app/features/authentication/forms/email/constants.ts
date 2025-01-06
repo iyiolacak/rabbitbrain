@@ -1,4 +1,4 @@
-import { AuthState } from "../../types";
+import { AuthObject } from "../../types";
 
 export const BUTTON_ICON_DURATION = 1500; // Duration in ms
 
@@ -12,7 +12,7 @@ export const transitionVariants = {
 
 
 // --- Initial Context ---
-export const initialAuthStatus: AuthState = {
+export const initialAuthObject: AuthObject = {
   method: "Email",
   stage: "signIn",
   state: "Idle",

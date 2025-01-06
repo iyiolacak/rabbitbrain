@@ -1,4 +1,4 @@
-import { AuthState, AuthFormState } from "../../types";
+import { AuthObject, AuthFormState } from "../../types";
 export interface EmailForm { 
     email: string;
 };

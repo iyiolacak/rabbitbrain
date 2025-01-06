@@ -1,13 +1,13 @@
 import { useCallback, useState } from "react";
 import { ClerkAPIError } from "@clerk/types";
-import { AuthState, AuthFormValuesType, AuthStage } from "../types";
+import { AuthObject, AuthFormValuesType, AuthStage } from "../types";
 
 
 
 type UseAuthStatusReturn = {
-  startSubmission: (prev: AuthState) => void;
-  markSuccess: (prev: AuthState) => void;
-  setStep: (prev: AuthState) => void;
+  startSubmission: (prev: AuthObject) => void;
+  markSuccess: (prev: AuthObject) => void;
+  setStep: (prev: AuthObject) => void;
   resetSubmittingState: () => void;
   resetAuth: () => void;
   shakeState: Record<string, boolean>;
