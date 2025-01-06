@@ -4,7 +4,6 @@ import React from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useAuthContext } from "../../context/AuthContext";
-import { AuthState } from "../../hooks/useAuthStatus";
 import EmailForm from "../../shared/EmailForm";
 import OAuthSignInButton from "./OAuthSignInButton";
 import TermsText from "../../shared/TermsText";
@@ -25,7 +24,7 @@ const RedirectToSignIn = () => (
 );
 
 const SignUpForm = () => {
-  const { authState } = useAuthContext();
+  const { authObject } = useAuthContext();
 
   return (
     <div className="flex flex-col items-center w-full h-full max-w-md w:min-w-3xl mx-auto px-4 py-3">
@@ -53,11 +52,11 @@ const SignUpForm = () => {
             <OAuthSignInButton
               strategy="oauth_google"
               className="w-full border bg-white font-semibold"
-              disabled={authState === AuthState.Submitting}
+              disabled={authObject.state === "Submitting"}
             />
           </div>
           <Divider />
-          <EmailForm authAction="sign-up" />
+          <EmailForm />
           <RedirectToSignIn />
         </div>
         <TermsText />

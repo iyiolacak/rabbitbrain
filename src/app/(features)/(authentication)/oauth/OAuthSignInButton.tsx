@@ -5,11 +5,10 @@ import { useSignUp } from "@clerk/nextjs";
 import { OAuthStrategy } from "@clerk/types";
 import React from "react";
 import { oauthMapping } from "./oauthMapping";
-import { useAuthContext } from "@/app/_features/_authentication/context/AuthContext";
-import ErrorDisplay from "@/app/_features/_authentication/shared/ErrorDisplay";
-import { AuthState, useAuthStatus } from "@/app/_features/_authentication/hooks/useAuthStatus";
 import LoadingCircle from "../shared/LoadingCircle";
 import useOAuthHandler from "@/app/features/authentication/hooks/useOAuthHandler";
+import { useAuthContext } from "../context/AuthContext";
+import APIErrorComponent from "../shared/ErrorDisplay";
 
 type OAuthButtonProps = {
   strategy: OAuthStrategy;
@@ -23,7 +22,7 @@ const OAuthSignInButton: React.FC<OAuthButtonProps> = ({
   disabled,
 }) => {
   const mapping = oauthMapping[strategy];
-  const { oauthServerError, authState } = useAuthStatus();
+  const { authObject } = useAuthContext();
   const handleOAuthClick = useOAuthHandler();
 
   return (
@@ -35,12 +34,12 @@ const OAuthSignInButton: React.FC<OAuthButtonProps> = ({
         onClick={() => handleOAuthClick(strategy)}
         disabled={disabled}
       >
-        {authState === AuthState.Submitting ?
+        {authObject.state === "Submitting" ?
         <LoadingCircle color="#000" /> :
         `Continue with ${mapping?.name}`
         }
       </Button>
-      {oauthServerError && <ErrorDisplay errors={oauthServerError} />}
+      {oauthServerError && <APIErrorComponent errors={oauthServerError} />}
     </>
   );
 };

@@ -7,6 +7,7 @@ import { useAuthContext } from "../context/AuthContext";
 
 const CodePage = () => {
   const { authObject, dispatch } = useAuthContext();
+  const didSomethingWentWrong = !authObject || !authObject.stage || authObject.stage === "signIn";
 
   return (
     <div className="flex min-h-full w-full px-4 max-w-md mx-auto">
@@ -25,7 +26,7 @@ const CodePage = () => {
             >
               {authObject.stage != "signIn"
                 ? authObject.stage.toString()
-                : "undefined"}
+                : "Something went wrong"}
               <EditPencil className="ml-0.5 flex-shrink-0 text-xs" />
             </span>
           </h3>

@@ -1,5 +1,3 @@
-import { getClerkError } from "@/app/_features/_authentication/utils/clerkErrorHandler";
-import { useAuthStatus } from "./useAuthStatus";
 import { useSignUp } from "@clerk/clerk-react";
 import { OAuthStrategy } from "@clerk/types";
 

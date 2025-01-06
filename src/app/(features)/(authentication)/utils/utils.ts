@@ -11,8 +11,8 @@ import {
 
 export type AuthReducerAction =
   | { type: "set_submitting" }
-  | { type: "error_occured"; payload: AuthAPIError }
   | { type: "signin_form_submitted"; payload: SignInForm }
+  | { type: "error_occured"; payload: AuthAPIError }
   | { type: "code_form_submitted"; payload: CodeForm }
   | { type: "auth_reset" }
   | { type: "change_method"; payload: AuthMethod };
