@@ -2,13 +2,12 @@
 import OTPForm from "./OTPForm";
 import { useAuthContext } from "@/app/features/authentication/context/AuthContext";
 import { useHandleBack } from "@/app/hooks/auth/useHandleBackNavigation";
-import { AuthStage } from "@/app/features/authentication/hooks/useAuthStatus";
 import ResendCode from "./ResendOTPCode";
 import { EditPencil } from "iconoir-react";
 
 const VerifyEmail = () => {
-  const { submittedData } = useAuthContext();
-  const handleBack = useHandleBack(AuthStage.Form);
+  const { authStatus } = useAuthContext();
+  const handleBack = useHandleBack(setStep("signUp"));
 
   return (
     <div className="flex min-h-full w-full px-4 max-w-md mx-auto">
@@ -23,7 +22,7 @@ const VerifyEmail = () => {
               onClick={handleBack}
               className="inline-flex cursor-pointer items-center rounded-md px-1 font-regular text-blue-700 transition-colors break-all"
             >
-              {submittedData?.email}
+              {authStatus.stage != "signIn" ? authStatus.stage.toString() : "undefined"}
               <EditPencil className="ml-0.5 flex-shrink-0 text-xs" />
             </span>
           </h3>

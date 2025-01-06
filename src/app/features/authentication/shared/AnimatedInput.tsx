@@ -4,7 +4,6 @@ import React, { forwardRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import "@/app/globals.css";
 import { AlertCircleIcon, EyeIcon, EyeOffIcon } from "lucide-react";
-import styles from './AnimatedInput.module.css';
 
 interface AnimatedInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -30,14 +29,8 @@ const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(
       shake = false, // Default shake to false
       ...props
     },
-    ref,
+    ref
   ) => {
-    const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
-
-    const handleToggleVisibility = () => setIsPasswordVisible(!isPasswordVisible);
-
-    const isPasswordField = type === "password";
-
     return (
       <div>
         <div className="relative">
@@ -46,17 +39,12 @@ const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(
             onChange={onChange}
             value={value}
             ref={ref}
-            type={
-              isPasswordField ? (isPasswordVisible ? "text" : "password") : type
-            }
+            type={type}
             {...props}
-            className={cn(
-              `pt-5 group ${props.className}`,
-              {
-                "border-red-600 focus-visible:ring-red-600": error,
-                "animate-shake": shake, // Apply shake animation when shake is true
-              }
-            )}
+            className={cn(`pt-5 group ${props.className}`, {
+              "border-red-600 focus-visible:ring-red-600": error,
+              "animate-shake": shake, // Apply shake animation when shake is true
+            })}
             placeholder={placeholder}
             aria-describedby={error ? `${id}-error` : undefined}
           />
@@ -67,12 +55,12 @@ const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(
               "floating-label group-disabled:text-blue-500",
               {
                 "text-red-600": error,
-              },
+              }
             )}
           >
             {prompt}
           </label>
-          </div>
+        </div>
         {error && (
           <div
             className="mt-1.5 flex flex-row items-center"
@@ -85,7 +73,7 @@ const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(
         )}
       </div>
     );
-  },
+  }
 );
 
 AnimatedInput.displayName = "AnimatedInput";
