@@ -6,13 +6,10 @@ export interface AuthObject {
   method: AuthMethod;
   stage: AuthStage;
   state: AuthFormState;
-  error: AuthError | null;
+  error: AuthAPIError | null;
 }
 
-export type AuthErrorType = "Validation" | "Server" | "AuthAPI" | "Unknown";
-
-export type AuthError = {
-  type: AuthErrorType;
+export type AuthAPIError = {
   message: string;
   longMessage?: string;
   code?: string;

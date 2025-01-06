@@ -1,9 +1,9 @@
 import React from "react";
 import { AlertCircleIcon } from "lucide-react";
-import { AuthError } from "../types";
+import { AuthAPIError } from "../types";
 
 type ErrorDisplayProps = {
-  error: AuthError | null;
+  error: AuthAPIError | null;
   className?: string;
   alertIcon?: boolean;
 };

@@ -1,6 +1,6 @@
 // import { AuthReducerAction } from "../context/AuthContext";
 import {
-  AuthError,
+  AuthAPIError,
   SignInForm as SignInForm,
   AuthObject,
   AuthStage,
@@ -11,7 +11,7 @@ import {
 
 export type AuthReducerAction =
   | { type: "set_submitting" }
-  | { type: "error_occured"; payload: AuthError }
+  | { type: "error_occured"; payload: AuthAPIError }
   | { type: "signin_form_submitted"; payload: SignInForm }
   | { type: "code_form_submitted"; payload: CodeForm }
   | { type: "auth_reset" }

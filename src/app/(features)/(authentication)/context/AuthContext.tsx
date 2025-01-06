@@ -9,7 +9,6 @@ import React, {
 } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
-import { useAuthStatus } from "@/app/_features/_authentication/hooks/useAuthStatus";
 import { AuthObject, EmailForm, CodeForm } from "../types";
 import { emailFormSchema, otpCodeSchema } from "../utils/validationSchemas";
 import { initialAuthObject } from "../forms/email/constants";

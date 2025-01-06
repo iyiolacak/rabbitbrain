@@ -6,7 +6,7 @@ import ResendCode from "./ResendOTPCode";
 import { EditPencil } from "iconoir-react";
 
 const CodePage = () => {
-  const { authStatus } = useAuthContext();
+  const { authObject, dispatch } = useAuthContext();
   const handleBack = useHandleBack(setStep("signUp"));
 
   return (
@@ -22,7 +22,7 @@ const CodePage = () => {
               onClick={handleBack}
               className="inline-flex cursor-pointer items-center rounded-md px-1 font-regular text-blue-700 transition-colors break-all"
             >
-              {authStatus.stage != "signIn" ? authStatus.stage.toString() : "undefined"}
+              {authObject.stage != "signIn" ? authObject.stage.toString() : "undefined"}
               <EditPencil className="ml-0.5 flex-shrink-0 text-xs" />
             </span>
           </h3>
