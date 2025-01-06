@@ -2,9 +2,6 @@ import { useSignUp } from "@clerk/clerk-react";
 import { OAuthStrategy } from "@clerk/types";
 
 export const useOAuthHandler = () => {
-  const { startSubmission, markSuccess, handleOAuthServerError, resetAuth } =
-    useAuthStatus();
-  const { signUp } = useSignUp();
 
   const handleOAuthClick = async (strategy: OAuthStrategy) => {
     if (!signUp) {

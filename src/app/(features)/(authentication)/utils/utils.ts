@@ -3,7 +3,6 @@ import {
   AuthAPIError,
   SignInForm as SignInForm,
   AuthObject,
-  AuthStage,
   EmailForm,
   CodeForm,
   AuthMethod,
@@ -25,7 +24,7 @@ export function authObjectReducer(
     case "signin_form_submitted":
       return {
         ...authObject,
-        stage: action.payload
+        stage: action.payload,
       };
     case "error_occured":
       return {
