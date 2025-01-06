@@ -1,4 +1,5 @@
 // import { AuthReducerAction } from "../context/AuthContext";
+import { signIn } from "convex/auth";
 import {
   AuthAPIError,
   SignInForm as SignInForm,
@@ -26,11 +27,11 @@ export function authObjectReducer(
         ...authObject,
         stage: action.payload,
       };
-      case "set_submitting":
-        return {
-          ...authObject,
-          state: "Submitting",
-        };
+    case "set_submitting":
+      return {
+        ...authObject,
+        state: "Submitting",
+      };
     case "error_occured":
       return {
         ...authObject,
@@ -42,4 +43,3 @@ export function authObjectReducer(
   }
 }
 
-export const onEmailFormSubmit = async (data: EmailForm): Promise<void> => {};

@@ -1,23 +1,16 @@
 "use client";
 
-import React, {
-  createContext,
-  Dispatch,
-  useContext,
-  useReducer,
-  useState,
-} from "react";
+import React, { createContext, Dispatch, useContext, useReducer } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
-import { AuthObject, EmailForm, CodeForm } from "../types";
+import { AuthObject, EmailForm, CodeForm, SignInForm } from "../types";
 import { emailFormSchema, otpCodeSchema } from "../utils/validationSchemas";
 import { initialAuthObject } from "../forms/email/constants";
 import { authObjectReducer, AuthReducerAction } from "../utils/utils";
+import { useAuthActions } from "@convex-dev/auth/react";
 
 // Context interface
 export interface AuthContextValue {
-  shakeState: Record<string, boolean>;
-
   emailFormMethods: UseFormReturn<EmailForm>;
   CodeFormMethods: UseFormReturn<CodeForm>;
 
@@ -42,14 +35,12 @@ export const useAuthContext = (): AuthContextValue => {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const util = useAuthStatus();
-
   const [authObject, dispatch] = useReducer(
     authObjectReducer,
     initialAuthObject
   );
 
-  const isCodeStage = typeof authObject.stage !== "string";
+  const { signIn } = useAuthActions();
 
   const emailFormMethods = useForm<EmailForm>({
     resolver: zodResolver(emailFormSchema),
@@ -61,7 +52,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   // Context Value
 
   const contextValue: AuthContextValue = {
-    shakeState: util.shakeState,
     emailFormMethods,
     CodeFormMethods,
     authObject,
