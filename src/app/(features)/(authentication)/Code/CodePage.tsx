@@ -1,13 +1,12 @@
 "use client";
 import OTPForm from "./CodeForm";
-import { useAuthContext } from "@/app/_features/_authentication/context/AuthContext";
 import { useHandleBack } from "@/app/hooks/auth/useHandleBackNavigation";
 import ResendCode from "./ResendOTPCode";
 import { EditPencil } from "iconoir-react";
+import { useAuthContext } from "../context/AuthContext";
 
 const CodePage = () => {
   const { authObject, dispatch } = useAuthContext();
-  const handleBack = useHandleBack(setStep("signUp"));
 
   return (
     <div className="flex min-h-full w-full px-4 max-w-md mx-auto">
@@ -19,10 +18,14 @@ const CodePage = () => {
           <h3 className="scroll-m-20 text-sm md:text-base font-normal tracking-tight py-5">
             Enter the security code we sent to&nbsp;
             <span
-              onClick={handleBack}
+              onClick={() => {
+                dispatch({ type: "auth_reset" });
+              }}
               className="inline-flex cursor-pointer items-center rounded-md px-1 font-regular text-blue-700 transition-colors break-all"
             >
-              {authObject.stage != "signIn" ? authObject.stage.toString() : "undefined"}
+              {authObject.stage != "signIn"
+                ? authObject.stage.toString()
+                : "undefined"}
               <EditPencil className="ml-0.5 flex-shrink-0 text-xs" />
             </span>
           </h3>
