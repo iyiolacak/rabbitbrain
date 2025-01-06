@@ -72,24 +72,7 @@ const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(
           >
             {prompt}
           </label>
-          {isPasswordField && (
-            <button
-              type="button"
-              onClick={handleToggleVisibility}
-              className="group absolute inset-y-0 right-4 flex items-center px-3 py-2"
-              aria-label={isPasswordVisible ? "Hide password" : "Show password"}
-            >
-              {isPasswordVisible ? (
-                <EyeIcon
-                  className="size-5 text-gray-400 group-hover:text-gray-500 transition-colors"
-                  strokeWidth={2}
-                />
-              ) : (
-                <EyeOffIcon className="size-5 text-gray-400" strokeWidth={2} />
-              )}
-            </button>
-          )}
-        </div>
+          </div>
         {error && (
           <div
             className="mt-1.5 flex flex-row items-center"
