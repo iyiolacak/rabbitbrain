@@ -9,7 +9,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { useAuthContext } from "../context/AuthContext";
-import ErrorDisplay from "../shared/ErrorDisplay";
+import APIErrorComponent from "../shared/ErrorDisplay";
 
 // TODO: The OTP input validation schema will be handled better.
 
@@ -32,6 +32,7 @@ const OTPForm = () => {
   }, [authObject.state]);
 
   const apiError = authObject.error;
+
   return (
     <form ref={formRef} onSubmit={handleSubmit(onCodeSubmit)}>
       <div className="flex items-center justify-center">
@@ -77,11 +78,11 @@ const OTPForm = () => {
         />
       </div>
       <div className="min-h-10 flex items-center justify-center">
-        {(ValidationErrors.OTPCode?.message || apiError) && (
-          <ErrorDisplay
+        {apiError && (
+          <APIErrorComponent
             alertIcon={false}
             className="flex justify-center"
-            error={ValidationErrors.OTPCode?.message || apiError}
+            error={apiError}
           />
         )}
       </div>

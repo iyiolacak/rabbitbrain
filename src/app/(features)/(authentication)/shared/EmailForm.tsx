@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import ErrorDisplay from "./ErrorDisplay";
+import APIErrorComponent from "./ErrorDisplay";
 import AnimatedInput from "./AnimatedInput";
 import { EmailForm as EmailFormValues } from "../types";
 import { useAuthActions } from "@convex-dev/auth/react";
@@ -52,7 +52,7 @@ const EmailForm: React.FC<EmailFormProps> = () => {
             />
           )}
         />
-          <ErrorDisplay className="mt-2" error={authObject.error} />
+          <APIErrorComponent className="mt-2" error={authObject.error} />
       </div>
     </form>
   );

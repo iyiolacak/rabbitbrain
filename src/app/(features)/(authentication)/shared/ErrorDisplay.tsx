@@ -8,9 +8,9 @@ type ErrorDisplayProps = {
   alertIcon?: boolean;
 };
 
-const ErrorDisplay: React.FC<ErrorDisplayProps> = ({
+const APIErrorComponent: React.FC<ErrorDisplayProps> = ({
   error,
-  className = "",
+  className,
   alertIcon = true,
 }) => {
   if (!error) return null;
@@ -25,4 +25,4 @@ const ErrorDisplay: React.FC<ErrorDisplayProps> = ({
   );
 };
 
-export default ErrorDisplay;
+export default APIErrorComponent;
