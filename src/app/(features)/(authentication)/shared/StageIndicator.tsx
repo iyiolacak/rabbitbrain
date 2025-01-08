@@ -13,9 +13,7 @@ const AuthStageIndicator = () => {
   useEffect(() => {
     if (authObject.stage === "signIn") {
       setStage(1);
-    } else if (
-      isStageOnCode(authObject.stage)
-    ) {
+    } else if (isStageOnCode(authObject.stage)) {
       setStage(2);
     } else {
       setStage(1);

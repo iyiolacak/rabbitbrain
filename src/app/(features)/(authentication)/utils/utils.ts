@@ -4,15 +4,18 @@ import {
   AuthAPIError,
   SignInForm as SignInForm,
   AuthObject,
-  EmailForm,
   CodeForm,
   AuthMethod,
   AuthStage,
 } from "../types";
+import { ConvexAuthActionsContext } from "@convex-dev/auth/react";
+import { Dispatch, useReducer } from "react";
+import { useAuthContext } from "../context/AuthContext";
 
 export type AuthReducerAction =
   | { type: "set_submitting" }
-  | { type: "signin_form_submitted"; payload: SignInForm }
+  | { type: "set_credentials"; payload: SignInForm } // "signIn" | { email: string };
+  | { type: "set_otp_code" }
   | { type: "error_occured"; payload: AuthAPIError }
   | { type: "code_form_submitted"; payload: CodeForm }
   | { type: "auth_reset" }
@@ -23,7 +26,7 @@ export function authObjectReducer(
   action: AuthReducerAction
 ): AuthObject {
   switch (action.type) {
-    case "signin_form_submitted":
+    case "set_credentials":
       return {
         ...authObject,
         stage: action.payload,
@@ -42,6 +45,20 @@ export function authObjectReducer(
     default:
       return authObject;
   }
+}
+export type SignInFunction = ConvexAuthActionsContext["signIn"];
+export function onEmailSubmit(
+  authObject: AuthObject,
+  dispatch: Dispatch<AuthReducerAction>,
+  signIn: SignInFunction,
+  formData: SignInForm
+) {
+  void signIn("resend-otp", formData).then(() =>
+    dispatch({
+      type: "set_credentials",
+      payload: { email: formData.email as string },
+    })
+  );
 }
 
 export function isStageOnCode(stage: AuthStage): stage is { email: string } {
