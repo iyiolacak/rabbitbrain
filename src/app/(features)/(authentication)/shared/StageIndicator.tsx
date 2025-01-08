@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { AuthStage } from "../types";
 import { useAuthContext } from "../context/AuthContext";
+import { isStageOnCode } from "../utils/utils";
 
 const AuthStageIndicator = () => {
   const outOf: number = 2;
@@ -13,7 +14,7 @@ const AuthStageIndicator = () => {
     if (authObject.stage === "signIn") {
       setStage(1);
     } else if (
-      isEmailSubmitted
+      isStageOnCode(authObject.stage)
     ) {
       setStage(2);
     } else {

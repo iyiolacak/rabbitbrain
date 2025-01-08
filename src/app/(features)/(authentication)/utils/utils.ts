@@ -7,6 +7,7 @@ import {
   EmailForm,
   CodeForm,
   AuthMethod,
+  AuthStage,
 } from "../types";
 
 export type AuthReducerAction =
@@ -43,3 +44,11 @@ export function authObjectReducer(
   }
 }
 
+export function isStageOnCode(stage: AuthStage): stage is { email: string } {
+  return (
+    typeof stage === "object" &&
+    stage !== null &&
+    "email" in stage &&
+    typeof stage.email === "string"
+  );
+}
