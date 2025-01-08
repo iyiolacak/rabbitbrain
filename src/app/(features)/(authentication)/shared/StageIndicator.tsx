@@ -1,56 +1,32 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { AuthAction, useAuthContext } from "@/app/_features/_authentication/context/AuthContext";
-import { AuthStage } from "@/app/_features/_authentication/hooks/useAuthStatus";
+import { AuthStage } from "../types";
+import { useAuthContext } from "../context/AuthContext";
 
-type AuthStageIndicatorProps = {
-  outOf: number;
-  authAction: AuthAction;
-};
-
-type StageMapping = {
-  [AuthAction in "sign-up" | "sign-in" | "forgot-password"]: {
-    [key in AuthStage]: number;
-  };
-};
-
-const AuthStageIndicator = ({ outOf, authAction }: AuthStageIndicatorProps) => {
-  const { authStage } = useAuthContext();
+const AuthStageIndicator = () => {
+  const outOf: number = 2;
+  const { authObject } = useAuthContext();
   const [stage, setStage] = useState<number>(1);
-  'porno'
 
   useEffect(() => {
-    const stageMapping: StageMapping = {
-      "sign-up": {
-        [AuthStage.Form]: 1,
-        [AuthStage.Verifying]: 2,
-        [AuthStage.Completed]: 3,
-      },
-      "sign-in": {
-        [AuthStage.Form]: 1,
-        [AuthStage.Verifying]: 2,
-        [AuthStage.Completed]: 3,
-      },
-      "forgot-password": {
-        [AuthStage.Form]: 1,
-        [AuthStage.Verifying]: 2,
-        [AuthStage.Completed]: 3,
-      },
-    } as const;
-    const currentStage = stageMapping[authAction]?.[authStage] ?? 1;
-    switch (authStage) {
-      case AuthStage.Verifying:
-        setStage(currentStage || 1);
-        break;
-      default:
-        setStage(1);
+    if (authObject.stage === "signIn") {
+      setStage(1);
+    } else if (
+      isEmailSubmitted
+    ) {
+      setStage(2);
+    } else {
+      setStage(1);
     }
-  }, [authStage, authAction]);
+  }, [authObject.stage]);
 
   const filledStages = useMemo(() => {
     return Array.from({ length: stage }, (_, index) => (
-      <div key={index} className="flex h-2 md:h-2.5 flex-grow rounded-full bg-gray-200">
+      <div
+        key={index}
+        className="flex h-2 md:h-2.5 flex-grow rounded-full bg-gray-200"
+      >
         <motion.div
           className="h-full w-[100%] rounded-full bg-primary"
           initial={{ scaleX: 0 }}
