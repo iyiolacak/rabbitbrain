@@ -5,11 +5,11 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useAuthContext } from "../../context/AuthContext";
 import EmailForm from "../../shared/EmailForm";
-import OAuthSignInButton from "./OAuthSignInButton";
 import TermsText from "../../shared/TermsText";
 import Logo from "@/components/Logo";
 import Divider from "../../shared/Divider";
 import SectionHeader from "../../shared/SectionHeader";
+import OAuthSignInButton from "../../oauth/OAuthSignInButton";
 
 const RedirectToSignIn = () => (
   <p className="flex flex-wrap w-full justify-center text-sm mt-10">

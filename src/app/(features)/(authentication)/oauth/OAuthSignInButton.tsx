@@ -1,12 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useSignUp } from "@clerk/nextjs";
 import { OAuthStrategy } from "@clerk/types";
 import React from "react";
 import { oauthMapping } from "./oauthMapping";
 import LoadingCircle from "../shared/LoadingCircle";
-import useOAuthHandler from "@/app/features/authentication/hooks/useOAuthHandler";
 import { useAuthContext } from "../context/AuthContext";
 import APIErrorComponent from "../shared/ErrorDisplay";
 
@@ -23,7 +21,6 @@ const OAuthSignInButton: React.FC<OAuthButtonProps> = ({
 }) => {
   const mapping = oauthMapping[strategy];
   const { authObject } = useAuthContext();
-  const handleOAuthClick = useOAuthHandler();
 
   return (
     <>
@@ -31,7 +28,7 @@ const OAuthSignInButton: React.FC<OAuthButtonProps> = ({
         variant="secondary"
         className={`${className} `}
         size={"lg"}
-        onClick={() => handleOAuthClick(strategy)}
+        onClick={() => {}}
         disabled={disabled}
       >
         {authObject.state === "Submitting" ?
@@ -39,7 +36,7 @@ const OAuthSignInButton: React.FC<OAuthButtonProps> = ({
         `Continue with ${mapping?.name}`
         }
       </Button>
-      {oauthServerError && <APIErrorComponent errors={oauthServerError} />}
+      {authObject.error && <APIErrorComponent error={authObject.error} />}
     </>
   );
 };

@@ -1,18 +1,18 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useAuthContext } from "@/app/_features/_authentication/context/AuthContext";
 import LoadingCircle from "../shared/LoadingCircle";
 import { SendDiagonalSolid, TimerSolid } from "iconoir-react";
+import { useAuthContext } from "../context/AuthContext";
 
 const RESEND_COOLDOWN_SECONDS = 30; // Adjust the cooldown duration as needed
 
 const ResendCode: React.FC = () => {
-  const { resendEmailCode, isResendingCode } = useAuthContext();
+  const { authObject } = useAuthContext();
   const [cooldown, setCooldown] = useState<number>(0); // Add type for state
 
   const handleResendCode = async () => {
-    if (cooldown > 0 || isResendingCode) return;
+    if (cooldown > 0 || authObject.onCooldown) return;
 
     try {
       await resendEmailCode();
@@ -41,7 +41,7 @@ const ResendCode: React.FC = () => {
   return (
     <span
       className={`ml-0.5 rounded-lg p-1 font-medium text-primary inline-block transition-all ${
-        cooldown > 0 || isResendingCode
+        cooldown > 0 || authObject
           ? "cursor-not-allowed opacity-70"
           : "cursor-pointer"
       }`}
@@ -58,10 +58,16 @@ const ResendCode: React.FC = () => {
       ) : isResendingCode ? (
         <div className="flex items-center text-md text-start">
           <LoadingCircle color="#222222" size={20} />
-          <div className="flex items-center">Send a new code&nbsp;<SendDiagonalSolid className="text-primary text-xs"/></div>
+          <div className="flex items-center">
+            Send a new code&nbsp;
+            <SendDiagonalSolid className="text-primary text-xs" />
           </div>
+        </div>
       ) : (
-        <div className="flex items-center">Send a new code&nbsp;<SendDiagonalSolid className="text-primary text-xs"/></div>
+        <div className="flex items-center">
+          Send a new code&nbsp;
+          <SendDiagonalSolid className="text-primary text-xs" />
+        </div>
       )}
     </span>
   );
