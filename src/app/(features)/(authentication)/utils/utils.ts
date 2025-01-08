@@ -1,5 +1,4 @@
 // import { AuthReducerAction } from "../context/AuthContext";
-import { signIn } from "convex/auth";
 import {
   AuthAPIError,
   SignInForm as SignInForm,
@@ -7,10 +6,9 @@ import {
   CodeForm,
   AuthMethod,
   AuthStage,
+  SignInFunction,
 } from "../types";
-import { ConvexAuthActionsContext } from "@convex-dev/auth/react";
-import { Dispatch, useReducer } from "react";
-import { useAuthContext } from "../context/AuthContext";
+import { Dispatch } from "react";
 
 export type AuthReducerAction =
   | { type: "set_submitting" }
@@ -46,7 +44,6 @@ export function authObjectReducer(
       return authObject;
   }
 }
-export type SignInFunction = ConvexAuthActionsContext["signIn"];
 export function onEmailSubmit(
   authObject: AuthObject,
   dispatch: Dispatch<AuthReducerAction>,

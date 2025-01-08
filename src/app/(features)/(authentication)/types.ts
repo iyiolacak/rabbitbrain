@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { emailFormSchema, otpCodeSchema } from "./utils/validationSchemas";
+import { ConvexAuthActionsContext } from "@convex-dev/auth/react";
 
 // AuthStateMachine represents the current state of the authentication process.
 // TODO:
@@ -33,3 +34,5 @@ export type CodeForm = z.infer<typeof otpCodeSchema>;
 
 export type SignInForm = EmailForm;
 export type SignInAndCodeForm = EmailForm & CodeForm;
+
+export type SignInFunction = ConvexAuthActionsContext["signIn"];
