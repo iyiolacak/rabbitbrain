@@ -3,7 +3,13 @@
 import React, { createContext, Dispatch, useContext, useReducer } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
-import { AuthObject, EmailForm, CodeForm, SignInForm } from "../types";
+import {
+  AuthObject,
+  EmailForm,
+  CodeForm,
+  SignInForm,
+  SignInFunction,
+} from "../types";
 import { emailFormSchema, otpCodeSchema } from "../utils/validationSchemas";
 import { initialAuthObject } from "../forms/email/constants";
 import { authObjectReducer, AuthReducerAction } from "../utils/utils";
@@ -16,6 +22,8 @@ export interface AuthContextValue {
 
   authObject: AuthObject;
   dispatch: Dispatch<AuthReducerAction>;
+
+  signIn: SignInFunction;
 }
 
 // Context Creation
@@ -54,9 +62,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const contextValue: AuthContextValue = {
     emailFormMethods,
     CodeFormMethods,
+
     authObject,
     dispatch,
-    // onOTPFormSubmit,
+
+    signIn,
   };
 
   return (

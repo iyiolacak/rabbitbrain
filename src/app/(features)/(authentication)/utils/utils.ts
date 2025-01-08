@@ -1,4 +1,5 @@
 // import { AuthReducerAction } from "../context/AuthContext";
+import { initialAuthObject } from "../forms/email/constants";
 import {
   AuthAPIError,
   SignInForm as SignInForm,
@@ -7,57 +8,68 @@ import {
   AuthMethod,
   AuthStage,
   SignInFunction,
+  OnEmailSubmitType,
+  AuthFormState,
 } from "../types";
 import { Dispatch } from "react";
 
 export type AuthReducerAction =
-  | { type: "set_submitting" }
-  | { type: "set_credentials"; payload: SignInForm } // "signIn" | { email: string };
-  | { type: "set_otp_code" }
-  | { type: "error_occured"; payload: AuthAPIError }
-  | { type: "code_form_submitted"; payload: CodeForm }
+  | { type: "set_auth_state"; payload: AuthFormState }
+  | { type: "set_auth_stage"; payload: SignInForm } // "signIn" | { email: string };
+  | { type: "set_auth_error"; payload: AuthAPIError }
+  // | { type: "code_form_submitted"; payload: CodeForm }
   | { type: "auth_reset" }
-  | { type: "change_method"; payload: AuthMethod };
+  | { type: "set_auth_method"; payload: AuthMethod };
 
 export function authObjectReducer(
   authObject: AuthObject,
   action: AuthReducerAction
 ): AuthObject {
   switch (action.type) {
-    case "set_credentials":
+    case "set_auth_stage": // In other words assign credentials
       return {
         ...authObject,
         stage: action.payload,
       };
-    case "set_submitting":
+    case "set_auth_state":
       return {
         ...authObject,
-        state: "Submitting",
+        state: action.payload,
       };
-    case "error_occured":
+    case "set_auth_error":
       return {
         ...authObject,
         state: "Error",
         error: action.payload,
       };
+    case "auth_reset":
+      return {
+        ...initialAuthObject,
+        method: authObject.method,
+      };
+    case "set_auth_method":
+      return {
+        ...authObject,
+        method: action.payload,
+      };
     default:
       return authObject;
   }
 }
-export function onEmailSubmit(
-  authObject: AuthObject,
-  dispatch: Dispatch<AuthReducerAction>,
-  signIn: SignInFunction,
-  formData: SignInForm
-) {
+
+export const onEmailSubmit: OnEmailSubmitType = (
+  dispatch,
+  signIn,
+  formData
+) => {
   void signIn("resend-otp", formData).then(() =>
     dispatch({
       type: "set_credentials",
       payload: { email: formData.email as string },
     })
   );
-}
-
+};
+1;
 export function isStageOnCode(stage: AuthStage): stage is { email: string } {
   return (
     typeof stage === "object" &&

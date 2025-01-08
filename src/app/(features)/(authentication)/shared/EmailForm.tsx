@@ -7,11 +7,15 @@ import AnimatedInput from "./AnimatedInput";
 import { EmailForm as EmailFormValues } from "../types";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useAuthContext } from "../context/AuthContext";
+import { onEmailSubmit } from "../utils/utils";
 type EmailFormProps = {
   disabled?: boolean;
 };
+type OnSubmitFunc = {
+  onEmailSubmit: OnEmailSubmit
+}
 
-const EmailForm: React.FC<EmailFormProps> = () => {
+const EmailForm: React.FC<EmailFormProps> = (onSubmitFunc: ) => {
   /* centralizes form logic */
   const {
     control,
@@ -24,15 +28,13 @@ const EmailForm: React.FC<EmailFormProps> = () => {
     setFocus("email");
   }, [setFocus]);
 
-  const { signIn } = useAuthActions();
-
-  const { authObject } = useAuthContext();
+  const { authObject, dispatch, signIn } = useAuthContext();
 
   const disabled = authObject.state === "Submitting";
 
   return (
     <form
-      onSubmit={handleSubmit((data) => signIn("resend-otp", data))}
+      onSubmit={handleSubmit((data) => onEmailSubmit(dispatch, signIn, data))}
       className="w-full"
     >
       <div className="flex flex-col gap-y-4">
@@ -52,7 +54,8 @@ const EmailForm: React.FC<EmailFormProps> = () => {
             />
           )}
         />
-          <APIErrorComponent className="mt-2" error={authObject.error} />
+              <button type="submit">Send code</button>
+        <APIErrorComponent className="mt-2" error={authObject.error} />
       </div>
     </form>
   );
