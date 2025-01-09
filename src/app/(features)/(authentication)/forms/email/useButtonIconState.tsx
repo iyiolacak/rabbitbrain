@@ -3,33 +3,34 @@
  * When authState becomes Error or Success, the icon updates and reverts after a timeout.
  */
 
-import { useState } from "react";
+import { JSX, useState } from "react";
 import LoadingCircle from "../../shared/LoadingCircle";
-import { AuthObject } from "../../types";
 import { Check, X } from "iconoir-react";
+import { AuthObject } from "../../types";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type ButtonStates = JSX.Element | typeof idleText;
 
 const idleText = "Send code";
 
-export function SubmitButton(authState: AuthObject) {
+export function SubmitButton(authObject: AuthObject) {
   /* This is the default (idle) text for the button. */
-  const buttonStates: Record<AuthObject, ButtonStates> = {
-    [AuthState.Idle]: idleText,
-    [AuthState.Submitting]: <LoadingCircle />,
-    [AuthState.Success]: <Check className="mr-2" />,
-    [AuthState.Error]: <X className="mr-2" />,
+  const buttonStates: Record<AuthObject["state"], ButtonStates> = {
+    "Idle": idleText,
+    "Submitting": <LoadingCircle />,
+    "Success": <Check className="mr-2" />,
+    "Error": <X className="mr-2" />,
   };
   const [buttonIcon, setButtonIcon] = useState<ButtonStates>(idleText);
 
-  switch (authState) {
-    case AuthState.Error:
+  if (authObject.error) {
       setButtonIcon(iconMap[error]);
   }
-} (
+} return (
   <Button
     type="submit"
-    disabled={authState === AuthState.Submitting}
+    disabled={authObject.state === "Submitting"}
     className={cn("w-full bg-primary transition-all", {
       "pulse-once-red": "authState === AuthState.Error",
     })}

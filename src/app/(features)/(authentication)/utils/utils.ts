@@ -6,6 +6,7 @@ import {
   AuthStage,
   OnEmailSubmitType,
   AuthFormState,
+  SignInFunction,
 } from "../types";
 
 export type AuthReducerAction =
@@ -51,17 +52,28 @@ export function authObjectReducer(
   }
 }
 
-export const onEmailSubmit: OnEmailSubmitType = (
+export const onEmailSubmit: OnEmailSubmitType = async (
   dispatch,
   signIn,
   formData
 ) => {
-  void signIn("resend-otp", formData).then(() =>
-    dispatch({
-      type: "set_auth_stage",
-      payload: { email: formData.email as string },
-    })
-  );
+  try {
+    const result = signIn("resend-otp", {
+      email: formData.email,
+    }).then(() => {
+      dispatch({
+        type: "set_auth_stage",
+        payload: { email: formData.email as string },
+      })
+    }
+    );
+    if ("error" in result) {
+    }
+  } catch (err) {
+    console.log("onEmailFormSubmit `void signIn error:", err);
+  } finally {
+    dispatch({ type: "set_auth_state", payload: "Success" }); // or "Idle"
+  }
 };
 
 export function isStageOnCode(stage: AuthStage): stage is { email: string } {

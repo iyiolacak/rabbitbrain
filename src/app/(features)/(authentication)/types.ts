@@ -9,7 +9,7 @@ export interface AuthObject {
   method: AuthMethod;
   stage: AuthStage;
   state: AuthFormState;
-  error: AuthAPIError | null;
+  error?: AuthAPIError | null; // error attributes existence means there is an error—So feel free to do conditional checks on `error` existence.
 }
 export type AuthAPIError = {
   message: string;

@@ -12,8 +12,8 @@ type EmailFormProps = {
   disabled?: boolean;
 };
 type OnSubmitFunc = {
-  onEmailSubmit: OnEmailSubmitType
-}
+  onEmailSubmit: OnEmailSubmitType;
+};
 
 const EmailForm: React.FC<EmailFormProps> = (onSubmitFunc) => {
   /* centralizes form logic */
@@ -55,7 +55,9 @@ const EmailForm: React.FC<EmailFormProps> = (onSubmitFunc) => {
             />
           )}
         />
-              <button type="submit" disabled={disabled}>Send code</button>
+        <button type="submit" disabled={disabled}>
+          Send code
+        </button>
         <APIErrorComponent className="mt-2" error={authObject.error} />
       </div>
     </form>

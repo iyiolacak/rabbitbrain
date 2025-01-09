@@ -15,6 +15,7 @@ import AuthCompleted from "../shared/AuthCompleted";
 import { useHandleBack } from "../hooks/useHandleBack";
 import { useAuthContext } from "../context/AuthContext";
 import { isStageOnCode } from "../utils/utils";
+import NavigateBack from "../sign-in/_components/NavigateBack";
 
 // Custom hooks
 
@@ -25,8 +26,6 @@ const transitionVariants = {
 };
 
 const SignUpPage = () => {
-
-
   const { authObject, dispatch } = useAuthContext();
 
   const handleBack = useHandleBack(dispatch);
@@ -38,7 +37,6 @@ const SignUpPage = () => {
     }),
     []
   );
-
 
   const renderStageContent = useMemo(() => {
     switch (true) {
@@ -67,26 +65,24 @@ const SignUpPage = () => {
             transition={transitionSettings}
             className="h-full"
           >
-            <Button onClick={handleBack} variant="ghost">
-              <NavArrowLeft />
-            </Button>
+            <NavigateBack handleBack={handleBack} />
             <CodePage />
           </motion.div>
         );
-      case AuthStage.Completed:
-        return (
-          <motion.div
-            key="completed"
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={transitionVariants}
-            transition={transitionSettings}
-            className="h-full"
-          >
-            <AuthCompleted />
-          </motion.div>
-        );
+      // case :
+      //   return (
+      //     <motion.div
+      //       key="completed"
+      //       initial="initial"
+      //       animate="animate"
+      //       exit="exit"
+      //       variants={transitionVariants}
+      //       transition={transitionSettings}
+      //       className="h-full"
+      //     >
+      //       <AuthCompleted />
+      //     </motion.div>
+      //   );
       default:
         return null;
     }
