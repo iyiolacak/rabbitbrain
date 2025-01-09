@@ -4,6 +4,8 @@ export const BUTTON_ICON_DURATION = 1500 as const; // Duration in ms
 
 export const SUBMISSION_TIMEOUT_MS = 30_000 as const;
 
+export const idleText = "Send code" as const;
+
 export const transitionVariants: Readonly<
   Record<string, { opacity: number; x: number }>
 > = {
