@@ -4,7 +4,7 @@ import {
   AuthObject,
   AuthMethod,
   AuthStage,
-  OnEmailSubmitType,
+  onSubmitType,
   AuthFormState,
   SignInFunction,
 } from "../types";
@@ -52,7 +52,7 @@ export function authObjectReducer(
   }
 }
 
-export const onEmailSubmit: OnEmailSubmitType = async (
+export const onEmailSubmit: onSubmitType = async (
   dispatch,
   signIn,
   formData
@@ -64,9 +64,8 @@ export const onEmailSubmit: OnEmailSubmitType = async (
       dispatch({
         type: "set_auth_stage",
         payload: { email: formData.email as string },
-      })
-    }
-    );
+      });
+    });
     if ("error" in result) {
     }
   } catch (err) {
@@ -74,6 +73,9 @@ export const onEmailSubmit: OnEmailSubmitType = async (
   } finally {
     dispatch({ type: "set_auth_state", payload: "Success" }); // or "Idle"
   }
+};
+export const handleCodeSubmit: onSubmitType = async (dispatch, signIn, formData) => {
+
 };
 
 export function isStageOnCode(stage: AuthStage): stage is { email: string } {

@@ -4,8 +4,10 @@ import { useHandleBack } from "@/app/hooks/auth/useHandleBackNavigation";
 import ResendCode from "./ResendOTPCode";
 import { EditPencil } from "iconoir-react";
 import { useAuthContext } from "../context/AuthContext";
-
-const CodePage = () => {
+interface CodePageProps {
+  onSubmit: () => void;
+}
+const CodePage: React.FC<CodePageProps> = (onSubmit) => {
   const { authObject, dispatch } = useAuthContext();
   const didSomethingWentWrong = !authObject || !authObject.stage || authObject.stage === "signIn";
 

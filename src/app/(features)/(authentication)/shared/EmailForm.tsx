@@ -4,15 +4,12 @@ import React, { useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import APIErrorComponent from "./ErrorDisplay";
 import AnimatedInput from "./AnimatedInput";
-import { EmailForm as EmailFormValues, OnEmailSubmitType } from "../types";
+import { EmailForm as EmailFormValues, onSubmitType } from "../types";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useAuthContext } from "../context/AuthContext";
 import { onEmailSubmit } from "../utils/utils";
 type EmailFormProps = {
   disabled?: boolean;
-};
-type OnSubmitFunc = {
-  onEmailSubmit: OnEmailSubmitType;
 };
 
 const EmailForm: React.FC<EmailFormProps> = (onSubmitFunc) => {
@@ -34,7 +31,9 @@ const EmailForm: React.FC<EmailFormProps> = (onSubmitFunc) => {
 
   return (
     <form
-      onSubmit={handleSubmit((data) => onEmailSubmit(dispatch, signIn, data))}
+      onSubmit={handleSubmit((data) =>
+        onEmailSubmit(dispatch, signIn, data)
+      )}
       className="w-full"
     >
       <div className="flex flex-col gap-y-4">
@@ -58,7 +57,9 @@ const EmailForm: React.FC<EmailFormProps> = (onSubmitFunc) => {
         <button type="submit" disabled={disabled}>
           Send code
         </button>
-        <APIErrorComponent className="mt-2" error={authObject.error} />
+        {authObject.error && (
+          <APIErrorComponent className="mt-2" error={authObject.error} />
+        )}
       </div>
     </form>
   );

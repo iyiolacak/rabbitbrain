@@ -38,7 +38,7 @@ export type SignInAndCodeForm = EmailForm & CodeForm;
 
 export type SignInFunction = ConvexAuthActionsContext["signIn"];
 
-export type OnEmailSubmitType = (
+export type onSubmitType = (
   dispatch: Dispatch<AuthReducerAction>,
   signIn: SignInFunction,
   formData: SignInForm

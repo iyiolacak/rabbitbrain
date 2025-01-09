@@ -38,7 +38,7 @@ const SignUpPage = () => {
     []
   );
 
-  const renderStageContent = useMemo(() => {
+  const displayCurrentStage = useMemo(() => {
     switch (true) {
       case authObject.stage === "signIn":
         return (
@@ -66,32 +66,19 @@ const SignUpPage = () => {
             className="h-full"
           >
             <NavigateBack handleBack={handleBack} />
-            <CodePage />
+            <CodePage onSubmit />
           </motion.div>
         );
-      // case :
-      //   return (
-      //     <motion.div
-      //       key="completed"
-      //       initial="initial"
-      //       animate="animate"
-      //       exit="exit"
-      //       variants={transitionVariants}
-      //       transition={transitionSettings}
-      //       className="h-full"
-      //     >
-      //       <AuthCompleted />
-      //     </motion.div>
-      //   );
       default:
         return null;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authObject.stage, handleBack]);
 
   return (
     <div className="h-full min-w-3xl flex justify-center items-center">
       <AnimatePresence mode="wait" initial={false}>
-        {renderStageContent}
+        {displayCurrentStage}
       </AnimatePresence>
     </div>
   );

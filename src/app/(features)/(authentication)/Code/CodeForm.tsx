@@ -10,11 +10,14 @@ import {
 } from "@/components/ui/input-otp";
 import { useAuthContext } from "../context/AuthContext";
 import APIErrorComponent from "../shared/ErrorDisplay";
+import { AuthError } from "node_modules/convex/dist/esm-types/browser/sync/protocol";
+import { AuthAPIError } from "../types";
+import { handleCodeSubmit as onCodeSubmit } from "../utils/utils";
 
 // TODO: The OTP input validation schema will be handled better.
 
 const CodeForm = () => {
-  const { CodeFormMethods, authObject } = useAuthContext();
+  const { CodeFormMethods, authObject} = useAuthContext();
 
   const {
     handleSubmit,
@@ -32,12 +35,8 @@ const CodeForm = () => {
   }, [authObject.state]);
 
   // IMPLEMENT LOGIC!!!
-  const onCodeSubmit = () => {};
-
-  const apiError = authObject.error;
-
   return (
-    <form ref={formRef} onSubmit={handleSubmit(onCodeSubmit)}>
+    <form ref={formRef} onSubmit={handleSubmit(onCodeSubmit())}>
       <div className="flex items-center justify-center">
         <Controller
           name="OTPCode"
@@ -49,7 +48,7 @@ const CodeForm = () => {
               maxLength={6}
               value={value}
               onChange={onChange}
-              onComplete={handleSubmit(onCodeSubmit)}
+              onComplete={handleSubmit(x)}
               ref={OTPInputRef}
               disabled={authObject.state === "Submitting"}
             >
@@ -58,8 +57,8 @@ const CodeForm = () => {
                   <InputOTPSlot
                     key={index}
                     index={index}
-                    shake={!!apiError}
-                    error={!!apiError}
+                    shake={!!authObject.error}
+                    error={!!authObject.error}
                     data-testid={`otp-slot-${index}`}
                   />
                 ))}
@@ -70,8 +69,8 @@ const CodeForm = () => {
                   <InputOTPSlot
                     key={index}
                     index={index}
-                    shake={!!apiError}
-                    error={!!apiError}
+                    shake={!!authObject.error}
+                    error={!!authObject.error}
                     data-testid={`otp-slot-${index}`}
                   />
                 ))}
@@ -86,7 +85,7 @@ const CodeForm = () => {
             ValidationErrors.OTPCode.message
           </p>
         )}
-        {apiError && (
+        {authObject.error && (
           <APIErrorComponent
             alertIcon={false}
             className="flex justify-center"
