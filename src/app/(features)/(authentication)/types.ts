@@ -4,8 +4,7 @@ import { ConvexAuthActionsContext } from "@convex-dev/auth/react";
 import { AuthReducerAction } from "./utils/utils";
 import { Dispatch } from "react";
 
-// AuthStateMachine represents the current state of the authentication process.
-// TODO:
+// AuthObject represents the current state of the authentication process.
 export interface AuthObject {
   method: AuthMethod;
   stage: AuthStage;
@@ -44,4 +43,3 @@ export type OnEmailSubmitType = (
   signIn: SignInFunction,
   formData: SignInForm
 ) => void;
-

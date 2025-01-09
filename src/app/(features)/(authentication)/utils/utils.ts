@@ -17,7 +17,6 @@ export type AuthReducerAction =
   | { type: "set_auth_state"; payload: AuthFormState }
   | { type: "set_auth_stage"; payload: SignInForm } // "signIn" | { email: string };
   | { type: "set_auth_error"; payload: AuthAPIError }
-  // | { type: "code_form_submitted"; payload: CodeForm }
   | { type: "auth_reset" }
   | { type: "set_auth_method"; payload: AuthMethod };
 
@@ -64,12 +63,12 @@ export const onEmailSubmit: OnEmailSubmitType = (
 ) => {
   void signIn("resend-otp", formData).then(() =>
     dispatch({
-      type: "set_credentials",
+      type: "set_auth_stage",
       payload: { email: formData.email as string },
     })
   );
 };
-1;
+
 export function isStageOnCode(stage: AuthStage): stage is { email: string } {
   return (
     typeof stage === "object" &&

@@ -29,8 +29,6 @@ const transitionVariants = {
 const SignUpPage = () => {
   const { isLoaded, user } = useUser();
 
-  // Redirect logic if user data is loaded
-  useAuthRedirect({ isLoaded, user });
 
   const handleBack = useHandleBack();
   const { authStage } = useAuthContext();

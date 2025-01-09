@@ -1,8 +1,8 @@
 import React from "react";
-import AuthImageSection from "@/app/_features/_authentication/shared/AuthImageSection";
-import AuthStageIndicator from "@/app/_features/_authentication/shared/StageIndicator";
-import { AuthProvider } from "@/app/_features/_authentication/context/AuthContext";
 import { Metadata } from "next";
+import { AuthProvider } from "./context/AuthContext";
+import AuthStageIndicator from "./shared/StageIndicator";
+import AuthImageSection from "./shared/AuthImageSection";
 
 export const metadata: Metadata = {
   title: "rabbitbrain · Create your account",
@@ -24,7 +24,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
           <div className="flex flex-col h-full w-full max-w-md relative">
             <div className="flex-grow">{children}</div>
             <div className="max-w-full">
-              <AuthStageIndicator outOf={3} authAction="sign-up" />
+              <AuthStageIndicator />
             </div>
           </div>
         </div>
