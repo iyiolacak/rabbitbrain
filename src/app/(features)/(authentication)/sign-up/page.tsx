@@ -86,7 +86,7 @@ const SignUpPage = () => {
       default:
         return null;
     }
-  }, [authStage, handleBack, transitionSettings]);
+  }, [authObject.stage, handleBack]);
 
   return (
     <div className="h-full min-w-3xl flex justify-center items-center">
