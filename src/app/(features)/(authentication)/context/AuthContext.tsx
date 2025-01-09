@@ -8,6 +8,7 @@ import { emailFormSchema, otpCodeSchema } from "../utils/validationSchemas";
 import { initialAuthObject } from "../forms/email/constants";
 import { authObjectReducer, AuthReducerAction } from "../utils/utils";
 import { useAuthActions } from "@convex-dev/auth/react";
+import { useHandleBack } from "../hooks/useHandleBack";
 
 // Context interface
 export interface AuthContextValue {
@@ -41,9 +42,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     authObjectReducer,
     initialAuthObject
   );
-
   const { signIn } = useAuthActions();
 
+  /**
+   * Form methods
+   */
   const emailFormMethods = useForm<EmailForm>({
     resolver: zodResolver(emailFormSchema),
   });

@@ -4,7 +4,6 @@
 import React, { useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavArrowLeft } from "iconoir-react";
-import { useUser } from "@clerk/clerk-react";
 
 // UI components
 import { Button } from "@/components/ui/button";
@@ -15,6 +14,7 @@ import CodePage from "../Code/CodePage";
 import AuthCompleted from "../shared/AuthCompleted";
 import { useHandleBack } from "../hooks/useHandleBack";
 import { useAuthContext } from "../context/AuthContext";
+import { isStageOnCode } from "../utils/utils";
 
 // Custom hooks
 
@@ -25,11 +25,11 @@ const transitionVariants = {
 };
 
 const SignUpPage = () => {
-  const { isLoaded, user } = useUser();
 
 
-  const { handleBack } = useHandleBack();
-  const { authObject} = useAuthContext();
+  const { authObject, dispatch } = useAuthContext();
+
+  const handleBack = useHandleBack(dispatch);
 
   const transitionSettings = useMemo(
     () => ({
@@ -39,9 +39,10 @@ const SignUpPage = () => {
     []
   );
 
+
   const renderStageContent = useMemo(() => {
-    switch (authStage) {
-      case AuthStage.Form:
+    switch (true) {
+      case authObject.stage === "signIn":
         return (
           <motion.div
             key="form"
@@ -55,7 +56,7 @@ const SignUpPage = () => {
             <SignUpStageForm />
           </motion.div>
         );
-      case AuthStage.Verifying:
+      case isStageOnCode(authObject.stage):
         return (
           <motion.div
             key="verifying"

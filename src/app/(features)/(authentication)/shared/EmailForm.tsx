@@ -46,6 +46,7 @@ const EmailForm: React.FC<EmailFormProps> = (onSubmitFunc) => {
             <AnimatedInput
               id="email"
               type="email"
+              autoComplete="email"
               prompt="Enter your email"
               placeholder="example@example.com"
               disabled={disabled}
@@ -54,7 +55,7 @@ const EmailForm: React.FC<EmailFormProps> = (onSubmitFunc) => {
             />
           )}
         />
-              <button type="submit">Send code</button>
+              <button type="submit" disabled={disabled}>Send code</button>
         <APIErrorComponent className="mt-2" error={authObject.error} />
       </div>
     </form>
