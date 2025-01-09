@@ -13,12 +13,10 @@ import { Button } from "@/components/ui/button";
 import SignUpStageForm from "./_components/SignUpForm";
 import CodePage from "../Code/CodePage";
 import AuthCompleted from "../shared/AuthCompleted";
-import { useAuthContext } from "@/app/_features/_authentication/context/AuthContext";
-import { AuthStage } from "@/app/_features/_authentication/hooks/useAuthStatus";
+import { useHandleBack } from "../hooks/useHandleBack";
+import { useAuthContext } from "../context/AuthContext";
 
 // Custom hooks
-import { useHandleBack } from "@/app/hooks/auth/useHandleBackNavigation";
-import { useAuthRedirect } from "@/app/hooks/auth/useAuthRedirect";
 
 const transitionVariants = {
   initial: { opacity: 0, x: 150 },
@@ -30,8 +28,8 @@ const SignUpPage = () => {
   const { isLoaded, user } = useUser();
 
 
-  const handleBack = useHandleBack();
-  const { authStage } = useAuthContext();
+  const { handleBack } = useHandleBack();
+  const { authObject} = useAuthContext();
 
   const transitionSettings = useMemo(
     () => ({

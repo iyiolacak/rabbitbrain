@@ -1,21 +1,16 @@
-// import { AuthReducerAction } from "../context/AuthContext";
 import { initialAuthObject } from "../forms/email/constants";
 import {
   AuthAPIError,
-  SignInForm as SignInForm,
   AuthObject,
-  CodeForm,
   AuthMethod,
   AuthStage,
-  SignInFunction,
   OnEmailSubmitType,
   AuthFormState,
 } from "../types";
-import { Dispatch } from "react";
 
 export type AuthReducerAction =
   | { type: "set_auth_state"; payload: AuthFormState }
-  | { type: "set_auth_stage"; payload: SignInForm } // "signIn" | { email: string };
+  | { type: "set_auth_stage"; payload: AuthStage } // "signIn" | { email: string };
   | { type: "set_auth_error"; payload: AuthAPIError }
   | { type: "auth_reset" }
   | { type: "set_auth_method"; payload: AuthMethod };
