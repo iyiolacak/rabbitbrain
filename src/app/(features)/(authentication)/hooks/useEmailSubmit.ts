@@ -20,7 +20,7 @@ export const useEmailSubmit = ({
 
       if ("error" in result) {
       }
-    } catch (err) {
+    } catch (normalizeError(err)) {
       console.log("onEmailFormSubmit `void signIn error:", err);
       dispatch({ type: "set_auth_error", payload: err})
     } finally {

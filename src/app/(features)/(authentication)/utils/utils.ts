@@ -60,11 +60,25 @@ export function isStageOnCode(stage: AuthStage): stage is { email: string } {
 }
 
 export function normalizeError(error: any): NormalizedAPIError {
-  if(error.response && error.response.data) {
+  if (error.response && error.response.data) {
     return {
       code: error.response.data.code || "API_ERROR",
       message: error.response.data.message || "Something went wrong.",
       meta: error.response.data.details || error.response.status,
-    }
+    };
+  } else if (error instanceof Error) {
+    return {
+      code: "JS_ERROR",
+      message: error.message,
+    };
+  } else if (error === "string") {
+    return {
+      code: "UNKNOWN_ERROR",
+      message: error,
+    };
   }
+  return {
+    code: "UNKNOWN_ERROR",
+    message: "An unknown error occured.",
+  };
 }
