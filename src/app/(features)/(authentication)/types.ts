@@ -9,19 +9,18 @@ export interface AuthObject {
   method: AuthMethod;
   stage: AuthStage;
   state: AuthFormState;
-  error?: AuthAPIError | null; // error attributes existence means there is an error—So feel free to do conditional checks on `error` existence.
+  error?: NormalizedAPIError | null; // error attributes existence means there is an error—So feel free to do conditional checks on `error` existence.
 }
-export type AuthAPIError = {
+export type NormalizedAPIError = {
   message: string;
-  longMessage?: string;
-  code?: string;
-  meta?: AuthErrorMeta;
+  code: string;
+  meta?: any;
 };
 
-type AuthErrorMeta =
-  | [{ field?: string; validationRule?: string }] /* Validation error */
-  | { endpoint?: string; statusCode?: number } /* Server */
-  | { [key: string]: unknown }; /* Fallback for unknown */
+// type AuthErrorMeta =
+//   | [{ field?: string; validationRule?: string }] /* Validation error */
+//   | { endpoint?: string; statusCode?: number } /* Server */
+//   | { [key: string]: unknown }; /* Fallback for unknown */
 
 export type AuthMethod = "Email" | "Phone";
 
@@ -41,5 +40,11 @@ export type SignInFunction = ConvexAuthActionsContext["signIn"];
 export type onSubmitType = (
   dispatch: Dispatch<AuthReducerAction>,
   signIn: SignInFunction,
-  formData: SignInForm
+  formData: SignInForm // { email: string }, that's it 
 ) => void;
+
+export interface UseSubmit {
+  dispatch: Dispatch<AuthReducerAction>;
+  signIn: SignInFunction;
+  formData: SignInForm;
+}

@@ -1,18 +1,16 @@
 import { initialAuthObject } from "../forms/email/constants";
 import {
-  AuthAPIError,
+  NormalizedAPIError,
   AuthObject,
   AuthMethod,
   AuthStage,
-  onSubmitType,
   AuthFormState,
-  SignInFunction,
 } from "../types";
 
 export type AuthReducerAction =
   | { type: "set_auth_state"; payload: AuthFormState }
   | { type: "set_auth_stage"; payload: AuthStage } // "signIn" | { email: string };
-  | { type: "set_auth_error"; payload: AuthAPIError }
+  | { type: "set_auth_error"; payload: NormalizedAPIError }
   | { type: "auth_reset" }
   | { type: "set_auth_method"; payload: AuthMethod };
 
@@ -52,32 +50,6 @@ export function authObjectReducer(
   }
 }
 
-export const onEmailSubmit: onSubmitType = async (
-  dispatch,
-  signIn,
-  formData
-) => {
-  try {
-    const result = signIn("resend-otp", {
-      email: formData.email,
-    }).then(() => {
-      dispatch({
-        type: "set_auth_stage",
-        payload: { email: formData.email as string },
-      });
-    });
-    if ("error" in result) {
-    }
-  } catch (err) {
-    console.log("onEmailFormSubmit `void signIn error:", err);
-  } finally {
-    dispatch({ type: "set_auth_state", payload: "Success" }); // or "Idle"
-  }
-};
-export const handleCodeSubmit: onSubmitType = async (dispatch, signIn, formData) => {
-
-};
-
 export function isStageOnCode(stage: AuthStage): stage is { email: string } {
   return (
     typeof stage === "object" &&
@@ -85,4 +57,14 @@ export function isStageOnCode(stage: AuthStage): stage is { email: string } {
     "email" in stage &&
     typeof stage.email === "string"
   );
+}
+
+export function normalizeError(error: any): NormalizedAPIError {
+  if(error.response && error.response.data) {
+    return {
+      code: error.response.data.code || "API_ERROR",
+      message: error.response.data.message || "Something went wrong.",
+      meta: error.response.data.details || error.response.status,
+    }
+  }
 }
