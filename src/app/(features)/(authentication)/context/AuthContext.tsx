@@ -3,12 +3,11 @@
 import React, { createContext, Dispatch, useContext, useReducer } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
-import { AuthObject, EmailForm, CodeForm, SignInFunction } from "../types";
+import { AuthObject, EmailForm, CodeForm, SignInFunction, onSubmitType } from "../types";
 import { emailFormSchema, otpCodeSchema } from "../utils/validationSchemas";
 import { initialAuthObject } from "../forms/email/constants";
 import { authObjectReducer, AuthReducerAction } from "../utils/utils";
 import { useAuthActions } from "@convex-dev/auth/react";
-import { useHandleBack } from "../hooks/useHandleBack";
 
 // Context interface
 export interface AuthContextValue {

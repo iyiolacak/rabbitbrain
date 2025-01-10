@@ -7,7 +7,6 @@ import AnimatedInput from "./AnimatedInput";
 import { EmailForm as EmailFormValues, onSubmitType } from "../types";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useAuthContext } from "../context/AuthContext";
-import { onEmailSubmit } from "../utils/utils";
 type EmailFormProps = {
   disabled?: boolean;
 };
@@ -31,9 +30,7 @@ const EmailForm: React.FC<EmailFormProps> = (onSubmitFunc) => {
 
   return (
     <form
-      onSubmit={handleSubmit((data) =>
-        onEmailSubmit(dispatch, signIn, data)
-      )}
+      onSubmit={handleSubmit((data) => onEmailSubmit(dispatch, signIn, data))}
       className="w-full"
     >
       <div className="flex flex-col gap-y-4">

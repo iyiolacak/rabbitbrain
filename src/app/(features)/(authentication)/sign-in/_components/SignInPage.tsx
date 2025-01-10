@@ -1,6 +1,6 @@
 "use client";
 import Logo from "@/components/Logo";
-import React, { useEffect } from "react";
+import React from "react";
 import SectionHeader from "../../shared/SectionHeader";
 import Divider from "../../shared/Divider";
 import TermsText from "../../shared/TermsText";
@@ -26,7 +26,6 @@ function RedirectToCreateAccount() {
 }
 
 const SignInPage = () => {
-
   const { authObject } = useAuthContext();
   return (
     <div className="flex items-center w-content flex-col h-content px-4 py-3">
