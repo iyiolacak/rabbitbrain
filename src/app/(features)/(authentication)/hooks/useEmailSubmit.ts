@@ -1,12 +1,7 @@
-import { Dispatch } from "react";
-import { NormalizedAPIError, SignInForm, SignInFunction, UseSubmit } from "../types";
-import { AuthReducerAction } from "../utils/utils";
+import { UseSubmit } from "../types";
+import { normalizeError } from "../utils/utils";
 
-export const useEmailSubmit = ({
-  dispatch,
-  signIn,
-  formData,
-}: UseSubmit) => {
+export const useEmailSubmit = ({ dispatch, signIn, formData }: UseSubmit) => {
   const submitEmail = async () => {
     try {
       const result = signIn("resend-otp", {
@@ -20,11 +15,15 @@ export const useEmailSubmit = ({
 
       if ("error" in result) {
       }
-    } catch (normalizeError(err)) {
+    } catch (err) {
+      const standardizedError = normalizeError(err);
+
       console.log("onEmailFormSubmit `void signIn error:", err);
-      dispatch({ type: "set_auth_error", payload: err})
+      dispatch({ type: "set_auth_error", payload: standardizedError });
     } finally {
       dispatch({ type: "set_auth_state", payload: "Success" }); // or "Idle"
     }
   };
+
+  return { submitEmail, useEmailSubmit };
 };
