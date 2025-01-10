@@ -46,5 +46,4 @@ export type onSubmitType = (
 export interface UseSubmit {
   dispatch: Dispatch<AuthReducerAction>;
   signIn: SignInFunction;
-  formData: SignInForm;
 }
