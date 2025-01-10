@@ -1,6 +1,5 @@
 "use client";
 import CodeForm from "./CodeForm";
-import { useHandleBack } from "@/app/hooks/auth/useHandleBackNavigation";
 import ResendCode from "./ResendOTPCode";
 import { EditPencil } from "iconoir-react";
 import { useAuthContext } from "../context/AuthContext";
@@ -9,7 +8,6 @@ interface CodePageProps {
 }
 const CodePage: React.FC<CodePageProps> = (onSubmit) => {
   const { authObject, dispatch } = useAuthContext();
-  const didSomethingWentWrong = !authObject || !authObject.stage || authObject.stage === "signIn";
 
   return (
     <div className="flex min-h-full w-full px-4 max-w-md mx-auto">

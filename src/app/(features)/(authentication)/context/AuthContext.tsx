@@ -72,4 +72,5 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default { useAuthContext, AuthProvider };

@@ -1,10 +1,9 @@
 "use client";
 
 // External libraries
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavArrowLeft } from "iconoir-react";
-import { useUser } from "@clerk/clerk-react";
 
 // UI components
 import { Button } from "@/components/ui/button";
@@ -16,7 +15,7 @@ import SignInPage from "./_components/SignInPage";
 import { transitionVariants } from "../forms/email/constants";
 import CodePage from "../Code/CodePage";
 import { useAuthContext } from "../context/AuthContext";
-import { handleCodeSubmit } from "../hooks/useCodeSubmit";
+import { useCodeSubmit } from "../hooks/useCodeSubmit";
 
 const SignUpPage = () => {
   const transitionSettings = useMemo(
@@ -27,7 +26,7 @@ const SignUpPage = () => {
     []
   );
 
-  const { authObject, dispatch } = useAuthContext();
+  const { authObject, dispatch, signIn } = useAuthContext();
 
   const handleGoBack = () => dispatch({ type: "auth_reset" });
 
@@ -64,7 +63,7 @@ const SignUpPage = () => {
         <Button onClick={handleGoBack} variant="ghost">
           <NavArrowLeft />
         </Button>
-        <CodePage onSubmit={() => handleCodeSubmit} />
+        <CodePage onSubmit={() => {}} />
       </motion.div>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
