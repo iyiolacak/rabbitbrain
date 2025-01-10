@@ -1,7 +1,7 @@
 "use client";
 import { AuthenticateWithRedirectCallback } from '@clerk/clerk-react';
 import React from 'react';
-import LoadingCircle from '../_components/LoadingCircle';
+import LoadingCircle from '../../shared/LoadingCircle';
 
 const SSOCallback = () => {
   return (
