@@ -42,7 +42,7 @@ const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(
             type={type}
             {...props}
             className={cn(`pt-5 group ${props.className}`, {
-              "border-red-600 focus:placeholder:text-transparent placeholder:text-red-700 focus-visible:ring-red-600": error,
+              "border-red-600 focus:not(:focus-visible):placeholder:text-transparent focus-visible:ring-red-600": error,
               "animate-shake": shake, // Apply shake animation when shake is true
             })}
             placeholder={placeholder}

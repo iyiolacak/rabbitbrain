@@ -124,7 +124,9 @@ input:not(:placeholder-shown) + .floating-label {
   font-weight: 500;
   color: #000; /* Focused label color */
 }
-
+input:not(:focus)::placeholder {
+  color: transparent
+}
 input:disabled + .floating-label {
   color: #9ca3af; /* Disabled label color */
 }
