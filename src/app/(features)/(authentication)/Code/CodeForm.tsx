@@ -10,12 +10,9 @@ import {
 } from "@/components/ui/input-otp";
 import { useAuthContext } from "../context/AuthContext";
 import APIErrorComponent from "../shared/ErrorDisplay";
-import { AuthError } from "node_modules/convex/dist/esm-types/browser/sync/protocol";
 import { NormalizedAPIError } from "../types";
 import { signIn } from "convex/auth";
 import { useCodeSubmit } from "../hooks/useCodeSubmit";
-
-// TODO: The OTP input validation schema will be handled better.
 
 const CodeForm = () => {
   const { CodeFormMethods, authObject, dispatch, signIn } = useAuthContext();
@@ -35,7 +32,7 @@ const CodeForm = () => {
     }
   }, [authObject.state]);
 
-  const { onCodeSubmit } = useCodeSubmit({ dispatch, signIn});
+  const { onCodeSubmit } = useCodeSubmit({ dispatch, signIn });
   return (
     <form ref={formRef} onSubmit={handleSubmit((code) => onCodeSubmit({}))}>
       <div className="flex items-center justify-center">

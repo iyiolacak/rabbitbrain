@@ -107,6 +107,28 @@
   top: 0.1em; /* Adjust this value to control the alignment */
 }
 
+/* Floating label styles */
+.floating-label {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #6b7280; /* Neutral text color */
+  pointer-events: none;
+}
+
+input:focus + .floating-label,
+input:not(:placeholder-shown) + .floating-label {
+  top: 0.5rem;
+  transform: translateY(0);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #000; /* Focused label color */
+}
+
+input:disabled + .floating-label {
+  color: #9ca3af; /* Disabled label color */
+}
+
 
 @layer base {
   * {
