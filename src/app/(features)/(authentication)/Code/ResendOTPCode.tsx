@@ -4,18 +4,25 @@ import React, { useState, useEffect } from "react";
 import LoadingCircle from "../shared/LoadingCircle";
 import { SendDiagonalSolid, TimerSolid } from "iconoir-react";
 import { useAuthContext } from "../context/AuthContext";
+import { AuthObject } from "../types";
+import { useEmailSubmit } from "../hooks/useEmailSubmit";
 
 const RESEND_COOLDOWN_SECONDS = 30; // Adjust the cooldown duration as needed
 
 const ResendCode: React.FC = () => {
-  const { authObject } = useAuthContext();
+  const { authObject, dispatch, signIn } = useAuthContext();
+  const { submitEmail } = useEmailSubmit({ dispatch, signIn });
   const [cooldown, setCooldown] = useState<number>(0); // Add type for state
 
-  const resendEmailCode = (authObject) => {
-    
-  }
+  const resendEmailCode = (authObject: AuthObject) => {
+    if (authObject.stage !== "signIn") {
+      await submitEmail(authObject.stage);
+    } else {
+      return "I throw you a big error because we don't know where we left your email address at, so we can't resend."
+    }
+  };
   const handleResendCode = async () => {
-    if (cooldown > 0 || authObject.onCooldown) return;
+    if (cooldown > 0) return;
 
     try {
       await resendEmailCode(authObject);

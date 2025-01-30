@@ -1,23 +1,23 @@
 import { SignInForm, UseSubmit } from "../types";
 import { normalizeError } from "../utils/utils";
 
-export const useEmailSubmit = ({ dispatch, signIn }: UseSubmit) => {
+export const useEmailSubmit = async ({ dispatch, signIn }: UseSubmit) => {
   const submitEmail = async (formData: SignInForm) => {
     try {
-      const result = signIn("resend-otp", {
+      const result = await signIn("resend-otp", {
         email: formData.email,
       });
+      
 
       dispatch({
         type: "set_auth_stage",
-        payload: { email: formData.email as string },
+        payload: { email: formData.email as string},
       });
 
       if ("error" in result) {
       }
     } catch (err) {
       const standardizedError = normalizeError(err);
-
       console.log("onEmailFormSubmit `void signIn error:", err);
       dispatch({ type: "set_auth_error", payload: standardizedError });
     } finally {
