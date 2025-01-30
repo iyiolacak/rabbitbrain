@@ -25,5 +25,5 @@ export const useEmailSubmit = ({ dispatch, signIn }: UseSubmit) => {
     }
   };
 
-  return { submitEmail, useEmailSubmit };
+  return { submitEmail };
 };
