@@ -1,7 +1,7 @@
 import { SignInForm, UseSubmit } from "../types";
 import { normalizeError } from "../utils/utils";
 
-export const useEmailSubmit = async ({ dispatch, signIn }: UseSubmit) => {
+export const useEmailSubmit = ({ dispatch, signIn }: UseSubmit) => {
   const submitEmail = async (formData: SignInForm) => {
     try {
       const result = await signIn("resend-otp", {
