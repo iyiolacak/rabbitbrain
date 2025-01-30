@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import APIErrorComponent from "./ErrorDisplay";
 import AnimatedInput from "./AnimatedInput";
-import { EmailForm as EmailFormValues, onSubmitType } from "../types";
-import { useAuthActions } from "@convex-dev/auth/react";
+import { EmailForm as EmailFormValues } from "../types";
 import { useAuthContext } from "../context/AuthContext";
 import { useEmailSubmit } from "../hooks/useEmailSubmit";
+import { Button } from "@/components/ui/button";
 type EmailFormProps = {
   disabled?: boolean;
 };
@@ -60,9 +60,9 @@ const EmailForm: React.FC<EmailFormProps> = (onSubmitFunc) => {
             />
           )}
         />
-        <button type="submit" disabled={disabled}>
+        <Button className="" type="submit" disabled={disabled}>
           Send code
-        </button>
+        </Button>
         {authObject.error && (
           <APIErrorComponent className="mt-2" error={authObject.error} />
         )}
