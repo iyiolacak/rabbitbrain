@@ -11,11 +11,14 @@ const ResendCode: React.FC = () => {
   const { authObject } = useAuthContext();
   const [cooldown, setCooldown] = useState<number>(0); // Add type for state
 
+  const resendEmailCode = (authObject) => {
+    
+  }
   const handleResendCode = async () => {
     if (cooldown > 0 || authObject.onCooldown) return;
 
     try {
-      await resendEmailCode();
+      await resendEmailCode(authObject);
       setCooldown(RESEND_COOLDOWN_SECONDS);
     } catch (error) {
       console.error("Failed to resend code:", error);
