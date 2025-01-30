@@ -60,7 +60,7 @@ const EmailForm: React.FC<EmailFormProps> = (onSubmitFunc) => {
             />
           )}
         />
-        <Button className="" size="lg" type="submit" disabled={disabled}>
+        <Button size="lg" type="submit" disabled={disabled}>
           Send code
         </Button>
         {authObject.error && (

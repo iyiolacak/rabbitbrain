@@ -14,6 +14,7 @@ export type AuthReducerAction =
   | { type: "auth_reset" }
   | { type: "set_auth_method"; payload: AuthMethod };
 
+  // To be used at auth context
 export function authObjectReducer(
   authObject: AuthObject,
   action: AuthReducerAction
