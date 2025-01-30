@@ -28,7 +28,7 @@ function RedirectToCreateAccount() {
 const SignInPage = () => {
   const { authObject } = useAuthContext();
   return (
-    <div className="flex items-center w-full bg-red-600 flex-col h-content px-4 py-3">
+    <div className="flex items-center w-full flex-col h-content px-4 py-3">
       <Logo
         size={"size-8"}
         className="flex h-min mb-16 w-content"
