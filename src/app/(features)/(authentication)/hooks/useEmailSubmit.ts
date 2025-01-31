@@ -17,6 +17,7 @@ export const useEmailSubmit = ({ dispatch, signIn }: UseSubmit) => {
       if ("error" in result) {
       }
     } catch (err) {
+      // Normalize error
       const standardizedError = normalizeError(err);
       console.log("onEmailFormSubmit `void signIn error:", err);
       dispatch({ type: "set_auth_error", payload: standardizedError });
