@@ -65,7 +65,7 @@ const ResendCode: React.FC = () => {
             <TimerSolid className="ml-1 text-xs" />
           </div>
         </div>
-      ) : isResendingCode ? (
+      ) : authObject.state === "Submitting" ? (
         <div className="flex items-center text-md text-start">
           <LoadingCircle color="#222222" size={20} />
           <div className="flex items-center">

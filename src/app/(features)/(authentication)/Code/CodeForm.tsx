@@ -13,6 +13,7 @@ import APIErrorComponent from "../shared/ErrorDisplay";
 import { NormalizedAPIError } from "../types";
 import { signIn } from "convex/auth";
 import { useCodeSubmit } from "../hooks/useCodeSubmit";
+import { normalizeError } from "../utils/utils";
 
 const CodeForm = () => {
   const { CodeFormMethods, authObject, dispatch, signIn } = useAuthContext();
@@ -34,7 +35,7 @@ const CodeForm = () => {
 
   const { onCodeSubmit } = useCodeSubmit({ dispatch, signIn });
   return (
-    <form ref={formRef} onSubmit={handleSubmit((code) => onCodeSubmit({}))}>
+    <form ref={formRef} onSubmit={handleSubmit((code) => onCodeSubmit(code))}>
       <div className="flex items-center justify-center">
         <Controller
           name="OTPCode"
@@ -87,7 +88,7 @@ const CodeForm = () => {
           <APIErrorComponent
             alertIcon={false}
             className="flex justify-center"
-            error={apiError}
+            error={normalizeError(authObject.error)}
           />
         )}
       </div>

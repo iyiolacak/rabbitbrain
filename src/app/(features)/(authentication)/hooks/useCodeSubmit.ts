@@ -1,6 +1,7 @@
 import { Dispatch } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import {
+  CodeForm,
   onSubmitType,
   SignInAndCodeForm,
   SignInForm,
@@ -12,7 +13,7 @@ import { useRouter } from "next/navigation";
 export const useCodeSubmit = ({ dispatch, signIn }: UseSubmit) => {
   const router = useRouter();
   // encapsulated on code submit logic here...
-  const onCodeSubmit = (formData: SignInAndCodeForm) => {
+  const onCodeSubmit = (formData: CodeForm) => {
     try {
       const result = signIn("resend-otp", { code: formData.OTPCode });
       dispatch({ type: "set_auth_state", payload: "Success"})

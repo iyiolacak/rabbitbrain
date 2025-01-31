@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useAuthContext } from "../context/AuthContext";
-import { isStageOnCode } from "../utils/utils";
+import { isStageOnCode } from "@/app/(features)/(authentication)/utils/utils"
 import { outOf } from "../forms/email/constants";
 
 const AuthStageIndicator = () => {

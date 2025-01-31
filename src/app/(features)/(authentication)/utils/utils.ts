@@ -63,7 +63,7 @@ export function authObjectReducer(
  *  unless authObject.state is successful(which means code entry happened and it was successful, so user should have been redirected.)
  *
  * Note: Again, there is a crucial nuance – The fact that authObject.state might be successful and this would still return `true`.
- */
+ **/
 
 export function isStageOnCode(stage: AuthStage): stage is { email: string } {
   return (
