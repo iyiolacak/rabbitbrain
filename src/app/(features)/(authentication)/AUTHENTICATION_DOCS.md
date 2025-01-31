@@ -15,6 +15,7 @@ This grants access to:
 
 # FormProvider
 Provides form functions by the `useForm` from `react-hook-form`, prevents excessive prop drilling
+
 # authObject
 Demonstrates current status of the sign in session.
 
