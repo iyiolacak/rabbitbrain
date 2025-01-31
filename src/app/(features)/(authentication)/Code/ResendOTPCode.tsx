@@ -16,9 +16,9 @@ const ResendCode: React.FC = () => {
 
   const resendEmailCode = (authObject: AuthObject) => {
     if (authObject.stage !== "signIn") {
-      await submitEmail(authObject.stage);
+      submitEmail(authObject.stage);
     } else {
-      return "I throw you a big error because we don't know where we left your email address at, so we can't resend."
+      return "I throw you a big error because we don't know where we left your email address at, so we can't resend.";
     }
   };
   const handleResendCode = async () => {
