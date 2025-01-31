@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import APIErrorComponent from "./ErrorDisplay";
 import AnimatedInput from "./AnimatedInput";
-import { EmailForm as EmailFormValues } from "../types";
+import { EmailForm as EmailFormValues, SignInForm } from "../types";
 import { useAuthContext } from "../context/AuthContext";
 import { useEmailSubmit } from "../hooks/useEmailSubmit";
 import { Button } from "@/components/ui/button";
@@ -30,14 +30,14 @@ const EmailForm: React.FC<EmailFormProps> = (onSubmitFunc) => {
   const { submitEmail } = useEmailSubmit({
     dispatch,
     signIn,
-    formData: { email: "" },
   });
 
   const disabled = authObject.state === "Submitting";
 
   return (
     <form
-      onSubmit={handleSubmit((data) => {
+      onSubmit={handleSubmit((data: SignInForm) => {
+        
         submitEmail({ ...data });
       })}
       className="w-full"

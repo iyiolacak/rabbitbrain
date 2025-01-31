@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, Dispatch, useContext, useReducer } from "react";
+import React, {
+  createContext,
+  Dispatch,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
 import { AuthObject, EmailForm, CodeForm, SignInFunction } from "../types";
@@ -43,6 +49,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   );
   const { signIn } = useAuthActions();
 
+  useEffect(() => {
+    console.log(authObject);
+  }, [authObject]);
   /**
    * Form methods
    */
