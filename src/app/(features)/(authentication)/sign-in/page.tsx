@@ -63,7 +63,7 @@ const SignUpPage = () => {
         <Button onClick={handleGoBack} variant="ghost">
           <NavArrowLeft />
         </Button>
-        <CodePage onSubmit={() => {}} />
+        <CodePage />
       </motion.div>
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps

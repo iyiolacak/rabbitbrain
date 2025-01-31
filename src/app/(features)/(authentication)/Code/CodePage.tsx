@@ -3,10 +3,8 @@ import CodeForm from "./CodeForm";
 import ResendCode from "./ResendOTPCode";
 import { EditPencil } from "iconoir-react";
 import { useAuthContext } from "../context/AuthContext";
-interface CodePageProps {
-  onSubmit: () => void;
-}
-const CodePage: React.FC<CodePageProps> = (onSubmit) => {
+
+const CodePage: React.FC = () => {
   const { authObject, dispatch } = useAuthContext();
 
   return (

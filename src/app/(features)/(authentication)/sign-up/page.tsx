@@ -66,7 +66,7 @@ const SignUpPage = () => {
             className="h-full"
           >
             <NavigateBack handleBack={handleBack} />
-            <CodePage onSubmit />
+            <CodePage />
           </motion.div>
         );
       default:
