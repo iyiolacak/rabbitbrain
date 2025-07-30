@@ -2,6 +2,7 @@
 
 ### **Interactive, AI-Powered Brain Training**  
 *Free, Open-Source, and Community-Driven.*
+<img width="1920" height="941" alt="image" src="https://github.com/user-attachments/assets/e5334372-0a12-4037-8fee-60284890f78d" />
 
 ---
 
