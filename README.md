@@ -1,4 +1,5 @@
 # 🐇 Rabbitbrain
+[not ready for production, and unmaintained.]
 
 ### **Interactive, AI-Powered Brain Training**  
 *Free, Open-Source, and Community-Driven.*
@@ -41,7 +42,7 @@ Rabbitbrain is built using modern, scalable technologies:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/rabbitbrain.git
+   git clone https://github.com/iyiolacak/rabbitbrain.git
    cd rabbitbrain
   
 2. **Install dependencies:**
