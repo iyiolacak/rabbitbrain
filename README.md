@@ -30,7 +30,7 @@ Rabbitbrain is built using modern, scalable technologies:
 - **Frontend**: [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/)
 - **Backend**: [Convex](https://www.convex.dev/)
 - **Database**: [Convex](https://www.convex.dev/)
-- **Authentication**: [Clerk](https://clerk.com/)
+- **Authentication**: [Convex Auth](https://www.convex.dev/auth)
 - **AI**: OpenAI's GPT API (with plans for integration with open-source AI models)
 - **Icons**: [Lucide React Icons](https://lucide.dev/), [Rabbit icons created by PLANBSTUDIO - Flaticon](https://www.flaticon.com/free-icons/rabbit)
 - **Deployment**: [Vercel](https://vercel.com/)
